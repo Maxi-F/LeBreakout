@@ -51,6 +51,9 @@
     <ClCompile Include="src\utils\math.cpp">
       <Filter>Archivos de recursos\utils</Filter>
     </ClCompile>
+    <ClCompile Include="src\utils\collisions.cpp">
+      <Filter>Archivos de recursos\utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\utils\Colors.h">
@@ -78,6 +81,9 @@
       <Filter>Archivos de encabezado\screens</Filter>
     </ClInclude>
     <ClInclude Include="src\utils\math.h">
+      <Filter>Archivos de encabezado\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\collisions.h">
       <Filter>Archivos de encabezado\utils</Filter>
     </ClInclude>
   </ItemGroup>

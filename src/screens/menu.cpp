@@ -1,11 +1,14 @@
 #include "sl.h"
 #include "menu.h"
+#include "screens.h"
 #include "../constants.h"
+#include "../utils/collisions.h"
 #include "../utils/Rectangles.h"
 #include "../utils/Colors.h"
 #include "../utils/fonts.h"
 #include "../utils/math.h"
 #include "../utils/Vector.h"
+#include <iostream>
 
 #define MENU_OPTIONS_LENGTH 4
 
@@ -66,7 +69,7 @@ void initMenu() {
 			"Rules"
 		},
 		{
-			Option::CREDITS,
+			Option::GAME_CREDITS,
 			creditsRectangle,
 			"Credits"
 		},
@@ -79,6 +82,23 @@ void initMenu() {
 
 	for (int i = 0; i < MENU_OPTIONS_LENGTH; i++) {
 		menuOptions[i] = newMenuOptions[i];
+	}
+}
+
+static void checkOptionCollisions() {
+	Vector2 mousePosition = { slGetMouseX(), slGetMouseY() };
+
+	for (int i = 0; i < MENU_OPTIONS_LENGTH; i++) {
+		if (checkPointToRectangleCollision(menuOptions[i].rectangle, mousePosition)) {
+			menuOptions[i].isHovered = true;
+
+			if (slGetMouseButton(SL_MOUSE_BUTTON_LEFT)) {
+				menuOptions[i].isClicked = true;
+			}
+		}
+		else {
+			menuOptions[i].isHovered = false;
+		}
 	}
 }
 
@@ -103,7 +123,7 @@ void drawMenu() {
 		const char* optionText = menuOptions[i].optionText;
 		Rectangle optionRectangle = menuOptions[i].rectangle;
 
-		fillRectangle(optionRectangle, RED);
+		fillRectangle(optionRectangle, menuOptions[i].isHovered ? DARK_RED : RED);
 		writeText(
 			optionText,
 			{ 
@@ -116,6 +136,37 @@ void drawMenu() {
 	};
 }
 
-Option getPressedOption() {
-	return Option::NONE;
+static Option getPressedOption() {
+	Option selectedOption = Option::NONE;
+
+	for (int i = 0; i < MENU_OPTIONS_LENGTH; i++) {
+		if (menuOptions[i].isClicked) {
+			selectedOption = menuOptions[i].option;
+		}
+	}
+
+	return selectedOption;
+}
+
+void doActionBySelectedOption(Screen& actualScreen, bool& shouldClose) {
+	checkOptionCollisions();
+
+	Option selectedOption = getPressedOption();
+
+	switch (selectedOption) {
+		case Option::NONE:
+			break;
+		case Option::EXIT:
+			shouldClose = true;
+			break;
+		case Option::GAME_RULES:
+			actualScreen = Screen::RULES;
+			break;
+		case Option::PLAY:
+			actualScreen = Screen::GAMEPLAY;
+			break;
+		case Option::GAME_CREDITS:
+			actualScreen = Screen::CREDITS;
+			break;
+	}
 }

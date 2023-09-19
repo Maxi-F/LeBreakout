@@ -4,14 +4,14 @@
 #include "screens/menu.h"
 #include "constants.h"
 
-void init() {
+static void init() {
 	slWindow(SCREEN_DIMENSIONS.x, SCREEN_DIMENSIONS.y, "LeBreakout", false);
 
 	initFont("src/white_rabbit.ttf");
 	initMenu();
 }
 
-void screenLoop(Screen &actualScreen) {
+static void screenLoop(Screen actualScreen) {
 	switch (actualScreen) {
 		case Screen::MENU:
 			drawMenu();
@@ -23,14 +23,30 @@ void screenLoop(Screen &actualScreen) {
 	}
 }
 
+static void screenTransition(Screen& actualScreen, bool& shouldClose) {
+	switch (actualScreen) {
+		case Screen::MENU:
+			doActionBySelectedOption(actualScreen, shouldClose);
+			break;
+		case Screen::GAMEPLAY:
+			break;
+		case Screen::CREDITS:
+			break;
+		case Screen::RULES:
+			break;
+	}
+}
+
 void startGame() {
 	init();
 	Screen actualScreen = Screen::MENU;
+	bool shouldClose = false;
 
-	while (!slShouldClose())
+	while (!slShouldClose() && !shouldClose)
 	{
 		screenLoop(actualScreen);
 
+		screenTransition(actualScreen, shouldClose);
 		slRender();
 	}
 

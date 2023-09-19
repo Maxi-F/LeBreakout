@@ -1,9 +1,10 @@
 #pragma once
+#include "screens.h";
 
 extern enum Option {
 	PLAY = 0,
 	GAME_RULES,
-	CREDITS,
+	GAME_CREDITS,
 	EXIT,
 	NONE
 };
@@ -11,3 +12,4 @@ extern enum Option {
 void initMenu();
 void drawMenu();
 Option getPressedOption();
+void doActionBySelectedOption(Screen &actualScreen, bool &shouldClose);

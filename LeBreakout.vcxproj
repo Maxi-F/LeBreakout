@@ -167,6 +167,7 @@
     <ClCompile Include="src\game.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\screens\menu.cpp" />
+    <ClCompile Include="src\utils\collisions.cpp" />
     <ClCompile Include="src\utils\Colors.cpp" />
     <ClCompile Include="src\utils\fonts.cpp" />
     <ClCompile Include="src\utils\math.cpp" />
@@ -177,6 +178,7 @@
     <ClInclude Include="src\game.h" />
     <ClInclude Include="src\screens\menu.h" />
     <ClInclude Include="src\screens\screens.h" />
+    <ClInclude Include="src\utils\collisions.h" />
     <ClInclude Include="src\utils\Colors.h" />
     <ClInclude Include="src\utils\fonts.h" />
     <ClInclude Include="src\utils\math.h" />
