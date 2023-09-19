@@ -1,4 +1,5 @@
 #pragma once
+#include "Colors.h"
 
 struct Rectangle {
 	double xCenter;
@@ -7,4 +8,4 @@ struct Rectangle {
 	double height;
 };
 
-void fillRectangle(Rectangle rectangle);
+void fillRectangle(Rectangle rectangle, Color color);

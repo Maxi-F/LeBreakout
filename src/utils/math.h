@@ -1,0 +1,1 @@
+double getHalf(double value);

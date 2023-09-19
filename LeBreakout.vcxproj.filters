@@ -19,6 +19,12 @@
     <Filter Include="Archivos de encabezado\utils">
       <UniqueIdentifier>{b12f4c89-e032-415f-a75b-4f3d119470e9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Archivos de recursos\screens">
+      <UniqueIdentifier>{8c343e5d-eea5-4227-af80-1898a7e0bd2f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\screens">
+      <UniqueIdentifier>{8da201bb-fbad-4f6f-9161-eef56bce31a3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\utils\Rectangles.cpp">
@@ -36,6 +42,15 @@
     <ClCompile Include="src\utils\fonts.cpp">
       <Filter>Archivos de recursos\utils</Filter>
     </ClCompile>
+    <ClCompile Include="src\constants.cpp">
+      <Filter>Archivos de recursos</Filter>
+    </ClCompile>
+    <ClCompile Include="src\screens\menu.cpp">
+      <Filter>Archivos de recursos\screens</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utils\math.cpp">
+      <Filter>Archivos de recursos\utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\utils\Colors.h">
@@ -51,6 +66,18 @@
       <Filter>Archivos de encabezado\utils</Filter>
     </ClInclude>
     <ClInclude Include="src\utils\Vector.h">
+      <Filter>Archivos de encabezado\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\screens\screens.h">
+      <Filter>Archivos de encabezado\screens</Filter>
+    </ClInclude>
+    <ClInclude Include="src\constants.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="src\screens\menu.h">
+      <Filter>Archivos de encabezado\screens</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\math.h">
       <Filter>Archivos de encabezado\utils</Filter>
     </ClInclude>
   </ItemGroup>

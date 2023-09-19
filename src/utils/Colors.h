@@ -8,6 +8,8 @@ struct Color {
 };
 
 extern const Color RED;
+extern const Color WHITE;
+extern const Color BLACK;
 extern const Color LIGHT_BLUE;
 
 void setBackColor(Color color);

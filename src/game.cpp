@@ -1,27 +1,35 @@
 #include "sl.h"
-#include "utils/Colors.h"
-#include "utils/Rectangles.h"
 #include "utils/fonts.h"
+#include "screens/screens.h"
+#include "screens/menu.h"
+#include "constants.h"
 
-void startGame() {
-	const int width = 400;
-	const int height = 400;
-
-	const Rectangle rectangle = { width * 0.5, height * 0.5, 100, 100 };
-
-	slWindow(width, height, "Simple SIGIL Example", false);
+void init() {
+	slWindow(SCREEN_DIMENSIONS.x, SCREEN_DIMENSIONS.y, "LeBreakout", false);
 
 	initFont("src/white_rabbit.ttf");
-	setFontSize(80);
+	initMenu();
+}
 
-	while (!slShouldClose() && !slGetKey(SL_KEY_ESCAPE))
+void screenLoop(Screen &actualScreen) {
+	switch (actualScreen) {
+		case Screen::MENU:
+			drawMenu();
+			break;
+		case Screen::GAMEPLAY:
+			break;
+		case Screen::RULES:
+			break;
+	}
+}
+
+void startGame() {
+	init();
+	Screen actualScreen = Screen::MENU;
+
+	while (!slShouldClose())
 	{
-		setBackColor(LIGHT_BLUE);
-		setForeColor(RED);
-
-		fillRectangle(rectangle);
-
-		writeText("HELLO", { width * 0.5, height * 0.5 }, { 0, 0, 0, 1 });
+		screenLoop(actualScreen);
 
 		slRender();
 	}
