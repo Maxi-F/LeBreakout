@@ -12,4 +12,4 @@ extern enum Option {
 void initMenu();
 void drawMenu();
 Option getPressedOption();
-void doActionBySelectedOption(Screen &actualScreen, bool &shouldClose);
+void checkOptionCollisions();

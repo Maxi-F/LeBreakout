@@ -164,8 +164,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\constants.cpp" />
+    <ClCompile Include="src\entities\ball.cpp" />
+    <ClCompile Include="src\entities\paddle.cpp" />
     <ClCompile Include="src\game.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\screens\gameplay.cpp" />
     <ClCompile Include="src\screens\menu.cpp" />
     <ClCompile Include="src\utils\collisions.cpp" />
     <ClCompile Include="src\utils\Colors.cpp" />
@@ -175,7 +178,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\constants.h" />
+    <ClInclude Include="src\entities\ball.h" />
+    <ClInclude Include="src\entities\paddle.h" />
     <ClInclude Include="src\game.h" />
+    <ClInclude Include="src\screens\gameplay.h" />
     <ClInclude Include="src\screens\menu.h" />
     <ClInclude Include="src\screens\screens.h" />
     <ClInclude Include="src\utils\collisions.h" />

@@ -8,7 +8,6 @@
 #include "../utils/fonts.h"
 #include "../utils/math.h"
 #include "../utils/Vector.h"
-#include <iostream>
 
 #define MENU_OPTIONS_LENGTH 4
 
@@ -85,7 +84,7 @@ void initMenu() {
 	}
 }
 
-static void checkOptionCollisions() {
+void checkOptionCollisions() {
 	Vector2 mousePosition = { slGetMouseX(), slGetMouseY() };
 
 	for (int i = 0; i < MENU_OPTIONS_LENGTH; i++) {
@@ -136,7 +135,7 @@ void drawMenu() {
 	};
 }
 
-static Option getPressedOption() {
+Option getPressedOption() {
 	Option selectedOption = Option::NONE;
 
 	for (int i = 0; i < MENU_OPTIONS_LENGTH; i++) {
@@ -146,27 +145,4 @@ static Option getPressedOption() {
 	}
 
 	return selectedOption;
-}
-
-void doActionBySelectedOption(Screen& actualScreen, bool& shouldClose) {
-	checkOptionCollisions();
-
-	Option selectedOption = getPressedOption();
-
-	switch (selectedOption) {
-		case Option::NONE:
-			break;
-		case Option::EXIT:
-			shouldClose = true;
-			break;
-		case Option::GAME_RULES:
-			actualScreen = Screen::RULES;
-			break;
-		case Option::PLAY:
-			actualScreen = Screen::GAMEPLAY;
-			break;
-		case Option::GAME_CREDITS:
-			actualScreen = Screen::CREDITS;
-			break;
-	}
 }

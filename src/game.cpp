@@ -2,6 +2,7 @@
 #include "utils/fonts.h"
 #include "screens/screens.h"
 #include "screens/menu.h"
+#include "screens/gameplay.h"
 #include "constants.h"
 
 static void init() {
@@ -11,26 +12,40 @@ static void init() {
 	initMenu();
 }
 
-static void screenLoop(Screen actualScreen) {
-	switch (actualScreen) {
-		case Screen::MENU:
-			drawMenu();
-			break;
-		case Screen::GAMEPLAY:
-			break;
-		case Screen::RULES:
-			break;
+static void doActionBySelectedOption(Screen& actualScreen, bool& shouldClose) {
+	checkOptionCollisions();
+
+	Option selectedOption = getPressedOption();
+
+	switch (selectedOption) {
+	case Option::NONE:
+		break;
+	case Option::EXIT:
+		shouldClose = true;
+		break;
+	case Option::GAME_RULES:
+		actualScreen = Screen::RULES;
+		break;
+	case Option::PLAY:
+		actualScreen = Screen::GAMEPLAY;
+		initGameplay();
+		break;
+	case Option::GAME_CREDITS:
+		actualScreen = Screen::CREDITS;
+		break;
 	}
 }
 
-static void screenTransition(Screen& actualScreen, bool& shouldClose) {
+
+static void screenLoop(Screen &actualScreen, bool& shouldClose) {
 	switch (actualScreen) {
 		case Screen::MENU:
 			doActionBySelectedOption(actualScreen, shouldClose);
+			drawMenu();
 			break;
 		case Screen::GAMEPLAY:
-			break;
-		case Screen::CREDITS:
+			updateGameplay();
+			drawGameplay();
 			break;
 		case Screen::RULES:
 			break;
@@ -44,9 +59,8 @@ void startGame() {
 
 	while (!slShouldClose() && !shouldClose)
 	{
-		screenLoop(actualScreen);
+		screenLoop(actualScreen, shouldClose);
 
-		screenTransition(actualScreen, shouldClose);
 		slRender();
 	}
 

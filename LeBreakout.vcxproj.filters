@@ -25,6 +25,12 @@
     <Filter Include="Archivos de encabezado\screens">
       <UniqueIdentifier>{8da201bb-fbad-4f6f-9161-eef56bce31a3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Archivos de recursos\entities">
+      <UniqueIdentifier>{05bf8e5f-f305-4c5e-affa-c5bee0fb8db2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\entities">
+      <UniqueIdentifier>{412c482d-42e6-40a0-883b-5de0b4c6f42e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\utils\Rectangles.cpp">
@@ -53,6 +59,15 @@
     </ClCompile>
     <ClCompile Include="src\utils\collisions.cpp">
       <Filter>Archivos de recursos\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="src\screens\gameplay.cpp">
+      <Filter>Archivos de recursos\screens</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entities\paddle.cpp">
+      <Filter>Archivos de recursos\entities</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entities\ball.cpp">
+      <Filter>Archivos de recursos\entities</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -85,6 +100,15 @@
     </ClInclude>
     <ClInclude Include="src\utils\collisions.h">
       <Filter>Archivos de encabezado\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\screens\gameplay.h">
+      <Filter>Archivos de encabezado\screens</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\paddle.h">
+      <Filter>Archivos de encabezado\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\ball.h">
+      <Filter>Archivos de encabezado\entities</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
