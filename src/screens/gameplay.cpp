@@ -1,6 +1,9 @@
 #include "gameplay.h"
+
 #include "../utils/math.h"
 #include "../constants.h"
+#include "../utils/Vector.h"
+#include "../utils/fonts.h"
 
 namespace Gameplay {
 	GameplayEntities gameplayEntities;
@@ -18,12 +21,12 @@ namespace Gameplay {
 
 			BlockNode* auxBlockNode = auxBlockRow->blockNode;
 
-			double blockRowStartPosition = MathUtils::getHalf(Constants::SCREEN_DIMENSIONS.x) - (MathUtils::getHalf(blocksInRowQuantity) - 0.5) * Block::BLOCK_WIDTH;
+			double blockRowStartPosition = MathUtils::getHalf(Constants::FIELD_DIMENSIONS.x) - (MathUtils::getHalf(blocksInRowQuantity) - 0.5) * Block::BLOCK_WIDTH;
 
 			for (int j = 0; j < blocksInRowQuantity; j++) {
 				auxBlockNode->block = Block::initBlock({
 					blockRowStartPosition + j * Block::BLOCK_WIDTH,
-					Constants::SCREEN_DIMENSIONS.y - Block::BLOCK_HEIGHT - i * Block::BLOCK_HEIGHT
+					Constants::FIELD_DIMENSIONS.y - Block::BLOCK_HEIGHT - i * Block::BLOCK_HEIGHT
 					});
 				auxBlockNode->next = new BlockNode();
 
@@ -50,7 +53,7 @@ namespace Gameplay {
 	void initGameplay() {
 		Paddle::Paddle paddle = Paddle::initPaddle();
 		BallNode* initBallNode = new BallNode({
-			Ball::initBall({ MathUtils::getHalf(Constants::SCREEN_DIMENSIONS.x), MathUtils::getHalf(Constants::SCREEN_DIMENSIONS.y) }, { 0.5, 0.5 }),
+			Ball::initBall({ MathUtils::getHalf(Constants::FIELD_DIMENSIONS.x), MathUtils::getHalf(Constants::FIELD_DIMENSIONS.y) }, { 0.5, 0.5 }),
 			nullptr
 			});
 
@@ -84,6 +87,28 @@ namespace Gameplay {
 		} while (initNode != nullptr);
 	}
 
+	static void drawUI() {
+		Rectangles::Rectangle uiBackground = {
+			MathUtils::getHalf(Constants::FIELD_DIMENSIONS.x),
+			Constants::SCREEN_DIMENSIONS.y - MathUtils::getHalf(Constants::FIELD_Y_MARGIN),
+			Constants::SCREEN_DIMENSIONS.x,
+			Constants::FIELD_Y_MARGIN
+		};
+
+		Rectangles::fillRectangle(uiBackground, Colors::GRAY);
+
+		const char* livesText = "Lives: 3";
+
+		Vectors::Vector2 livesTextSize = Fonts::getTextSize(livesText);
+
+		Fonts::writeText(
+			livesText,
+			{ 40, Constants::FIELD_DIMENSIONS.y + MathUtils::getHalf(Constants::FIELD_Y_MARGIN) - MathUtils::getHalf(livesTextSize.y) },
+			Colors::WHITE,
+			40
+		);
+	}
+
 	void drawGameplay() {
 		drawPaddle(gameplayEntities.paddle);
 
@@ -106,5 +131,7 @@ namespace Gameplay {
 
 			blockRow = blockRow->next;
 		} while (blockRow != nullptr);
+
+		drawUI();
 	}
 }

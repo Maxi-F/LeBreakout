@@ -13,6 +13,7 @@ namespace Colors {
 	extern const Color BLACK;
 	extern const Color LIGHT_BLUE;
 	extern const Color DARK_RED;
+	extern const Color GRAY;
 
 	void setBackColor(Color color);
 	void setForeColor(Color color);

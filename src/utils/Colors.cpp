@@ -7,6 +7,7 @@ namespace Colors {
 	extern const Color BLACK = { 0, 0, 0, 1 };
 	extern const Color WHITE = { 1, 1, 1, 1 };
 	extern const Color DARK_RED = { 0.6, 0, 0, 1 };
+	extern const Color GRAY = { 0.612, 0.612, 0.612, 1 };
 
 	void setBackColor(Color color) {
 		slSetBackColor(color.r, color.g, color.b);

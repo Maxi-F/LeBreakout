@@ -56,13 +56,13 @@ namespace Ball {
 			ball.position.x = ball.radius;
 			ball.direction = { -ball.direction.x, ball.direction.y };
 		}
-		else if (ball.position.x + ball.radius > Constants::SCREEN_DIMENSIONS.x) {
-			ball.position.x = Constants::SCREEN_DIMENSIONS.x - ball.radius;
+		else if (ball.position.x + ball.radius > Constants::FIELD_DIMENSIONS.x) {
+			ball.position.x = Constants::FIELD_DIMENSIONS.x - ball.radius;
 			ball.direction = { -ball.direction.x, ball.direction.y };
 		}
 
-		if (ball.position.y + ball.radius > Constants::SCREEN_DIMENSIONS.y) {
-			ball.position.y = Constants::SCREEN_DIMENSIONS.y - ball.radius;
+		if (ball.position.y + ball.radius > Constants::FIELD_DIMENSIONS.y) {
+			ball.position.y = Constants::FIELD_DIMENSIONS.y - ball.radius;
 			ball.direction = { ball.direction.x, -ball.direction.y };
 		}
 	}
@@ -102,5 +102,3 @@ namespace Ball {
 		Circles::drawCircle(ball->position, ball->radius, Colors::WHITE);
 	}
 }
-
-
