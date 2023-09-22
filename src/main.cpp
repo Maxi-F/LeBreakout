@@ -2,6 +2,6 @@
 
 int main()
 {
-	startGame();
+	Game::startGame();
 	return 0;
 }

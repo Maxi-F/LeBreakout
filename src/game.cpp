@@ -7,65 +7,67 @@
 #include <stdlib.h>
 #include <time.h>
 
-static void init() {
-	srand(time(NULL));
-	slWindow(SCREEN_DIMENSIONS.x, SCREEN_DIMENSIONS.y, "LeBreakout", false);
+namespace Game {
+	static void init() {
+		srand(time(NULL));
+		slWindow(Constants::SCREEN_DIMENSIONS.x, Constants::SCREEN_DIMENSIONS.y, "LeBreakout", true);
 
-	initFont("src/white_rabbit.ttf");
-	initMenu();
-}
-
-static void doActionBySelectedOption(Screen& actualScreen, bool& shouldClose) {
-	checkOptionCollisions();
-
-	Option selectedOption = getPressedOption();
-
-	switch (selectedOption) {
-	case Option::NONE:
-		break;
-	case Option::EXIT:
-		shouldClose = true;
-		break;
-	case Option::GAME_RULES:
-		actualScreen = Screen::RULES;
-		break;
-	case Option::PLAY:
-		actualScreen = Screen::GAMEPLAY;
-		initGameplay();
-		break;
-	case Option::GAME_CREDITS:
-		actualScreen = Screen::CREDITS;
-		break;
-	}
-}
-
-
-static void screenLoop(Screen &actualScreen, bool& shouldClose) {
-	switch (actualScreen) {
-		case Screen::MENU:
-			doActionBySelectedOption(actualScreen, shouldClose);
-			drawMenu();
-			break;
-		case Screen::GAMEPLAY:
-			updateGameplay();
-			drawGameplay();
-			break;
-		case Screen::RULES:
-			break;
-	}
-}
-
-void startGame() {
-	init();
-	Screen actualScreen = Screen::MENU;
-	bool shouldClose = false;
-
-	while (!slShouldClose() && !shouldClose)
-	{
-		screenLoop(actualScreen, shouldClose);
-
-		slRender();
+		Fonts::initFont("src/white_rabbit.ttf");
+		Menu::initMenu();
 	}
 
-	slClose();
+	static void doActionBySelectedOption(Screen::Screen& actualScreen, bool& shouldClose) {
+		Menu::checkOptionCollisions();
+
+		Menu::Option selectedOption = Menu::getPressedOption();
+
+		switch (selectedOption) {
+		case Menu::Option::NONE:
+			break;
+		case Menu::Option::EXIT:
+			shouldClose = true;
+			break;
+		case Menu::Option::GAME_RULES:
+			actualScreen = Screen::RULES;
+			break;
+		case Menu::Option::PLAY:
+			actualScreen = Screen::GAMEPLAY;
+			Gameplay::initGameplay();
+			break;
+		case Menu::Option::GAME_CREDITS:
+			actualScreen = Screen::CREDITS;
+			break;
+		}
+	}
+
+
+	static void screenLoop(Screen::Screen &actualScreen, bool& shouldClose) {
+		switch (actualScreen) {
+			case Screen::MENU:
+				doActionBySelectedOption(actualScreen, shouldClose);
+				Menu::drawMenu();
+				break;
+			case Screen::GAMEPLAY:
+				Gameplay::updateGameplay();
+				Gameplay::drawGameplay();
+				break;
+			case Screen::RULES:
+				break;
+		}
+	}
+
+	void startGame() {
+		init();
+		Screen::Screen actualScreen = Screen::MENU;
+		bool shouldClose = false;
+
+		while (!slShouldClose() && !shouldClose)
+		{
+			screenLoop(actualScreen, shouldClose);
+
+			slRender();
+		}
+
+		slClose();
+	}
 }

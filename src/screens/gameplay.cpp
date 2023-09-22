@@ -2,107 +2,109 @@
 #include "../utils/math.h"
 #include "../constants.h"
 
-GameplayEntities gameplayEntities;
+namespace Gameplay {
+	GameplayEntities gameplayEntities;
 
-static BlockRowNode* initBlockRows() {
-	int blockRowsQuantity = getRandomBetween(3, 5);
+	static BlockRowNode* initBlockRows() {
+		int blockRowsQuantity = MathUtils::getRandomBetween(3, 5);
 
-	BlockRowNode* blockRows = new BlockRowNode();
+		BlockRowNode* blockRows = new BlockRowNode();
 
-	BlockRowNode* auxBlockRow = blockRows;
-	for (int i = 0; i < blockRowsQuantity; i++) {
-		auxBlockRow->blockNode = new BlockNode();
+		BlockRowNode* auxBlockRow = blockRows;
+		for (int i = 0; i < blockRowsQuantity; i++) {
+			auxBlockRow->blockNode = new BlockNode();
 
-		int blocksInRowQuantity = getRandomBetween(4, 9);
+			int blocksInRowQuantity = MathUtils::getRandomBetween(4, 9);
 
-		BlockNode* auxBlockNode = auxBlockRow->blockNode;
-		 
-		double blockRowStartPosition = getHalf(SCREEN_DIMENSIONS.x) - (getHalf(blocksInRowQuantity) - 0.5) * BLOCK_WIDTH;
+			BlockNode* auxBlockNode = auxBlockRow->blockNode;
 
-		for (int j = 0; j < blocksInRowQuantity; j++) {
-			auxBlockNode->block = initBlock({
-				blockRowStartPosition + j * BLOCK_WIDTH,
-				SCREEN_DIMENSIONS.y - BLOCK_HEIGHT - i * BLOCK_HEIGHT
-				});
-			auxBlockNode->next = new BlockNode();
+			double blockRowStartPosition = MathUtils::getHalf(Constants::SCREEN_DIMENSIONS.x) - (MathUtils::getHalf(blocksInRowQuantity) - 0.5) * Block::BLOCK_WIDTH;
 
-			if (j + 1 < blocksInRowQuantity) {
-				auxBlockNode = auxBlockNode->next;
+			for (int j = 0; j < blocksInRowQuantity; j++) {
+				auxBlockNode->block = Block::initBlock({
+					blockRowStartPosition + j * Block::BLOCK_WIDTH,
+					Constants::SCREEN_DIMENSIONS.y - Block::BLOCK_HEIGHT - i * Block::BLOCK_HEIGHT
+					});
+				auxBlockNode->next = new BlockNode();
+
+				if (j + 1 < blocksInRowQuantity) {
+					auxBlockNode = auxBlockNode->next;
+				}
+			}
+			delete auxBlockNode->next;
+			auxBlockNode->next = nullptr;
+
+			auxBlockRow->next = new BlockRowNode();
+
+			if (i + 1 < blockRowsQuantity) {
+				auxBlockRow = auxBlockRow->next;
 			}
 		}
-		delete auxBlockNode->next;
-		auxBlockNode->next = nullptr;
 
-		auxBlockRow->next = new BlockRowNode();
+		delete auxBlockRow->next;
+		auxBlockRow->next = nullptr;
 
-		if (i + 1 < blockRowsQuantity) {
-			auxBlockRow = auxBlockRow->next;
-		}
+		return blockRows;
 	}
 
-	delete auxBlockRow->next;
-	auxBlockRow->next = nullptr;
+	void initGameplay() {
+		Paddle::Paddle paddle = Paddle::initPaddle();
+		BallNode* initBallNode = new BallNode({
+			Ball::initBall({ MathUtils::getHalf(Constants::SCREEN_DIMENSIONS.x), MathUtils::getHalf(Constants::SCREEN_DIMENSIONS.y) }, { 0.5, 0.5 }),
+			nullptr
+			});
 
-	return blockRows;
-}
+		int blockRowsQuantity = MathUtils::getRandomBetween(3, 5);
 
-void initGameplay() {
-	Paddle paddle = initPaddle();
-	BallNode* initBallNode = new BallNode({
-		initBall({ getHalf(SCREEN_DIMENSIONS.x), getHalf(SCREEN_DIMENSIONS.y) }, { 0.5, 0.5 }),
-		nullptr
-		});
+		BlockRowNode* blockRows = initBlockRows();
 
-	int blockRowsQuantity = getRandomBetween(3, 5);
+		gameplayEntities = { paddle, initBallNode, blockRows };
+	}
 
-	BlockRowNode* blockRows = initBlockRows();
+	void updateGameplay() {
+		updatePaddle(gameplayEntities.paddle);
 
-	gameplayEntities = { paddle, initBallNode, blockRows };
-}
+		BallNode* initNode = gameplayEntities.balls;
 
-void updateGameplay() {
-	updatePaddle(gameplayEntities.paddle);
+		do {
+			BlockRowNode* blockRow = gameplayEntities.blockRows;
+			do {
+				BlockNode* blockNode = blockRow->blockNode;
 
-	BallNode* initNode = gameplayEntities.balls;
+				do {
+					updateBlock(blockNode->block, &initNode->ball);
+					blockNode = blockNode->next;
+				} while (blockNode != nullptr);
 
-	do {
+				blockRow = blockRow->next;
+			} while (blockRow != nullptr);
+
+			updateBall(&initNode->ball, gameplayEntities.paddle.rectangle);
+			initNode = initNode->next;
+		} while (initNode != nullptr);
+	}
+
+	void drawGameplay() {
+		drawPaddle(gameplayEntities.paddle);
+
+		BallNode* initNode = gameplayEntities.balls;
+
+		do {
+			drawBall(&initNode->ball);
+			initNode = initNode->next;
+		} while (initNode != nullptr);
+
 		BlockRowNode* blockRow = gameplayEntities.blockRows;
+
 		do {
 			BlockNode* blockNode = blockRow->blockNode;
 
 			do {
-				updateBlock(blockNode->block, &initNode->ball);
+				drawBlock(blockNode->block);
 				blockNode = blockNode->next;
 			} while (blockNode != nullptr);
 
 			blockRow = blockRow->next;
 		} while (blockRow != nullptr);
-
-		updateBall(&initNode->ball, gameplayEntities.paddle.rectangle);
-		initNode = initNode->next;
-	} while (initNode != nullptr);
-}
-
-void drawGameplay() {
-	drawPaddle(gameplayEntities.paddle);
-
-	BallNode* initNode = gameplayEntities.balls;
-
-	do {
-		drawBall(&initNode->ball);
-		initNode = initNode->next;
-	} while (initNode != nullptr);
-
-	BlockRowNode* blockRow = gameplayEntities.blockRows;
-
-	do {
-		BlockNode* blockNode = blockRow->blockNode;
-
-		do {
-			drawBlock(blockNode->block);
-			blockNode = blockNode->next;
-		} while (blockNode != nullptr);
-		
-		blockRow = blockRow->next;
-	} while (blockRow != nullptr);
+	}
 }

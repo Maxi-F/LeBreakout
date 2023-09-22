@@ -173,10 +173,10 @@
     <ClCompile Include="src\screens\menu.cpp" />
     <ClCompile Include="src\utils\circles.cpp" />
     <ClCompile Include="src\utils\collisions.cpp" />
-    <ClCompile Include="src\utils\Colors.cpp" />
+    <ClCompile Include="src\utils\colors.cpp" />
     <ClCompile Include="src\utils\fonts.cpp" />
     <ClCompile Include="src\utils\math.cpp" />
-    <ClCompile Include="src\utils\Rectangles.cpp" />
+    <ClCompile Include="src\utils\rectangles.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\constants.h" />

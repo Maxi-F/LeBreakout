@@ -2,15 +2,18 @@
 #include "../utils/Vector.h"
 #include "../utils/Rectangles.h"
 
-struct Ball {
-	Vector2 position;
-	Vector2 direction;
-	double velocity;
-	double radius;
-};
+namespace Ball {
+	struct Ball {
+		Vectors::Vector2 position;
+		Vectors::Vector2 direction;
+		Rectangles::Rectangle lastFrameCollisionBox;
+		double velocity;
+		double radius;
+	};
 
-void drawBall(Ball* ball);
-void updateBall(Ball* ball, Rectangle paddleRectangle);
-void changeDirectionByCollisionPosition(Ball* ball, Rectangle blockRectangle);
-Ball initBall(Vector2 position, Vector2 direction);
-Rectangle getBallCollisionBox(Ball ball);
+	void drawBall(Ball* ball);
+	void updateBall(Ball* ball, Rectangles::Rectangle paddleRectangle);
+	void changeDirectionByCollisionPosition(Ball* ball, Rectangles::Rectangle blockRectangle);
+	Ball initBall(Vectors::Vector2 position, Vectors::Vector2 direction);
+	Rectangles::Rectangle getBallCollisionBox(Ball ball);
+}

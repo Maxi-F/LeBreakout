@@ -3,14 +3,16 @@
 #include "../utils/Vector.h"
 #include "ball.h"
 
-struct Block {
-	Rectangle rectangle;
-	bool hasBeenHit;
-};
+namespace Block {
+	struct Block {
+		Rectangles::Rectangle rectangle;
+		bool hasBeenHit;
+	};
 
-extern const double BLOCK_HEIGHT;
-extern const double BLOCK_WIDTH;
+	extern const double BLOCK_HEIGHT;
+	extern const double BLOCK_WIDTH;
 
-void drawBlock(Block block);
-Block initBlock(Vector2 position);
-void updateBlock(Block &block, Ball *ball);
+	void drawBlock(Block block);
+	Block initBlock(Vectors::Vector2 position);
+	void updateBlock(Block &block, Ball::Ball *ball);
+}

@@ -2,4 +2,6 @@
 #include "Vector.h"
 #include "Colors.h"
 
-void drawCircle(Vector2 center, double radius, Color color);
+namespace Circles {
+	void drawCircle(Vectors::Vector2 center, double radius, Colors::Color color);
+}

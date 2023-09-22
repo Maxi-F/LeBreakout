@@ -1,12 +1,14 @@
 #pragma once
 #include "Colors.h"
 
-struct Rectangle {
-	double xCenter;
-	double yCenter;
-	double width;
-	double height;
-};
+namespace Rectangles {
+	struct Rectangle {
+		double xCenter;
+		double yCenter;
+		double width;
+		double height;
+	};
 
-void fillRectangle(Rectangle rectangle, Color color);
-void outlineRectangle(Rectangle rectangle, Color color);
+	void fillRectangle(Rectangle rectangle, Colors::Color color);
+	void outlineRectangle(Rectangle rectangle, Colors::Color color);
+}

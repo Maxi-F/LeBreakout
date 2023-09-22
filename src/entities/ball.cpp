@@ -9,99 +9,98 @@
 static const double BALL_RADIUS = 10;
 static const double BALL_VELOCITY = 600;
 
-Ball initBall(Vector2 position, Vector2 direction) {
-	return {
-		position,
-		direction,
-		BALL_VELOCITY,
-		BALL_RADIUS
-	};
-}
 
-Rectangle getBallCollisionBox(Ball ball) {
-	return {
-		ball.position.x,
-		ball.position.y,
-		ball.radius * 2,
-		ball.radius * 2
-	};
-}
 
-static float getValuePerBallDirection(Ball ball, float directionPositiveValue, float directionNegativeValue) {
-	return ball.direction.y > 0 ? directionPositiveValue : directionNegativeValue;
-}
+namespace Ball {
+	Ball initBall(Vectors::Vector2 position, Vectors::Vector2 direction) {
+		return {
+			position,
+			direction,
+			{},
+			BALL_VELOCITY,
+			BALL_RADIUS
+		};
+	}
 
-static float getDistancePercentageFromPaddle(Rectangle paddleRectangle, Ball& ball) {
-	float distance = getDistanceFromMiddle(paddleRectangle, ball.position);
-	float halfWidth = getHalf(paddleRectangle.width);
+	Rectangles::Rectangle getBallCollisionBox(Ball ball) {
+		return {
+			ball.position.x,
+			ball.position.y,
+			ball.radius * 2,
+			ball.radius * 2
+		};
+	}
+	static float getValuePerBallDirection(Ball ball, float directionPositiveValue, float directionNegativeValue) {
+		return ball.direction.y > 0 ? directionPositiveValue : directionNegativeValue;
+	}
 
-	return clamp(1 - (halfWidth - distance) / halfWidth, -1, 1) * 0.5;
-}
+	static float getDistancePercentageFromPaddle(Rectangles::Rectangle paddleRectangle, Ball& ball) {
+		float distance = MathUtils::getDistanceFromMiddle(paddleRectangle, ball.position);
+		float halfWidth = MathUtils::getHalf(paddleRectangle.width);
 
-static void checkPaddleCollision(Ball& ball, Rectangle paddleRectangle) {
-	if (checkRectangleCollision(getBallCollisionBox(ball), paddleRectangle)) {
-		double directionPercentage = getDistancePercentageFromPaddle(paddleRectangle, ball);
+		return MathUtils::clamp(1 - (halfWidth - distance) / halfWidth, -1, 1) * 0.5;
+	}
 
-		ball.direction = { directionPercentage, getValuePerBallDirection(ball, moduleOf(directionPercentage) - 1, 1 - moduleOf(directionPercentage)) };
+	static void checkPaddleCollision(Ball& ball, Rectangles::Rectangle paddleRectangle) {
+		if (Collisions::checkRectangleCollision(getBallCollisionBox(ball), paddleRectangle)) {
+			double directionPercentage = getDistancePercentageFromPaddle(paddleRectangle, ball);
 
-		ball.position.y = paddleRectangle.yCenter + getHalf(paddleRectangle.height) + ball.radius;
+			ball.direction = { directionPercentage, getValuePerBallDirection(ball, MathUtils::moduleOf(directionPercentage) - 1, 1 - MathUtils::moduleOf(directionPercentage)) };
+
+			ball.position.y = paddleRectangle.yCenter + MathUtils::getHalf(paddleRectangle.height) + ball.radius;
+		}
+	}
+
+	static void checkScreenCollision(Ball &ball) {
+		if (ball.position.x - ball.radius < 0) {
+			ball.position.x = ball.radius;
+			ball.direction = { -ball.direction.x, ball.direction.y };
+		}
+		else if (ball.position.x + ball.radius > Constants::SCREEN_DIMENSIONS.x) {
+			ball.position.x = Constants::SCREEN_DIMENSIONS.x - ball.radius;
+			ball.direction = { -ball.direction.x, ball.direction.y };
+		}
+
+		if (ball.position.y + ball.radius > Constants::SCREEN_DIMENSIONS.y) {
+			ball.position.y = Constants::SCREEN_DIMENSIONS.y - ball.radius;
+			ball.direction = { ball.direction.x, -ball.direction.y };
+		}
+	}
+
+	void updateBall(Ball *ball, Rectangles::Rectangle paddleRectangle) {
+		checkPaddleCollision(*ball, paddleRectangle);
+		checkScreenCollision(*ball);
+
+		ball->lastFrameCollisionBox = getBallCollisionBox(*ball);
+
+		ball->position = {
+			ball->position.x + ball->velocity * ball->direction.x * slGetDeltaTime(),
+			ball->position.y + ball->velocity * ball->direction.y * slGetDeltaTime() 
+		};
+	}
+
+	void changeDirectionByCollisionPosition(Ball* ball, Rectangles::Rectangle blockRectangle) {
+		Collisions::CollisionPosition positionWhereCollided = Collisions::getCollisionPosition(
+			ball->lastFrameCollisionBox,
+			getBallCollisionBox(*ball),
+			blockRectangle
+		);
+
+		switch (positionWhereCollided) {
+			case Collisions::CollisionPosition::LEFT:
+			case Collisions::CollisionPosition::RIGHT:
+				ball->direction.x *= -1;
+				break;
+			case Collisions::CollisionPosition::UP:
+			case Collisions::CollisionPosition::DOWN:
+				ball->direction.y *= -1;
+				break;
+		}
+	}
+
+	void drawBall(Ball *ball) {
+		Circles::drawCircle(ball->position, ball->radius, Colors::WHITE);
 	}
 }
 
-static void checkScreenCollision(Ball &ball) {
-	if (ball.position.x - ball.radius < 0) {
-		ball.position.x = ball.radius;
-		ball.direction = { -ball.direction.x, ball.direction.y };
-	}
-	else if (ball.position.x + ball.radius > SCREEN_DIMENSIONS.x) {
-		ball.position.x = SCREEN_DIMENSIONS.x - ball.radius;
-		ball.direction = { -ball.direction.x, ball.direction.y };
-	}
 
-	if (ball.position.y + ball.radius > SCREEN_DIMENSIONS.y) {
-		ball.position.y = SCREEN_DIMENSIONS.y - ball.radius;
-		ball.direction = { ball.direction.x, -ball.direction.y };
-	}
-}
-
-float lastDeltaTime;
-
-void updateBall(Ball *ball, Rectangle paddleRectangle) {
-	checkPaddleCollision(*ball, paddleRectangle);
-	checkScreenCollision(*ball);
-
-	ball->position = {
-		ball->position.x + ball->velocity * ball->direction.x * slGetDeltaTime(),
-		ball->position.y + ball->velocity * ball->direction.y * slGetDeltaTime() 
-	};
-
-	lastDeltaTime = slGetDeltaTime();
-}
-
-void changeDirectionByCollisionPosition(Ball* ball, Rectangle blockRectangle) {
-	CollisionPosition positionWhereCollided = getCollisionPosition(
-		{
-		ball->position.x - ball->velocity * ball->direction.x * lastDeltaTime,
-		ball->position.y - ball->velocity * ball->direction.y * lastDeltaTime,
-		ball->radius * 2,
-		ball->radius * 2
-		},
-		getBallCollisionBox(*ball),
-		blockRectangle
-	);
-
-	switch (positionWhereCollided) {
-		case CollisionPosition::LEFT:
-		case CollisionPosition::RIGHT:
-			ball->direction.x *= -1;
-			break;
-		case CollisionPosition::UP:
-		case CollisionPosition::DOWN:
-			ball->direction.y *= -1;
-			break;
-	}
-}
-
-void drawBall(Ball *ball) {
-	drawCircle(ball->position, ball->radius, WHITE);
-}
