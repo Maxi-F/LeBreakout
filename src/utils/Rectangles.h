@@ -9,3 +9,4 @@ struct Rectangle {
 };
 
 void fillRectangle(Rectangle rectangle, Color color);
+void outlineRectangle(Rectangle rectangle, Color color);

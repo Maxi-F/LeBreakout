@@ -1,5 +1,6 @@
 #include "Rectangles.h"
 #include "Vector.h"
+#include <stdlib.h>
 
 double getHalf(double value) {
 	return value / 2.0;
@@ -16,4 +17,8 @@ double getDistanceFromMiddle(Rectangle rectangle, Vector2 point) {
 
 double moduleOf(double value) {
 	return value < 0 ? -value : value;
+}
+
+int getRandomBetween(int min, int max) {
+	return min + rand() % (max - min);
 }

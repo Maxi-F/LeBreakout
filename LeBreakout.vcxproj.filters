@@ -72,6 +72,9 @@
     <ClCompile Include="src\utils\circles.cpp">
       <Filter>Archivos de recursos\utils</Filter>
     </ClCompile>
+    <ClCompile Include="src\entities\block.cpp">
+      <Filter>Archivos de recursos\entities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\utils\Colors.h">
@@ -115,6 +118,9 @@
     </ClInclude>
     <ClInclude Include="src\utils\circles.h">
       <Filter>Archivos de encabezado\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\block.h">
+      <Filter>Archivos de encabezado\entities</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

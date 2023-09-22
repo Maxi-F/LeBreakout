@@ -4,8 +4,11 @@
 #include "screens/menu.h"
 #include "screens/gameplay.h"
 #include "constants.h"
+#include <stdlib.h>
+#include <time.h>
 
 static void init() {
+	srand(time(NULL));
 	slWindow(SCREEN_DIMENSIONS.x, SCREEN_DIMENSIONS.y, "LeBreakout", false);
 
 	initFont("src/white_rabbit.ttf");

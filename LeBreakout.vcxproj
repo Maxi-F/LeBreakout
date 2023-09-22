@@ -165,6 +165,7 @@
   <ItemGroup>
     <ClCompile Include="src\constants.cpp" />
     <ClCompile Include="src\entities\ball.cpp" />
+    <ClCompile Include="src\entities\block.cpp" />
     <ClCompile Include="src\entities\paddle.cpp" />
     <ClCompile Include="src\game.cpp" />
     <ClCompile Include="src\main.cpp" />
@@ -180,6 +181,7 @@
   <ItemGroup>
     <ClInclude Include="src\constants.h" />
     <ClInclude Include="src\entities\ball.h" />
+    <ClInclude Include="src\entities\block.h" />
     <ClInclude Include="src\entities\paddle.h" />
     <ClInclude Include="src\game.h" />
     <ClInclude Include="src\screens\gameplay.h" />

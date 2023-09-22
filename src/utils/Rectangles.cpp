@@ -10,3 +10,8 @@ void fillRectangle(Rectangle rectangle, Color color) {
 	setForeColor(color);
 	doWithRectangle(rectangle, slRectangleFill);
 };
+
+void outlineRectangle(Rectangle rectangle, Color color) {
+	setForeColor(color);
+	doWithRectangle(rectangle, slRectangleOutline);
+}
