@@ -170,6 +170,7 @@
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\screens\gameplay.cpp" />
     <ClCompile Include="src\screens\menu.cpp" />
+    <ClCompile Include="src\utils\circles.cpp" />
     <ClCompile Include="src\utils\collisions.cpp" />
     <ClCompile Include="src\utils\Colors.cpp" />
     <ClCompile Include="src\utils\fonts.cpp" />
@@ -184,6 +185,7 @@
     <ClInclude Include="src\screens\gameplay.h" />
     <ClInclude Include="src\screens\menu.h" />
     <ClInclude Include="src\screens\screens.h" />
+    <ClInclude Include="src\utils\circles.h" />
     <ClInclude Include="src\utils\collisions.h" />
     <ClInclude Include="src\utils\Colors.h" />
     <ClInclude Include="src\utils\fonts.h" />
