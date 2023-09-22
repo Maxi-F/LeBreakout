@@ -11,4 +11,6 @@ struct Ball {
 
 void drawBall(Ball* ball);
 void updateBall(Ball* ball, Rectangle paddleRectangle);
+void changeDirectionByCollisionPosition(Ball* ball, Rectangle blockRectangle);
 Ball initBall(Vector2 position, Vector2 direction);
+Rectangle getBallCollisionBox(Ball ball);

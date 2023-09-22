@@ -18,7 +18,7 @@ Ball initBall(Vector2 position, Vector2 direction) {
 	};
 }
 
-static Rectangle getBallCollisionBox(Ball ball) {
+Rectangle getBallCollisionBox(Ball ball) {
 	return {
 		ball.position.x,
 		ball.position.y,
@@ -64,6 +64,8 @@ static void checkScreenCollision(Ball &ball) {
 	}
 }
 
+float lastDeltaTime;
+
 void updateBall(Ball *ball, Rectangle paddleRectangle) {
 	checkPaddleCollision(*ball, paddleRectangle);
 	checkScreenCollision(*ball);
@@ -72,6 +74,32 @@ void updateBall(Ball *ball, Rectangle paddleRectangle) {
 		ball->position.x + ball->velocity * ball->direction.x * slGetDeltaTime(),
 		ball->position.y + ball->velocity * ball->direction.y * slGetDeltaTime() 
 	};
+
+	lastDeltaTime = slGetDeltaTime();
+}
+
+void changeDirectionByCollisionPosition(Ball* ball, Rectangle blockRectangle) {
+	CollisionPosition positionWhereCollided = getCollisionPosition(
+		{
+		ball->position.x - ball->velocity * ball->direction.x * lastDeltaTime,
+		ball->position.y - ball->velocity * ball->direction.y * lastDeltaTime,
+		ball->radius * 2,
+		ball->radius * 2
+		},
+		getBallCollisionBox(*ball),
+		blockRectangle
+	);
+
+	switch (positionWhereCollided) {
+		case CollisionPosition::LEFT:
+		case CollisionPosition::RIGHT:
+			ball->direction.x *= -1;
+			break;
+		case CollisionPosition::UP:
+		case CollisionPosition::DOWN:
+			ball->direction.y *= -1;
+			break;
+	}
 }
 
 void drawBall(Ball *ball) {

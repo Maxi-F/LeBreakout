@@ -66,6 +66,18 @@ void updateGameplay() {
 	BallNode* initNode = gameplayEntities.balls;
 
 	do {
+		BlockRowNode* blockRow = gameplayEntities.blockRows;
+		do {
+			BlockNode* blockNode = blockRow->blockNode;
+
+			do {
+				updateBlock(blockNode->block, &initNode->ball);
+				blockNode = blockNode->next;
+			} while (blockNode != nullptr);
+
+			blockRow = blockRow->next;
+		} while (blockRow != nullptr);
+
 		updateBall(&initNode->ball, gameplayEntities.paddle.rectangle);
 		initNode = initNode->next;
 	} while (initNode != nullptr);

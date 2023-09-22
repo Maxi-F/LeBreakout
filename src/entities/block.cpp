@@ -1,4 +1,6 @@
 #include "block.h"
+#include "ball.h"
+#include "../utils/collisions.h"
 
 extern const double BLOCK_HEIGHT = 60;
 extern const double BLOCK_WIDTH = 150;
@@ -17,4 +19,9 @@ void drawBlock(Block block) {
 	}
 }
 
-void updateBlock(Block& block) {};
+void updateBlock(Block& block, Ball *ball) {
+	if (!block.hasBeenHit && checkRectangleCollision(block.rectangle, getBallCollisionBox(*ball))) {
+		changeDirectionByCollisionPosition(ball, block.rectangle);
+		block.hasBeenHit = true;
+	}
+};
