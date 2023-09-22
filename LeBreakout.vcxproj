@@ -167,6 +167,7 @@
     <ClCompile Include="src\entities\ball.cpp" />
     <ClCompile Include="src\entities\block.cpp" />
     <ClCompile Include="src\entities\paddle.cpp" />
+    <ClCompile Include="src\entities\player.cpp" />
     <ClCompile Include="src\game.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\screens\gameplay.cpp" />
@@ -183,16 +184,17 @@
     <ClInclude Include="src\entities\ball.h" />
     <ClInclude Include="src\entities\block.h" />
     <ClInclude Include="src\entities\paddle.h" />
+    <ClInclude Include="src\entities\player.h" />
     <ClInclude Include="src\game.h" />
     <ClInclude Include="src\screens\gameplay.h" />
     <ClInclude Include="src\screens\menu.h" />
     <ClInclude Include="src\screens\screens.h" />
     <ClInclude Include="src\utils\circles.h" />
     <ClInclude Include="src\utils\collisions.h" />
-    <ClInclude Include="src\utils\Colors.h" />
+    <ClInclude Include="src\utils\colors.h" />
     <ClInclude Include="src\utils\fonts.h" />
     <ClInclude Include="src\utils\math.h" />
-    <ClInclude Include="src\utils\Rectangles.h" />
+    <ClInclude Include="src\utils\rectangles.h" />
     <ClInclude Include="src\utils\Vector.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -12,7 +12,7 @@ namespace Ball {
 	};
 
 	void drawBall(Ball* ball);
-	void updateBall(Ball* ball, Rectangles::Rectangle paddleRectangle);
+	void updateBall(Ball* ball, Rectangles::Rectangle paddleRectangle, bool& collidedBottom);
 	void changeDirectionByCollisionPosition(Ball* ball, Rectangles::Rectangle blockRectangle);
 	Ball initBall(Vectors::Vector2 position, Vectors::Vector2 direction);
 	Rectangles::Rectangle getBallCollisionBox(Ball ball);

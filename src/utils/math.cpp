@@ -23,4 +23,8 @@ namespace MathUtils {
 	int getRandomBetween(int min, int max) {
 		return min + rand() % (max - min);
 	}
+
+	double positiveOrNegative() {
+		return getRandomBetween(0, 2) == 0 ? -1 : 1;
+	}
 }

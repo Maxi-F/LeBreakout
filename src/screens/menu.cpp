@@ -142,6 +142,7 @@ namespace Menu {
 		for (int i = 0; i < MENU_OPTIONS_LENGTH; i++) {
 			if (menuOptions[i].isClicked) {
 				selectedOption = menuOptions[i].option;
+				menuOptions[i].isClicked = false;
 			}
 		}
 

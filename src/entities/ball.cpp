@@ -51,7 +51,7 @@ namespace Ball {
 		}
 	}
 
-	static void checkScreenCollision(Ball &ball) {
+	static void checkScreenCollision(Ball &ball, bool &collidedBottom) {
 		if (ball.position.x - ball.radius < 0) {
 			ball.position.x = ball.radius;
 			ball.direction = { -ball.direction.x, ball.direction.y };
@@ -65,11 +65,14 @@ namespace Ball {
 			ball.position.y = Constants::FIELD_DIMENSIONS.y - ball.radius;
 			ball.direction = { ball.direction.x, -ball.direction.y };
 		}
+		else if (ball.position.y + ball.radius < 0) {
+			collidedBottom = true;
+		}
 	}
 
-	void updateBall(Ball *ball, Rectangles::Rectangle paddleRectangle) {
+	void updateBall(Ball *ball, Rectangles::Rectangle paddleRectangle, bool &collidedBottom) {
 		checkPaddleCollision(*ball, paddleRectangle);
-		checkScreenCollision(*ball);
+		checkScreenCollision(*ball, collidedBottom);
 
 		ball->lastFrameCollisionBox = getBallCollisionBox(*ball);
 

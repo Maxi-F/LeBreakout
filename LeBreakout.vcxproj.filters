@@ -75,12 +75,15 @@
     <ClCompile Include="src\entities\block.cpp">
       <Filter>Archivos de recursos\entities</Filter>
     </ClCompile>
+    <ClCompile Include="src\entities\player.cpp">
+      <Filter>Archivos de recursos\entities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\utils\Colors.h">
+    <ClInclude Include="src\utils\colors.h">
       <Filter>Archivos de encabezado\utils</Filter>
     </ClInclude>
-    <ClInclude Include="src\utils\Rectangles.h">
+    <ClInclude Include="src\utils\rectangles.h">
       <Filter>Archivos de encabezado\utils</Filter>
     </ClInclude>
     <ClInclude Include="src\game.h">
@@ -120,6 +123,9 @@
       <Filter>Archivos de encabezado\utils</Filter>
     </ClInclude>
     <ClInclude Include="src\entities\block.h">
+      <Filter>Archivos de encabezado\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\player.h">
       <Filter>Archivos de encabezado\entities</Filter>
     </ClInclude>
   </ItemGroup>

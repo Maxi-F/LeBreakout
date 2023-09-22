@@ -8,4 +8,5 @@ namespace MathUtils {
 	double getDistanceFromMiddle(Rectangles::Rectangle rectangle, Vectors::Vector2 point);
 	double moduleOf(double value);
 	int getRandomBetween(int min, int max);
+	double positiveOrNegative();
 }

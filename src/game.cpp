@@ -10,7 +10,7 @@
 namespace Game {
 	static void init() {
 		srand(time(NULL));
-		slWindow(Constants::SCREEN_DIMENSIONS.x, Constants::SCREEN_DIMENSIONS.y, "LeBreakout", true);
+		slWindow(Constants::SCREEN_DIMENSIONS.x, Constants::SCREEN_DIMENSIONS.y, "LeBreakout", false);
 
 		Fonts::initFont("src/white_rabbit.ttf");
 		Menu::initMenu();
@@ -48,7 +48,7 @@ namespace Game {
 				Menu::drawMenu();
 				break;
 			case Screen::GAMEPLAY:
-				Gameplay::updateGameplay();
+				Gameplay::updateGameplay(actualScreen);
 				Gameplay::drawGameplay();
 				break;
 			case Screen::RULES:

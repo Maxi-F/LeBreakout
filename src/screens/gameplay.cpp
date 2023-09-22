@@ -1,90 +1,98 @@
 #include "gameplay.h"
 
+#include <string>
+
 #include "../utils/math.h"
 #include "../constants.h"
 #include "../utils/Vector.h"
 #include "../utils/fonts.h"
 
 namespace Gameplay {
+	using Blocks = std::vector<std::vector<Block::Block>>;
+
 	GameplayEntities gameplayEntities;
 
-	static BlockRowNode* initBlockRows() {
+	static Blocks initBlockRows() {
 		int blockRowsQuantity = MathUtils::getRandomBetween(3, 5);
 
-		BlockRowNode* blockRows = new BlockRowNode();
+		Blocks blocks(blockRowsQuantity, std::vector<Block::Block>(1));
 
-		BlockRowNode* auxBlockRow = blockRows;
 		for (int i = 0; i < blockRowsQuantity; i++) {
-			auxBlockRow->blockNode = new BlockNode();
+			int blockColumnsQuantity = MathUtils::getRandomBetween(5, 9);
+			double blockRowStartPosition = MathUtils::getHalf(Constants::FIELD_DIMENSIONS.x) - (MathUtils::getHalf(blockColumnsQuantity) - 0.5) * Block::BLOCK_WIDTH;
+			
+			blocks[i].resize(blockColumnsQuantity);
 
-			int blocksInRowQuantity = MathUtils::getRandomBetween(4, 9);
-
-			BlockNode* auxBlockNode = auxBlockRow->blockNode;
-
-			double blockRowStartPosition = MathUtils::getHalf(Constants::FIELD_DIMENSIONS.x) - (MathUtils::getHalf(blocksInRowQuantity) - 0.5) * Block::BLOCK_WIDTH;
-
-			for (int j = 0; j < blocksInRowQuantity; j++) {
-				auxBlockNode->block = Block::initBlock({
+			for (int j = 0; j < blockColumnsQuantity; j++) {
+				blocks[i][j] = Block::initBlock({
 					blockRowStartPosition + j * Block::BLOCK_WIDTH,
 					Constants::FIELD_DIMENSIONS.y - Block::BLOCK_HEIGHT - i * Block::BLOCK_HEIGHT
 					});
-				auxBlockNode->next = new BlockNode();
-
-				if (j + 1 < blocksInRowQuantity) {
-					auxBlockNode = auxBlockNode->next;
-				}
-			}
-			delete auxBlockNode->next;
-			auxBlockNode->next = nullptr;
-
-			auxBlockRow->next = new BlockRowNode();
-
-			if (i + 1 < blockRowsQuantity) {
-				auxBlockRow = auxBlockRow->next;
 			}
 		}
 
-		delete auxBlockRow->next;
-		auxBlockRow->next = nullptr;
+		return blocks;
+	}
 
-		return blockRows;
+	static Ball::Ball initBallInMiddle() {
+		Vectors::Vector2 directions = { MathUtils::getHalf(MathUtils::positiveOrNegative()), MathUtils::getHalf(MathUtils::positiveOrNegative()) };
+		return Ball::initBall({ MathUtils::getHalf(Constants::FIELD_DIMENSIONS.x), MathUtils::getHalf(Constants::FIELD_DIMENSIONS.y) }, directions);
 	}
 
 	void initGameplay() {
 		Paddle::Paddle paddle = Paddle::initPaddle();
-		BallNode* initBallNode = new BallNode({
-			Ball::initBall({ MathUtils::getHalf(Constants::FIELD_DIMENSIONS.x), MathUtils::getHalf(Constants::FIELD_DIMENSIONS.y) }, { 0.5, 0.5 }),
-			nullptr
-			});
+		std::vector<Ball::Ball> balls = { initBallInMiddle() };
 
-		int blockRowsQuantity = MathUtils::getRandomBetween(3, 5);
+		Blocks blocks = initBlockRows();
 
-		BlockRowNode* blockRows = initBlockRows();
+		Player::Player player = Player::initPlayer();
 
-		gameplayEntities = { paddle, initBallNode, blockRows };
+		gameplayEntities = { paddle, balls, blocks, player };
+	}
+	
+	static void updateBlocks(Ball::Ball& ball) {
+		for (int j = 0; j < gameplayEntities.blockRows.size(); j++) {
+			for (int k = 0; k < gameplayEntities.blockRows[j].size(); k++) {
+				Block::updateBlock(gameplayEntities.blockRows[j][k], &ball);
+			}
+		}
 	}
 
-	void updateGameplay() {
+	static void updateBallsAndBlocks() {
+		for (int i = 0; i < gameplayEntities.balls.size(); i++) {
+			updateBlocks(gameplayEntities.balls[i]);
+
+			bool collidedBottom = false;
+			Ball::updateBall(&gameplayEntities.balls[i], gameplayEntities.paddle.rectangle, collidedBottom);
+
+			if (collidedBottom) {
+				gameplayEntities.balls.erase(gameplayEntities.balls.begin() + i);
+
+				if (gameplayEntities.balls.empty()) {
+					Player::reduceLives(gameplayEntities.player);
+
+					if (!Player::isStillAlive(gameplayEntities.player)) {
+						gameplayEntities.hasLost = true;
+					}
+
+					gameplayEntities.balls.insert(gameplayEntities.balls.begin(), initBallInMiddle());
+				}
+			}
+		}
+	}
+
+	static void updateGamplayEntities() {
 		updatePaddle(gameplayEntities.paddle);
+		updateBallsAndBlocks();
+	}
 
-		BallNode* initNode = gameplayEntities.balls;
-
-		do {
-			BlockRowNode* blockRow = gameplayEntities.blockRows;
-			do {
-				BlockNode* blockNode = blockRow->blockNode;
-
-				do {
-					updateBlock(blockNode->block, &initNode->ball);
-					blockNode = blockNode->next;
-				} while (blockNode != nullptr);
-
-				blockRow = blockRow->next;
-			} while (blockRow != nullptr);
-
-			updateBall(&initNode->ball, gameplayEntities.paddle.rectangle);
-			initNode = initNode->next;
-		} while (initNode != nullptr);
+	void updateGameplay(Screen::Screen &screen) {
+		if (!gameplayEntities.hasWon && !gameplayEntities.hasLost) {
+			updateGamplayEntities();
+		}
+		else {
+			screen = Screen::MENU;
+		}
 	}
 
 	static void drawUI() {
@@ -97,40 +105,34 @@ namespace Gameplay {
 
 		Rectangles::fillRectangle(uiBackground, Colors::GRAY);
 
-		const char* livesText = "Lives: 3";
+		const std::string livesPreText = "Lives: ";
+		std::string lives = std::to_string(gameplayEntities.player.lives);
+		std::string livesText = livesPreText + lives;
 
-		Vectors::Vector2 livesTextSize = Fonts::getTextSize(livesText);
+		Vectors::Vector2 livesTextSize = Fonts::getTextSize(livesText.c_str());
+
+		double fontSize = 40;
 
 		Fonts::writeText(
-			livesText,
-			{ 40, Constants::FIELD_DIMENSIONS.y + MathUtils::getHalf(Constants::FIELD_Y_MARGIN) - MathUtils::getHalf(livesTextSize.y) },
+			livesText.c_str(),
+			{ fontSize, Constants::FIELD_DIMENSIONS.y + MathUtils::getHalf(Constants::FIELD_Y_MARGIN) - MathUtils::getHalf(livesTextSize.y) },
 			Colors::WHITE,
-			40
+			fontSize
 		);
 	}
 
 	void drawGameplay() {
 		drawPaddle(gameplayEntities.paddle);
 
-		BallNode* initNode = gameplayEntities.balls;
+		for (int i = 0; i < gameplayEntities.balls.size(); i++) {
+			Ball::drawBall(&gameplayEntities.balls[i]);
+		}
 
-		do {
-			drawBall(&initNode->ball);
-			initNode = initNode->next;
-		} while (initNode != nullptr);
-
-		BlockRowNode* blockRow = gameplayEntities.blockRows;
-
-		do {
-			BlockNode* blockNode = blockRow->blockNode;
-
-			do {
-				drawBlock(blockNode->block);
-				blockNode = blockNode->next;
-			} while (blockNode != nullptr);
-
-			blockRow = blockRow->next;
-		} while (blockRow != nullptr);
+		for (int i = 0; i < gameplayEntities.blockRows.size(); i++) {
+			for (int j = 0; j < gameplayEntities.blockRows[i].size(); j++) {
+				Block::drawBlock(gameplayEntities.blockRows[i][j]);
+			}
+		}
 
 		drawUI();
 	}
