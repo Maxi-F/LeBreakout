@@ -1,6 +1,6 @@
 #pragma once
-#include "../utils/Rectangles.h"
-#include "../utils/Vector.h"
+#include "utils/Rectangles.h"
+#include "utils/Vector.h"
 #include "ball.h"
 
 namespace Block {

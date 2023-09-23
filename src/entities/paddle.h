@@ -1,5 +1,5 @@
 #pragma once
-#include "../utils/Rectangles.h"
+#include "utils/Rectangles.h"
 
 namespace Paddle {
 	struct Paddle {

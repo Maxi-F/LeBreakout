@@ -1,7 +1,7 @@
 #include "block.h"
 
 #include "ball.h"
-#include "../utils/collisions.h"
+#include "utils/collisions.h"
 
 namespace Block {
 	extern const double BLOCK_HEIGHT = 60;

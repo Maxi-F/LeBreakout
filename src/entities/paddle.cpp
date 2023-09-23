@@ -1,8 +1,8 @@
 #include "sl.h"
 #include "paddle.h";
-#include "../utils/math.h"
-#include "../utils/Vector.h"
-#include "../constants.h"
+#include "utils/math.h"
+#include "utils/Vector.h"
+#include "constants.h"
 
 namespace Paddle {
 	extern const Vectors::Vector2 PADDLE_SIZE = { 360, 30 };

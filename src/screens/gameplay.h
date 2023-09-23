@@ -1,11 +1,11 @@
 #pragma once
 #include <vector>
 
-#include "../screens/screens.h"
-#include "../entities/paddle.h"
-#include "../entities/ball.h"
-#include "../entities/block.h"
-#include "../entities/player.h"
+#include "screens/screens.h"
+#include "entities/paddle.h"
+#include "entities/ball.h"
+#include "entities/block.h"
+#include "entities/player.h"
 
 namespace Gameplay {
 	struct GameplayEntities {

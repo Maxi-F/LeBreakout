@@ -1,10 +1,10 @@
 #include "sl.h"
 #include "ball.h"
-#include "../utils/Rectangles.h"
-#include "../utils/circles.h"
-#include "../utils/collisions.h"
-#include "../utils/math.h"
-#include "../constants.h"
+#include "utils/Rectangles.h"
+#include "utils/circles.h"
+#include "utils/collisions.h"
+#include "utils/math.h"
+#include "constants.h"
 
 static const double BALL_RADIUS = 10;
 static const double BALL_VELOCITY = 600;

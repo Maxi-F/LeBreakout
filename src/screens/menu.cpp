@@ -1,13 +1,13 @@
 #include "sl.h"
 #include "menu.h"
 #include "screens.h"
-#include "../constants.h"
-#include "../utils/collisions.h"
-#include "../utils/Rectangles.h"
-#include "../utils/Colors.h"
-#include "../utils/fonts.h"
-#include "../utils/math.h"
-#include "../utils/Vector.h"
+#include "constants.h"
+#include "utils/collisions.h"
+#include "utils/Rectangles.h"
+#include "utils/Colors.h"
+#include "utils/fonts.h"
+#include "utils/math.h"
+#include "utils/Vector.h"
 
 namespace Menu {
 	static const int MENU_OPTIONS_LENGTH = 4;

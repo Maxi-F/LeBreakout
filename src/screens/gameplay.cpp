@@ -2,10 +2,10 @@
 
 #include <string>
 
-#include "../utils/math.h"
-#include "../constants.h"
-#include "../utils/Vector.h"
-#include "../utils/fonts.h"
+#include "utils/math.h"
+#include "constants.h"
+#include "utils/Vector.h"
+#include "utils/fonts.h"
 
 namespace Gameplay {
 	using Blocks = std::vector<std::vector<Block::Block>>;

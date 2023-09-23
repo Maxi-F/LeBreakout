@@ -1,6 +1,6 @@
 #pragma once
-#include "../utils/Vector.h"
-#include "../utils/Rectangles.h"
+#include "utils/Vector.h"
+#include "utils/Rectangles.h"
 
 namespace Ball {
 	struct Ball {

@@ -78,6 +78,9 @@
     <ClCompile Include="src\entities\player.cpp">
       <Filter>Archivos de recursos\entities</Filter>
     </ClCompile>
+    <ClCompile Include="powerup.cpp">
+      <Filter>Archivos de recursos\entities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\utils\colors.h">
@@ -92,7 +95,7 @@
     <ClInclude Include="src\utils\fonts.h">
       <Filter>Archivos de encabezado\utils</Filter>
     </ClInclude>
-    <ClInclude Include="src\utils\Vector.h">
+    <ClInclude Include="src\utils\vector.h">
       <Filter>Archivos de encabezado\utils</Filter>
     </ClInclude>
     <ClInclude Include="src\screens\screens.h">
@@ -126,6 +129,9 @@
       <Filter>Archivos de encabezado\entities</Filter>
     </ClInclude>
     <ClInclude Include="src\entities\player.h">
+      <Filter>Archivos de encabezado\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="powerup.h">
       <Filter>Archivos de encabezado\entities</Filter>
     </ClInclude>
   </ItemGroup>
