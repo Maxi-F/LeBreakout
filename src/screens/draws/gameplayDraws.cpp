@@ -32,7 +32,7 @@ namespace GameplayDraws {
 		{
 			{
 				MathUtils::getHalf(Constants::SCREEN_DIMENSIONS.x),
-				MathUtils::getHalf(Constants::SCREEN_DIMENSIONS.y),
+				MathUtils::getHalf(Constants::SCREEN_DIMENSIONS.y) - MENU_OPTION_HEIGHT,
 				MENU_OPTION_WIDTH,
 				MENU_OPTION_HEIGHT
 			},

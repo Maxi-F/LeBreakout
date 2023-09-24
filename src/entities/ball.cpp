@@ -91,12 +91,16 @@ namespace Ball {
 
 		switch (positionWhereCollided) {
 			case Collisions::CollisionPosition::LEFT:
+				ball->direction.x = -MathUtils::moduleOf(ball->direction.x);
+				break;
 			case Collisions::CollisionPosition::RIGHT:
-				ball->direction.x *= -1;
+				ball->direction.x = MathUtils::moduleOf(ball->direction.x);
 				break;
 			case Collisions::CollisionPosition::UP:
+				ball->direction.y = -MathUtils::moduleOf(ball->direction.y);
+				break;
 			case Collisions::CollisionPosition::DOWN:
-				ball->direction.y *= -1;
+				ball->direction.y = MathUtils::moduleOf(ball->direction.y);
 				break;
 		}
 	}
