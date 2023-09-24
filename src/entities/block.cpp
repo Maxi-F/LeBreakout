@@ -7,9 +7,10 @@ namespace Block {
 	extern const double BLOCK_HEIGHT = 60;
 	extern const double BLOCK_WIDTH = 150;
 
-	Block initBlock(Vectors::Vector2 position) {
+	Block initBlock(Vectors::Vector2 position, PowerUps::PowerUp powerUp) {
 		return {
 			{ position.x, position.y, BLOCK_WIDTH, BLOCK_HEIGHT },
+			powerUp,
 			false
 		};
 	}
@@ -25,6 +26,7 @@ namespace Block {
 		if (!block.hasBeenHit && Collisions::checkRectangleCollision(block.rectangle, getBallCollisionBox(*ball))) {
 			changeDirectionByCollisionPosition(ball, block.rectangle);
 			block.hasBeenHit = true;
+			block.powerUp.isFalling = true;
 		}
 	};
 }

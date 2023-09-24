@@ -78,7 +78,7 @@
     <ClCompile Include="src\entities\player.cpp">
       <Filter>Archivos de recursos\entities</Filter>
     </ClCompile>
-    <ClCompile Include="powerup.cpp">
+    <ClCompile Include="src\entities\powerup.cpp">
       <Filter>Archivos de recursos\entities</Filter>
     </ClCompile>
   </ItemGroup>
@@ -131,7 +131,7 @@
     <ClInclude Include="src\entities\player.h">
       <Filter>Archivos de encabezado\entities</Filter>
     </ClInclude>
-    <ClInclude Include="powerup.h">
+    <ClInclude Include="src\entities\powerup.h">
       <Filter>Archivos de encabezado\entities</Filter>
     </ClInclude>
   </ItemGroup>

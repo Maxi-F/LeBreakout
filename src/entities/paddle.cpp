@@ -5,9 +5,12 @@
 #include "constants.h"
 
 namespace Paddle {
-	extern const Vectors::Vector2 PADDLE_SIZE = { 360, 30 };
-	extern const float PADDLE_VELOCITY = 500;
-	static const float PADDLE_MARGIN_TO_BOTTOM = 200;
+	extern const Vectors::Vector2 PADDLE_SIZE = { 150, 30 };
+	extern const double PADDLE_VELOCITY = 500;
+	static const double PADDLE_MARGIN_TO_BOTTOM = 100;
+	static const double PADDLE_ENLARGE_AND_REDUCE_WIDTH = 50;
+	static const double PADDLE_MIN_WIDTH = 50;
+	static const double PADDLE_MAX_WIDTH = 350;
 
 	static double getPaddleLeftSide(Paddle paddle) {
 		return paddle.rectangle.xCenter - MathUtils::getHalf(paddle.rectangle.width);
@@ -49,5 +52,17 @@ namespace Paddle {
 	void updatePaddle(Paddle& paddle) {
 		moveLeftIfPressing(paddle);
 		moveRightIfPressing(paddle);
+	}
+
+	void enlarge(Paddle& paddle) {
+		paddle.rectangle.width = MathUtils::clamp(paddle.rectangle.width + PADDLE_ENLARGE_AND_REDUCE_WIDTH, PADDLE_MIN_WIDTH, PADDLE_MAX_WIDTH);
+	}
+
+	void reduce(Paddle& paddle) {
+		paddle.rectangle.width = MathUtils::clamp(paddle.rectangle.width - PADDLE_ENLARGE_AND_REDUCE_WIDTH, PADDLE_MIN_WIDTH, PADDLE_MAX_WIDTH);
+	}
+
+	void reset(Paddle& paddle) {
+		paddle.rectangle.width = PADDLE_SIZE.x;
 	}
 }

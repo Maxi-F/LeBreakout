@@ -6,6 +6,7 @@
 #include "constants.h"
 #include "utils/Vector.h"
 #include "utils/fonts.h"
+#include "entities/powerup.h"
 
 namespace Gameplay {
 	using Blocks = std::vector<std::vector<Block::Block>>;
@@ -24,10 +25,12 @@ namespace Gameplay {
 			blocks[i].resize(blockColumnsQuantity);
 
 			for (int j = 0; j < blockColumnsQuantity; j++) {
-				blocks[i][j] = Block::initBlock({
+				Vectors::Vector2 blockPosition = {
 					blockRowStartPosition + j * Block::BLOCK_WIDTH,
 					Constants::FIELD_DIMENSIONS.y - Block::BLOCK_HEIGHT - i * Block::BLOCK_HEIGHT
-					});
+				};
+
+				blocks[i][j] = Block::initBlock(blockPosition, PowerUps::createPowerUp(blockPosition));
 			}
 		}
 
@@ -35,7 +38,7 @@ namespace Gameplay {
 	}
 
 	static Ball::Ball initBallInMiddle() {
-		Vectors::Vector2 directions = { MathUtils::getHalf(MathUtils::positiveOrNegative()), MathUtils::getHalf(MathUtils::positiveOrNegative()) };
+		Vectors::Vector2 directions = { MathUtils::getHalf(MathUtils::positiveOrNegative()), -0.5 };
 		return Ball::initBall({ MathUtils::getHalf(Constants::FIELD_DIMENSIONS.x), MathUtils::getHalf(Constants::FIELD_DIMENSIONS.y) }, directions);
 	}
 
@@ -54,6 +57,7 @@ namespace Gameplay {
 		for (int j = 0; j < gameplayEntities.blockRows.size(); j++) {
 			for (int k = 0; k < gameplayEntities.blockRows[j].size(); k++) {
 				Block::updateBlock(gameplayEntities.blockRows[j][k], &ball);
+				PowerUps::doPowerUp(gameplayEntities.blockRows[j][k].powerUp, gameplayEntities.paddle, ball, gameplayEntities.balls);
 			}
 		}
 	}
@@ -70,6 +74,7 @@ namespace Gameplay {
 
 				if (gameplayEntities.balls.empty()) {
 					Player::reduceLives(gameplayEntities.player);
+					Paddle::reset(gameplayEntities.paddle);
 
 					if (!Player::isStillAlive(gameplayEntities.player)) {
 						gameplayEntities.hasLost = true;
@@ -81,9 +86,18 @@ namespace Gameplay {
 		}
 	}
 
+	static void updatePowerUps() {
+		for (int j = 0; j < gameplayEntities.blockRows.size(); j++) {
+			for (int k = 0; k < gameplayEntities.blockRows[j].size(); k++) {
+				PowerUps::updatePowerUp(gameplayEntities.blockRows[j][k].powerUp);
+			}
+		}
+	}
+
 	static void updateGamplayEntities() {
 		updatePaddle(gameplayEntities.paddle);
 		updateBallsAndBlocks();
+		updatePowerUps();
 	}
 
 	void updateGameplay(Screen::Screen &screen) {
@@ -131,6 +145,14 @@ namespace Gameplay {
 		for (int i = 0; i < gameplayEntities.blockRows.size(); i++) {
 			for (int j = 0; j < gameplayEntities.blockRows[i].size(); j++) {
 				Block::drawBlock(gameplayEntities.blockRows[i][j]);
+			}
+		}
+
+
+		// This is in another loop so it draws on top of the blocks
+		for (int i = 0; i < gameplayEntities.blockRows.size(); i++) {
+			for (int j = 0; j < gameplayEntities.blockRows[i].size(); j++) {
+				PowerUps::drawPowerUp(gameplayEntities.blockRows[i][j].powerUp);
 			}
 		}
 

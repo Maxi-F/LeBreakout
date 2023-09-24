@@ -9,6 +9,7 @@ namespace Ball {
 		Rectangles::Rectangle lastFrameCollisionBox;
 		double velocity;
 		double radius;
+		bool hasBomb = false;
 	};
 
 	void drawBall(Ball* ball);

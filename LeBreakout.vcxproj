@@ -164,12 +164,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="powerup.cpp" />
     <ClCompile Include="src\constants.cpp" />
     <ClCompile Include="src\entities\ball.cpp" />
     <ClCompile Include="src\entities\block.cpp" />
     <ClCompile Include="src\entities\paddle.cpp" />
     <ClCompile Include="src\entities\player.cpp" />
+    <ClCompile Include="src\entities\powerup.cpp" />
     <ClCompile Include="src\game.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\screens\gameplay.cpp" />
@@ -182,12 +182,12 @@
     <ClCompile Include="src\utils\rectangles.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="powerup.h" />
     <ClInclude Include="src\constants.h" />
     <ClInclude Include="src\entities\ball.h" />
     <ClInclude Include="src\entities\block.h" />
     <ClInclude Include="src\entities\paddle.h" />
     <ClInclude Include="src\entities\player.h" />
+    <ClInclude Include="src\entities\powerup.h" />
     <ClInclude Include="src\game.h" />
     <ClInclude Include="src\screens\gameplay.h" />
     <ClInclude Include="src\screens\menu.h" />

@@ -11,4 +11,7 @@ namespace Paddle {
 	Paddle initPaddle();
 	void updatePaddle(Paddle& paddle);
 	void drawPaddle(Paddle paddle);
+	void enlarge(Paddle& paddle);
+	void reduce(Paddle& paddle);
+	void reset(Paddle& paddle);
 }
