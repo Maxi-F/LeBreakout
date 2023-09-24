@@ -31,6 +31,12 @@
     <Filter Include="Archivos de encabezado\entities">
       <UniqueIdentifier>{412c482d-42e6-40a0-883b-5de0b4c6f42e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Archivos de recursos\screens\draws">
+      <UniqueIdentifier>{833228b6-9ea8-4f71-8dcb-1f4bb5b21cbd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\screens\draws">
+      <UniqueIdentifier>{3580815d-513e-44eb-b53d-552665f04954}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\utils\rectangles.cpp">
@@ -80,6 +86,9 @@
     </ClCompile>
     <ClCompile Include="src\entities\powerup.cpp">
       <Filter>Archivos de recursos\entities</Filter>
+    </ClCompile>
+    <ClCompile Include="src\screens\draws\gameplayDraws.cpp">
+      <Filter>Archivos de recursos\screens\draws</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -133,6 +142,9 @@
     </ClInclude>
     <ClInclude Include="src\entities\powerup.h">
       <Filter>Archivos de encabezado\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\screens\draws\gameplayDraws.h">
+      <Filter>Archivos de encabezado\screens\draws</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

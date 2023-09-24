@@ -15,6 +15,7 @@ namespace Gameplay {
 		Player::Player player;
 		bool hasWon = false;
 		bool hasLost = false;
+		bool paused = false;
 	};
 
 	void updateGameplay(Screen::Screen &screen);

@@ -1,12 +1,13 @@
-#include "gameplay.h"
-
 #include <string>
+#include "sl.h"
 
+#include "screens/draws/gameplayDraws.h"
 #include "utils/math.h"
 #include "constants.h"
 #include "utils/Vector.h"
 #include "utils/fonts.h"
 #include "entities/powerup.h"
+#include "utils/collisions.h"
 
 namespace Gameplay {
 	using Blocks = std::vector<std::vector<Block::Block>>;
@@ -53,18 +54,25 @@ namespace Gameplay {
 		gameplayEntities = { paddle, balls, blocks, player };
 	}
 	
-	static void updateBlocks(Ball::Ball& ball) {
+	static void updateAndCheckBlocks(Ball::Ball& ball) {
+		bool hasWon = true;
+
 		for (int j = 0; j < gameplayEntities.blockRows.size(); j++) {
 			for (int k = 0; k < gameplayEntities.blockRows[j].size(); k++) {
+				if (!gameplayEntities.blockRows[j][k].hasBeenHit) {
+					hasWon = false;
+				}
 				Block::updateBlock(gameplayEntities.blockRows[j][k], &ball);
 				PowerUps::doPowerUp(gameplayEntities.blockRows[j][k].powerUp, gameplayEntities.paddle, ball, gameplayEntities.balls);
 			}
 		}
+
+		gameplayEntities.hasWon = hasWon;
 	}
 
 	static void updateBallsAndBlocks() {
 		for (int i = 0; i < gameplayEntities.balls.size(); i++) {
-			updateBlocks(gameplayEntities.balls[i]);
+			updateAndCheckBlocks(gameplayEntities.balls[i]);
 
 			bool collidedBottom = false;
 			Ball::updateBall(&gameplayEntities.balls[i], gameplayEntities.paddle.rectangle, collidedBottom);
@@ -100,62 +108,55 @@ namespace Gameplay {
 		updatePowerUps();
 	}
 
-	void updateGameplay(Screen::Screen &screen) {
-		if (!gameplayEntities.hasWon && !gameplayEntities.hasLost) {
-			updateGamplayEntities();
-		}
-		else {
-			screen = Screen::MENU;
+	static void doByGameplayOption(Screen::Screen &screen, GameplayDraws::GameplayOption option) {
+		switch (option) {
+			case GameplayDraws::GameplayOption::RESUME:
+				gameplayEntities.paused = false;
+				break;
+			case GameplayDraws::GameplayOption::PLAY_AGAIN:
+				initGameplay();
+				break;
+			case GameplayDraws::GameplayOption::GO_TO_MENU:
+				screen = Screen::Screen::MENU;
+				break;
 		}
 	}
 
-	static void drawUI() {
-		Rectangles::Rectangle uiBackground = {
-			MathUtils::getHalf(Constants::FIELD_DIMENSIONS.x),
-			Constants::SCREEN_DIMENSIONS.y - MathUtils::getHalf(Constants::FIELD_Y_MARGIN),
-			Constants::SCREEN_DIMENSIONS.x,
-			Constants::FIELD_Y_MARGIN
+	void updateGameplay(Screen::Screen &screen) {
+		Vectors::Vector2 mousePosition = { slGetMouseX(), slGetMouseY() };
+
+		if (gameplayEntities.hasLost || gameplayEntities.hasWon) {
+			GameplayDraws::GameplayOption selectedOption = GameplayDraws::GameplayOption::NONE;
+
+			for (int i = 0; i < GameplayDraws::GAMEPLAY_MENU_OPTIONS_LENGTH; i++) {
+				if (Collisions::checkPointToRectangleCollision(GameplayDraws::LOSE_OR_WIN_OPTIONS[i].rectangle, mousePosition) && slGetMouseButton(SL_MOUSE_BUTTON_LEFT)) {
+					selectedOption = GameplayDraws::LOSE_OR_WIN_OPTIONS[i].option;
+				}
+			}
+
+			doByGameplayOption(screen, selectedOption);
+		}
+		else if (gameplayEntities.paused) {
+			GameplayDraws::GameplayOption selectedOption = GameplayDraws::GameplayOption::NONE;
+
+			for (int i = 0; i < GameplayDraws::GAMEPLAY_MENU_OPTIONS_LENGTH; i++) {
+				if (Collisions::checkPointToRectangleCollision(GameplayDraws::PAUSE_OPTIONS[i].rectangle, mousePosition) && slGetMouseButton(SL_MOUSE_BUTTON_LEFT)) {
+					selectedOption = GameplayDraws::PAUSE_OPTIONS[i].option;
+				}
+			}
+
+			doByGameplayOption(screen, selectedOption);
+		}
+		else {
+			updateGamplayEntities();
+
+			if (slGetKey(SL_KEY_ESCAPE)) {
+				gameplayEntities.paused = true;
+			}
 		};
-
-		Rectangles::fillRectangle(uiBackground, Colors::GRAY);
-
-		const std::string livesPreText = "Lives: ";
-		std::string lives = std::to_string(gameplayEntities.player.lives);
-		std::string livesText = livesPreText + lives;
-
-		Vectors::Vector2 livesTextSize = Fonts::getTextSize(livesText.c_str());
-
-		double fontSize = 40;
-
-		Fonts::writeText(
-			livesText.c_str(),
-			{ fontSize, Constants::FIELD_DIMENSIONS.y + MathUtils::getHalf(Constants::FIELD_Y_MARGIN) - MathUtils::getHalf(livesTextSize.y) },
-			Colors::WHITE,
-			fontSize
-		);
 	}
 
 	void drawGameplay() {
-		drawPaddle(gameplayEntities.paddle);
-
-		for (int i = 0; i < gameplayEntities.balls.size(); i++) {
-			Ball::drawBall(&gameplayEntities.balls[i]);
-		}
-
-		for (int i = 0; i < gameplayEntities.blockRows.size(); i++) {
-			for (int j = 0; j < gameplayEntities.blockRows[i].size(); j++) {
-				Block::drawBlock(gameplayEntities.blockRows[i][j]);
-			}
-		}
-
-
-		// This is in another loop so it draws on top of the blocks
-		for (int i = 0; i < gameplayEntities.blockRows.size(); i++) {
-			for (int j = 0; j < gameplayEntities.blockRows[i].size(); j++) {
-				PowerUps::drawPowerUp(gameplayEntities.blockRows[i][j].powerUp);
-			}
-		}
-
-		drawUI();
+		GameplayDraws::drawGameplay(gameplayEntities);
 	}
 }

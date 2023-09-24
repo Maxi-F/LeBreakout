@@ -11,6 +11,7 @@ namespace Colors {
 	extern const Color YELLOW = { 1, 1, 0, 1 };
 	extern const Color PURPLE = { 1, 0, 1, 1 };
 	extern const Color GREEN = { 0, 1, 0, 1 };
+	extern const Color OPAQUE_BLACK = { 0.45, 0.45, 0.45, 0.9 };
 
 	void setBackColor(Color color) {
 		slSetBackColor(color.r, color.g, color.b);

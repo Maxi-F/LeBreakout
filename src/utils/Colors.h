@@ -17,6 +17,7 @@ namespace Colors {
 	extern const Color YELLOW;
 	extern const Color PURPLE;
 	extern const Color GREEN;
+	extern const Color OPAQUE_BLACK;
 
 	void setBackColor(Color color);
 	void setForeColor(Color color);
