@@ -105,7 +105,8 @@
       </Command>
     </CustomBuildStep>
     <PreBuildEvent>
-      <Command>xcopy /s/y "$(SolutionDir)lib\dlls" "$(OutDir)"</Command>
+      <Command>xcopy /s/y "$(SolutionDir)lib\dlls" "$(OutDir)"
+xcopy /s/y "$(SolutionDir)assets\" "$(OutDir)assets\"</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -132,7 +133,8 @@
       </Command>
     </CustomBuildStep>
     <PreBuildEvent>
-      <Command>xcopy /s/y "$(SolutionDir)lib\dlls" "$(OutDir)"</Command>
+      <Command>xcopy /s/y "$(SolutionDir)lib\dlls" "$(OutDir)"
+xcopy /s/y "$(SolutionDir)assets\" "$(OutDir)assets\"</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">

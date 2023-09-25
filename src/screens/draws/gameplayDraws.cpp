@@ -70,6 +70,8 @@ namespace GameplayDraws {
 				return "BACK TO MENU";
 			case GameplayOption::PLAY_AGAIN:
 				return "PLAY AGAIN";
+			default:
+				return "";
 		};
 	}
 
