@@ -116,7 +116,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)lib\include;$(SolutionDir)src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)lib\include;$(ProjectDir)src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -177,6 +177,7 @@
     <ClCompile Include="src\screens\gameplay.cpp" />
     <ClCompile Include="src\screens\menu.cpp" />
     <ClCompile Include="src\screens\rules.cpp" />
+    <ClCompile Include="src\textureManager.cpp" />
     <ClCompile Include="src\utils\circles.cpp" />
     <ClCompile Include="src\utils\collisions.cpp" />
     <ClCompile Include="src\utils\colors.cpp" />
@@ -198,6 +199,7 @@
     <ClInclude Include="src\screens\menu.h" />
     <ClInclude Include="src\screens\rules.h" />
     <ClInclude Include="src\screens\screens.h" />
+    <ClInclude Include="src\textureManager.h" />
     <ClInclude Include="src\utils\circles.h" />
     <ClInclude Include="src\utils\collisions.h" />
     <ClInclude Include="src\utils\colors.h" />

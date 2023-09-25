@@ -96,6 +96,9 @@
     <ClCompile Include="src\screens\credits.cpp">
       <Filter>Archivos de recursos\screens</Filter>
     </ClCompile>
+    <ClCompile Include="src\textureManager.cpp">
+      <Filter>Archivos de recursos</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\utils\colors.h">
@@ -157,6 +160,9 @@
     </ClInclude>
     <ClInclude Include="src\screens\credits.h">
       <Filter>Archivos de encabezado\screens</Filter>
+    </ClInclude>
+    <ClInclude Include="src\textureManager.h">
+      <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

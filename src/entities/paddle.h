@@ -5,7 +5,6 @@ namespace Paddle {
 	struct Paddle {
 		Rectangles::Rectangle rectangle;
 		double velocity;
-		Colors::Color color;
 	};
 
 	Paddle initPaddle();

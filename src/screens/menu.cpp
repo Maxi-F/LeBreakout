@@ -1,5 +1,8 @@
-#include "sl.h"
 #include "menu.h"
+
+#include "sl.h"
+
+#include "textureManager.h"
 #include "screens.h"
 #include "constants.h"
 #include "utils/collisions.h"
@@ -61,22 +64,22 @@ namespace Menu {
 			{
 				Option::PLAY,
 				playRectangle,
-				"Play"
+				"PLAY"
 			},
 			{
 				Option::GAME_RULES,
 				rulesRectangle,
-				"Rules"
+				"RULES"
 			},
 			{
 				Option::GAME_CREDITS,
 				creditsRectangle,
-				"Credits"
+				"CREDITS"
 			},
 			{
 				Option::EXIT,
 				exitRectangle,
-				"Exit"
+				"EXIT"
 			}
 		};
 
@@ -108,8 +111,17 @@ namespace Menu {
 
 	void drawMenu() {
 		setBackColor(Colors::BLACK);
+
+		slSprite(
+			TextureManager::obtainTexture(TextureManager::TextureType::MENU_BACKGROUND),
+			MathUtils::getHalf(Constants::SCREEN_DIMENSIONS.x),
+			MathUtils::getHalf(Constants::SCREEN_DIMENSIONS.y),
+			Constants::SCREEN_DIMENSIONS.x,
+			Constants::SCREEN_DIMENSIONS.y
+		);
+
 		const char* title = "LeBreakout";
-		int titleFontSize = 120;
+		int titleFontSize = 160;
 		double titleMargin = 200;
 
 		Fonts::setFontSize(titleFontSize);
@@ -117,27 +129,42 @@ namespace Menu {
 		Fonts::writeText(
 			title,
 			{ HALF_SCREEN.x - MathUtils::getHalf(slGetTextWidth(title)), Constants::SCREEN_DIMENSIONS.y - titleMargin },
-			Colors::WHITE,
+			Colors::BLACK,
 			titleFontSize
 		);
 
-		Fonts::setFontSize(OPTION_FONT_SIZE);
-
 		for (int i = 0; i < MENU_OPTIONS_LENGTH; i++) {
+			Colors::setForeColor(Colors::WHITE);
+
+			Fonts::setFontSize(OPTION_FONT_SIZE);
 			const char* optionText = menuOptions[i].optionText;
 			Rectangles::Rectangle optionRectangle = menuOptions[i].rectangle;
 
-			Rectangles::fillRectangle(optionRectangle, menuOptions[i].isHovered ? Colors::DARK_RED : Colors::RED);
+			slSprite(
+				TextureManager::obtainTexture(TextureManager::TextureType::BUTTON),
+				optionRectangle.xCenter,
+				optionRectangle.yCenter,
+				optionRectangle.width,
+				optionRectangle.height
+			);
+
+			if (menuOptions[i].isHovered) {
+				Rectangles::fillRectangle(menuOptions[i].rectangle, Colors::OPAQUE_GRAY);
+			}
+
+			Vectors::Vector2 optionTextSize = Fonts::getTextSize(optionText);
 			Fonts::writeText(
 				optionText,
 				{ 
-					optionRectangle.xCenter - MathUtils::getHalf(slGetTextWidth(optionText)),
-					optionRectangle.yCenter - MathUtils::getHalf(slGetTextHeight(optionText))
+					optionRectangle.xCenter - MathUtils::getHalf(optionTextSize.x),
+					optionRectangle.yCenter - MathUtils::getHalf(optionTextSize.y)
 				},
-				Colors::WHITE,
+				Colors::LIGHT_GRAY,
 				OPTION_FONT_SIZE
 			);
 		};
+
+		Colors::setForeColor(Colors::WHITE);
 	}
 
 	Option getPressedOption() {

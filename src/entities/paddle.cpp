@@ -3,6 +3,7 @@
 #include "utils/math.h"
 #include "utils/Vector.h"
 #include "constants.h"
+#include "textureManager.h"
 
 namespace Paddle {
 	extern const Vectors::Vector2 PADDLE_SIZE = { 150, 30 };
@@ -28,13 +29,18 @@ namespace Paddle {
 				PADDLE_SIZE.x,
 				PADDLE_SIZE.y
 			},
-			PADDLE_VELOCITY,
-			Colors::RED
+			PADDLE_VELOCITY
 		};
 	}
 
 	void drawPaddle(Paddle paddle) {
-		fillRectangle(paddle.rectangle, paddle.color);
+		slSprite(
+			TextureManager::obtainTexture(TextureManager::TextureType::PADDLE),
+			paddle.rectangle.xCenter,
+			paddle.rectangle.yCenter,
+			paddle.rectangle.width,
+			paddle.rectangle.height + 20
+		);
 	}
 
 	static void moveLeftIfPressing(Paddle& paddle) {

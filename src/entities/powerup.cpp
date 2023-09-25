@@ -6,7 +6,7 @@
 #include "utils/collisions.h"
 #include "utils/circles.h"
 #include "utils/Colors.h"
-
+#include "textureManager.h"
 
 namespace PowerUps {
 	static const double POWER_UP_FALL_VELOCITY = 200;
@@ -21,14 +21,14 @@ namespace PowerUps {
 		return randomNumber > static_cast<int>(PowerUpType::NONE) ? PowerUpType::NONE : static_cast<PowerUpType>(randomNumber);
 	}
 
-	static Colors::Color getColorPerPowerUp(PowerUpType powerUpType) {
+	static TextureManager::TextureType getTexturePerPowerUp(PowerUpType powerUpType) {
 		switch (powerUpType) {
 			case PowerUpType::ADD_BALL:
-				return Colors::YELLOW;
+				return TextureManager::TextureType::ADD_BALL_POWER_UP;
 			case PowerUpType::ENLARGE:
-				return Colors::GREEN;
+				return TextureManager::TextureType::ENLARGE_POWER_UP;
 			case PowerUpType::REDUCE:
-				return Colors::DARK_RED;
+				return TextureManager::TextureType::REDUCE_POWER_UP;
 		}
 	}
 
@@ -51,7 +51,16 @@ namespace PowerUps {
 
 	void drawPowerUp(PowerUp powerUp) {
 		if (powerUp.powerUpType != PowerUpType::NONE && !powerUp.collisioned && powerUp.isFalling) {
-			Circles::drawCircle(powerUp.position, powerUp.radius, getColorPerPowerUp(powerUp.powerUpType));
+			Rectangles::Rectangle powerUpCollisionBox = getPowerUpCollisionBox(powerUp);
+			TextureManager::TextureType texture = getTexturePerPowerUp(powerUp.powerUpType);
+
+			slSprite(
+				TextureManager::obtainTexture(texture),
+				powerUpCollisionBox.xCenter,
+				powerUpCollisionBox.yCenter,
+				powerUpCollisionBox.width + 25,
+				powerUpCollisionBox.height + 25
+			);
 		}
 	};
 

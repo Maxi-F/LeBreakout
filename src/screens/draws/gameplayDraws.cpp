@@ -12,6 +12,7 @@
 #include "entities/ball.h"
 #include "entities/block.h"
 #include "constants.h"
+#include "textureManager.h"
 
 namespace GameplayDraws {
 	extern const int GAMEPLAY_MENU_OPTIONS_LENGTH = 2;
@@ -80,16 +81,18 @@ namespace GameplayDraws {
 			Constants::FIELD_Y_MARGIN
 		};
 
-		Rectangles::fillRectangle(uiBackground, Colors::GRAY);
+		Rectangles::fillRectangle(uiBackground, Colors::DARK_RED);
 
 		const std::string livesPreText = "Lives: ";
 		std::string lives = std::to_string(gameplayEntities.player.lives);
 		std::string livesText = livesPreText + lives;
 
 
-		Vectors::Vector2 livesTextSize = Fonts::getTextSize(livesText.c_str());
+		double fontSize = 60;
 
-		double fontSize = 40;
+		Fonts::setFontSize(fontSize);
+
+		Vectors::Vector2 livesTextSize = Fonts::getTextSize(livesText.c_str());
 
 		Fonts::writeText(
 			livesText.c_str(),
@@ -110,9 +113,15 @@ namespace GameplayDraws {
 			MENU_SIZE.y
 		};
 
-		Rectangles::fillRectangle(menu, Colors::OPAQUE_BLACK);
+		slSprite(
+			TextureManager::obtainTexture(TextureManager::TextureType::PAUSE_BACKGROUND),
+			menu.xCenter,
+			menu.yCenter,
+			menu.width,
+			menu.height
+		);
 		
-		double titleFontSize = 50;
+		double titleFontSize = 80;
 		double titleMargin = 60;
 		Fonts::setFontSize(titleFontSize);
 
@@ -124,21 +133,28 @@ namespace GameplayDraws {
 				MathUtils::getHalf(Constants::SCREEN_DIMENSIONS.x) - MathUtils::getHalf(titleSize.x),
 				MathUtils::getHalf(Constants::SCREEN_DIMENSIONS.y) + MathUtils::getHalf(MENU_SIZE.y) - titleSize.y - titleMargin
 			},
-			Colors::WHITE,
+			Colors::LIGHT_GRAY,
 			titleFontSize
 		);
 
+		Colors::setForeColor(Colors::WHITE);
+
 		for (int i = 0; i < GAMEPLAY_MENU_OPTIONS_LENGTH; i++) {
-			Rectangles::fillRectangle(
-				options[i].rectangle,
-				Collisions::checkPointToRectangleCollision(options[i].rectangle, mousePosition) ? 
-					Colors::DARK_RED : 
-					Colors::RED
+			slSprite(
+				TextureManager::obtainTexture(TextureManager::TextureType::BUTTON),
+				options[i].rectangle.xCenter,
+				options[i].rectangle.yCenter,
+				options[i].rectangle.width,
+				options[i].rectangle.height
 			);
+
+			if (Collisions::checkPointToRectangleCollision(options[i].rectangle, mousePosition)) {
+				Rectangles::fillRectangle(options[i].rectangle, Colors::OPAQUE_GRAY);
+			}
 
 			const char* optionText = optionToString(options[i].option);
 
-			double optionFontSize = 35;
+			double optionFontSize = 50;
 			Fonts::setFontSize(optionFontSize);
 			Vectors::Vector2 optionSize = Fonts::getTextSize(optionText);
 
@@ -148,9 +164,11 @@ namespace GameplayDraws {
 					options[i].rectangle.xCenter - MathUtils::getHalf(optionSize.x),
 					options[i].rectangle.yCenter - MathUtils::getHalf(optionSize.y)
 				},
-				Colors::WHITE,
+				Colors::LIGHT_GRAY,
 				optionFontSize
 			);
+
+			Colors::setForeColor(Colors::WHITE);
 		}
 	}
 
@@ -167,6 +185,25 @@ namespace GameplayDraws {
 	}
 
 	void drawGameplay(Gameplay::GameplayEntities gameplayEntities) {
+		slSprite(
+			TextureManager::obtainTexture(TextureManager::TextureType::GAMEPLAY_BACKGROUND),
+			MathUtils::getHalf(Constants::SCREEN_DIMENSIONS.x),
+			MathUtils::getHalf(Constants::SCREEN_DIMENSIONS.y),
+			Constants::SCREEN_DIMENSIONS.x,
+			Constants::SCREEN_DIMENSIONS.y
+		);
+
+		Rectangles::fillRectangle(
+			{
+				MathUtils::getHalf(Constants::SCREEN_DIMENSIONS.x),
+				MathUtils::getHalf(Constants::SCREEN_DIMENSIONS.y),
+				Constants::SCREEN_DIMENSIONS.x,
+				Constants::SCREEN_DIMENSIONS.y
+			},
+			Colors::OPAQUE_GRAY
+		);
+		
+		Colors::setForeColor(Colors::WHITE);
 
 		Paddle::drawPaddle(gameplayEntities.paddle);
 

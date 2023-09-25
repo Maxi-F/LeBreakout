@@ -1,7 +1,10 @@
 #include "block.h"
 
+#include "sl.h"
+
 #include "ball.h"
 #include "utils/collisions.h"
+#include "textureManager.h"
 
 namespace Block {
 	extern const double BLOCK_HEIGHT = 60;
@@ -17,8 +20,13 @@ namespace Block {
 
 	void drawBlock(Block block) {
 		if (!block.hasBeenHit) {
-			Rectangles::fillRectangle(block.rectangle, Colors::LIGHT_BLUE);
-			Rectangles::outlineRectangle(block.rectangle, Colors::DARK_RED);
+			slSprite(
+				TextureManager::obtainTexture(TextureManager::TextureType::BLOCK),
+				block.rectangle.xCenter,
+				block.rectangle.yCenter,
+				block.rectangle.width + 60,
+				block.rectangle.height + 40
+			);
 		}
 	}
 

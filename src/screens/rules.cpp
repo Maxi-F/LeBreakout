@@ -9,10 +9,11 @@
 #include "utils/math.h"
 #include "utils/Rectangles.h"
 #include "utils/collisions.h"
+#include "textureManager.h"
 
 namespace RulesScreen {
-	static const double MARGIN = 75;
-	static const double GO_BACK_WIDTH = 150;
+	static const double MARGIN = 100;
+	static const double GO_BACK_WIDTH = 300;
 	static const double GO_BACK_HEIGHT = 100;
 
 	static const Rectangles::Rectangle goBackRectangle = {
@@ -23,17 +24,35 @@ namespace RulesScreen {
 	};
 
 	static struct PowerUpWithText {
-		Colors::Color color;
+		TextureManager::TextureType texture;
 		const char* text;
 	};
 
 	void drawRules() {
-		const double FONT_SIZE = 30;
+		const double FONT_SIZE = 60;
+
+		slSprite(
+			TextureManager::obtainTexture(TextureManager::TextureType::RULES_CREDITS_BACKGROUND),
+			MathUtils::getHalf(Constants::SCREEN_DIMENSIONS.x),
+			MathUtils::getHalf(Constants::SCREEN_DIMENSIONS.y),
+			Constants::SCREEN_DIMENSIONS.x,
+			Constants::SCREEN_DIMENSIONS.y
+		);
+
+		Rectangles::fillRectangle(
+			{ 
+				MathUtils::getHalf(Constants::SCREEN_DIMENSIONS.x),
+				MathUtils::getHalf(Constants::SCREEN_DIMENSIONS.y),
+				Constants::SCREEN_DIMENSIONS.x,
+				Constants::SCREEN_DIMENSIONS.y
+			},
+			Colors::OPAQUE_GRAY
+		);
 
 		Fonts::setFontSize(FONT_SIZE);
 
 		const int FIRST_TEXTS_COUNT = 3;
-		const char* movementText = "Move with A and D.";
+		const char* movementText = "Move with A and D. Pause with 'ESC' key.";
 		const char* objectiveText = "Your objective is to break all blocks. When you break all blocks, you win!";
 		const char* powerUpsTitle = "POWER UPS:";
 	
@@ -52,12 +71,11 @@ namespace RulesScreen {
 			);
 		}
 
-		const PowerUpWithText enlargeText = { Colors::GREEN, "Makes your paddle bigger." };
-		const PowerUpWithText reduceText = { Colors::DARK_RED, "Makes your paddle smaller." };
-		const PowerUpWithText addBallText = { Colors::YELLOW, "Adds a ball!" };
+		const PowerUpWithText enlargeText = { TextureManager::TextureType::ENLARGE_POWER_UP, "Makes your paddle bigger." };
+		const PowerUpWithText reduceText = { TextureManager::TextureType::REDUCE_POWER_UP, "Makes your paddle smaller." };
+		const PowerUpWithText addBallText = { TextureManager::TextureType::ADD_BALL_POWER_UP, "Adds a ball!" };
 
 		const int POWER_UP_TEXTS_COUNT = 3;
-		const double PLUS_MARGIN = 50;
 		const PowerUpWithText powerUpTexts[POWER_UP_TEXTS_COUNT] = {
 			enlargeText,
 			reduceText,
@@ -65,20 +83,28 @@ namespace RulesScreen {
 		};
 
 		for (int i = 0; i < POWER_UP_TEXTS_COUNT; i++) {
-			Circles::drawCircle(
-				{
-					MARGIN + PowerUps::POWER_UP_RADIUS,
-					Constants::SCREEN_DIMENSIONS.y - FIRST_TEXTS_COUNT * MARGIN - MARGIN - MARGIN * i
-				}, 
-				PowerUps::POWER_UP_RADIUS,
-				powerUpTexts[i].color
+			Rectangles::Rectangle powerUpBox = PowerUps::getPowerUpCollisionBox({
+					{
+						MARGIN + PowerUps::POWER_UP_RADIUS,
+						Constants::SCREEN_DIMENSIONS.y - FIRST_TEXTS_COUNT * MARGIN - MARGIN - MARGIN * i
+					},
+					{},
+					PowerUps::POWER_UP_RADIUS 
+				});
+
+			slSprite(
+				TextureManager::obtainTexture(powerUpTexts[i].texture),
+				powerUpBox.xCenter,
+				powerUpBox.yCenter,
+				powerUpBox.width,
+				powerUpBox.height
 			);
 
 			Fonts::writeText(
 				powerUpTexts[i].text,
 				{
 					MARGIN + PowerUps::POWER_UP_RADIUS * 3,
-					Constants::SCREEN_DIMENSIONS.y - FIRST_TEXTS_COUNT * MARGIN - MARGIN - MARGIN * i - PowerUps::POWER_UP_RADIUS + MathUtils::getHalf(Fonts::getTextSize(powerUpTexts->text).y)
+					Constants::SCREEN_DIMENSIONS.y - FIRST_TEXTS_COUNT * MARGIN - MARGIN - MARGIN * i - PowerUps::POWER_UP_RADIUS
 				},
 				Colors::WHITE,
 				FONT_SIZE
@@ -99,10 +125,20 @@ namespace RulesScreen {
 
 		Vectors::Vector2 mousePosition = { slGetMouseX(), slGetMouseY() };
 
-		Rectangles::fillRectangle(
-			goBackRectangle,
-			Collisions::checkPointToRectangleCollision(goBackRectangle, mousePosition) ? Colors::DARK_RED : Colors::RED
+		slSprite(
+			TextureManager::obtainTexture(TextureManager::TextureType::BUTTON),
+			goBackRectangle.xCenter,
+			goBackRectangle.yCenter,
+			goBackRectangle.width,
+			goBackRectangle.height
 		);
+
+		if (Collisions::checkPointToRectangleCollision(goBackRectangle, mousePosition)) {
+			Rectangles::fillRectangle(
+				goBackRectangle,
+				Colors::OPAQUE_GRAY
+			);
+		}
 
 		const char* goBackText = "Go back";
 		Vectors::Vector2 goBackTextSize = Fonts::getTextSize(goBackText);
@@ -110,9 +146,11 @@ namespace RulesScreen {
 		Fonts::writeText(
 			goBackText,
 			{ goBackRectangle.xCenter - MathUtils::getHalf(goBackTextSize.x), goBackRectangle.yCenter - MathUtils::getHalf(goBackTextSize.y) },
-			Colors::WHITE,
+			Colors::LIGHT_GRAY,
 			FONT_SIZE
 		);
+
+		Colors::setForeColor(Colors::WHITE);
 	}
 
 	void changeScreen(Screen::Screen& screen) {

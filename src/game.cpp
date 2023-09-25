@@ -5,6 +5,7 @@
 #include "screens/rules.h"
 #include "screens/gameplay.h"
 #include "screens/credits.h"
+#include "textureManager.h"
 #include "constants.h"
 #include <stdlib.h>
 #include <time.h>
@@ -16,7 +17,8 @@ namespace Game {
 		srand(time(NULL));
 		slWindow(Constants::SCREEN_DIMENSIONS.x, Constants::SCREEN_DIMENSIONS.y, "LeBreakout", false);
 
-		Fonts::initFont("src/white_rabbit.ttf");
+		TextureManager::initTextureManager();
+		Fonts::initFont("assets/amatic.ttf");
 		Menu::initMenu();
 	}
 

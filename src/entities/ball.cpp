@@ -5,6 +5,7 @@
 #include "utils/collisions.h"
 #include "utils/math.h"
 #include "constants.h"
+#include "textureManager.h"
 
 static const double BALL_RADIUS = 10;
 static const double BALL_VELOCITY = 600;
@@ -106,6 +107,14 @@ namespace Ball {
 	}
 
 	void drawBall(Ball *ball) {
-		Circles::drawCircle(ball->position, ball->radius, Colors::WHITE);
+		Rectangles::Rectangle ballCollisionBox = getBallCollisionBox(*ball);
+
+		slSprite(
+			TextureManager::obtainTexture(TextureManager::TextureType::BALL),
+			ballCollisionBox.xCenter,
+			ballCollisionBox.yCenter,
+			ballCollisionBox.width + 25,
+			ballCollisionBox.height + 25
+		);
 	}
 }
