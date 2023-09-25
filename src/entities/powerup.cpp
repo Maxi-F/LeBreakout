@@ -7,9 +7,11 @@
 #include "utils/circles.h"
 #include "utils/Colors.h"
 
-static const double POWER_UP_FALL_VELOCITY = 200;
 
 namespace PowerUps {
+	static const double POWER_UP_FALL_VELOCITY = 200;
+	extern const double POWER_UP_RADIUS = 20;
+
 	static PowerUpType getRandomPowerUp() {
 		const double POWER_UP_PROBABLITY = 0.25;
 
@@ -43,7 +45,7 @@ namespace PowerUps {
 		return {
 			position,
 			getRandomPowerUp(),
-			20
+			POWER_UP_RADIUS
 		};
 	}
 

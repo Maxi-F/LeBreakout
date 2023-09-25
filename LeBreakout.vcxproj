@@ -172,9 +172,11 @@
     <ClCompile Include="src\entities\powerup.cpp" />
     <ClCompile Include="src\game.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\screens\credits.cpp" />
     <ClCompile Include="src\screens\draws\gameplayDraws.cpp" />
     <ClCompile Include="src\screens\gameplay.cpp" />
     <ClCompile Include="src\screens\menu.cpp" />
+    <ClCompile Include="src\screens\rules.cpp" />
     <ClCompile Include="src\utils\circles.cpp" />
     <ClCompile Include="src\utils\collisions.cpp" />
     <ClCompile Include="src\utils\colors.cpp" />
@@ -190,9 +192,11 @@
     <ClInclude Include="src\entities\player.h" />
     <ClInclude Include="src\entities\powerup.h" />
     <ClInclude Include="src\game.h" />
+    <ClInclude Include="src\screens\credits.h" />
     <ClInclude Include="src\screens\draws\gameplayDraws.h" />
     <ClInclude Include="src\screens\gameplay.h" />
     <ClInclude Include="src\screens\menu.h" />
+    <ClInclude Include="src\screens\rules.h" />
     <ClInclude Include="src\screens\screens.h" />
     <ClInclude Include="src\utils\circles.h" />
     <ClInclude Include="src\utils\collisions.h" />

@@ -2,12 +2,16 @@
 #include "utils/fonts.h"
 #include "screens/screens.h"
 #include "screens/menu.h"
+#include "screens/rules.h"
 #include "screens/gameplay.h"
+#include "screens/credits.h"
 #include "constants.h"
 #include <stdlib.h>
 #include <time.h>
 
 namespace Game {
+	bool isLeftClickPressed = false;
+
 	static void init() {
 		srand(time(NULL));
 		slWindow(Constants::SCREEN_DIMENSIONS.x, Constants::SCREEN_DIMENSIONS.y, "LeBreakout", false);
@@ -17,7 +21,7 @@ namespace Game {
 	}
 
 	static void doActionBySelectedOption(Screen::Screen& actualScreen, bool& shouldClose) {
-		Menu::checkOptionCollisions();
+		Menu::checkOptionCollisions(isLeftClickPressed);
 
 		Menu::Option selectedOption = Menu::getPressedOption();
 
@@ -48,10 +52,16 @@ namespace Game {
 				Menu::drawMenu();
 				break;
 			case Screen::GAMEPLAY:
-				Gameplay::updateGameplay(actualScreen);
+				Gameplay::updateGameplay(actualScreen, isLeftClickPressed);
 				Gameplay::drawGameplay();
 				break;
 			case Screen::RULES:
+				RulesScreen::drawRules();
+				RulesScreen::changeScreen(actualScreen);
+				break;
+			case Screen::CREDITS:
+				CreditsScreen::drawCredits();
+				CreditsScreen::changeScreen(actualScreen);
 				break;
 		}
 	}

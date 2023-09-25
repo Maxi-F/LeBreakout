@@ -108,7 +108,7 @@ namespace Gameplay {
 		updatePowerUps();
 	}
 
-	static void doByGameplayOption(Screen::Screen &screen, GameplayDraws::GameplayOption option) {
+	static void doByGameplayOption(Screen::Screen &screen, GameplayDraws::GameplayOption option, bool& isLeftClickPressed) {
 		switch (option) {
 			case GameplayDraws::GameplayOption::RESUME:
 				gameplayEntities.paused = false;
@@ -118,11 +118,12 @@ namespace Gameplay {
 				break;
 			case GameplayDraws::GameplayOption::GO_TO_MENU:
 				screen = Screen::Screen::MENU;
+				isLeftClickPressed = true;
 				break;
 		}
 	}
 
-	void updateGameplay(Screen::Screen &screen) {
+	void updateGameplay(Screen::Screen &screen, bool& isLeftClickPressed) {
 		Vectors::Vector2 mousePosition = { slGetMouseX(), slGetMouseY() };
 
 		if (gameplayEntities.hasLost || gameplayEntities.hasWon) {
@@ -134,7 +135,7 @@ namespace Gameplay {
 				}
 			}
 
-			doByGameplayOption(screen, selectedOption);
+			doByGameplayOption(screen, selectedOption, isLeftClickPressed);
 		}
 		else if (gameplayEntities.paused) {
 			GameplayDraws::GameplayOption selectedOption = GameplayDraws::GameplayOption::NONE;
@@ -145,7 +146,7 @@ namespace Gameplay {
 				}
 			}
 
-			doByGameplayOption(screen, selectedOption);
+			doByGameplayOption(screen, selectedOption, isLeftClickPressed);
 		}
 		else {
 			updateGamplayEntities();

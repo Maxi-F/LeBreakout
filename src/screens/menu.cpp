@@ -85,14 +85,18 @@ namespace Menu {
 		}
 	}
 
-	void checkOptionCollisions() {
+	void checkOptionCollisions(bool& isLeftClickPressed) {
 		Vectors::Vector2 mousePosition = { slGetMouseX(), slGetMouseY() };
+
+		if (!slGetMouseButton(SL_MOUSE_BUTTON_LEFT)) {
+			isLeftClickPressed = false;
+		}
 
 		for (int i = 0; i < MENU_OPTIONS_LENGTH; i++) {
 			if (Collisions::checkPointToRectangleCollision(menuOptions[i].rectangle, mousePosition)) {
 				menuOptions[i].isHovered = true;
 
-				if (slGetMouseButton(SL_MOUSE_BUTTON_LEFT)) {
+				if (slGetMouseButton(SL_MOUSE_BUTTON_LEFT) && !isLeftClickPressed) {
 					menuOptions[i].isClicked = true;
 				}
 			}

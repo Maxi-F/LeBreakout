@@ -18,7 +18,7 @@ namespace Gameplay {
 		bool paused = false;
 	};
 
-	void updateGameplay(Screen::Screen &screen);
+	void updateGameplay(Screen::Screen &screen, bool& isLeftClickPressed);
 	void initGameplay();
 	void drawGameplay();
 }

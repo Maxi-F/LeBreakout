@@ -21,6 +21,7 @@ namespace PowerUps {
 		bool collisioned = false;
 	};
 
+	extern const double POWER_UP_RADIUS;
 	PowerUp createPowerUp(Vectors::Vector2 position);
 	void drawPowerUp(PowerUp powerUp);
 	void updatePowerUp(PowerUp& powerUp);

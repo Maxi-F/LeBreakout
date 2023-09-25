@@ -13,5 +13,5 @@ namespace Menu {
 	void initMenu();
 	void drawMenu();
 	Option getPressedOption();
-	void checkOptionCollisions();
+	void checkOptionCollisions(bool& isLeftClickPressed);
 }
