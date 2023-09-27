@@ -39,7 +39,7 @@ namespace Gameplay {
 	}
 
 	static Ball::Ball initBallInMiddle() {
-		Vectors::Vector2 directions = { MathUtils::getHalf(MathUtils::positiveOrNegative()), -0.5 };
+		Vectors::Vector2 directions = { MathUtils::getHalf(MathUtils::positiveOrNegative()), 0.5 };
 		return Ball::initBall({ MathUtils::getHalf(Constants::FIELD_DIMENSIONS.x), MathUtils::getHalf(Constants::FIELD_DIMENSIONS.y) }, directions);
 	}
 

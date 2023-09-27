@@ -33,7 +33,7 @@ namespace GameplayDraws {
 		{
 			{
 				MathUtils::getHalf(Constants::SCREEN_DIMENSIONS.x),
-				MathUtils::getHalf(Constants::SCREEN_DIMENSIONS.y) - MENU_OPTION_HEIGHT,
+				MathUtils::getHalf(Constants::SCREEN_DIMENSIONS.y),
 				MENU_OPTION_WIDTH,
 				MENU_OPTION_HEIGHT
 			},
@@ -83,14 +83,14 @@ namespace GameplayDraws {
 			Constants::FIELD_Y_MARGIN
 		};
 
-		Rectangles::fillRectangle(uiBackground, Colors::DARK_RED);
+		Rectangles::fillRectangle(uiBackground, Colors::OPAQUE_DARK_RED);
 
 		const std::string livesPreText = "Lives: ";
 		std::string lives = std::to_string(gameplayEntities.player.lives);
 		std::string livesText = livesPreText + lives;
 
 
-		double fontSize = 60;
+		double fontSize = 55;
 
 		Fonts::setFontSize(fontSize);
 
@@ -99,6 +99,32 @@ namespace GameplayDraws {
 		Fonts::writeText(
 			livesText.c_str(),
 			{ fontSize, Constants::FIELD_DIMENSIONS.y + MathUtils::getHalf(Constants::FIELD_Y_MARGIN) - MathUtils::getHalf(livesTextSize.y) },
+			Colors::WHITE,
+			fontSize
+		);
+
+		const char* movementExplanation = "Press 'A' & 'D' to move.";
+		Vectors::Vector2 movementTextSize = Fonts::getTextSize(movementExplanation);
+
+		Fonts::writeText(
+			movementExplanation,
+			{
+				MathUtils::getHalf(Constants::SCREEN_DIMENSIONS.x) - MathUtils::getHalf(movementTextSize.x),
+				Constants::FIELD_DIMENSIONS.y + MathUtils::getHalf(Constants::FIELD_Y_MARGIN) - MathUtils::getHalf(movementTextSize.y)
+			},
+			Colors::WHITE,
+			fontSize
+		);
+
+		const char* pauseExplanation = "Press 'ESC' to pause.";
+		Vectors::Vector2 pauseTextSize = Fonts::getTextSize(pauseExplanation);
+
+		Fonts::writeText(
+			pauseExplanation,
+			{
+				Constants::SCREEN_DIMENSIONS.x - movementTextSize.x,
+				Constants::FIELD_DIMENSIONS.y + MathUtils::getHalf(Constants::FIELD_Y_MARGIN) - MathUtils::getHalf(pauseTextSize.y)
+			},
 			Colors::WHITE,
 			fontSize
 		);

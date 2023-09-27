@@ -15,7 +15,7 @@ namespace Game {
 
 	static void init() {
 		srand(time(NULL));
-		slWindow(Constants::SCREEN_DIMENSIONS.x, Constants::SCREEN_DIMENSIONS.y, "LeBreakout", false);
+		slWindow(Constants::SCREEN_DIMENSIONS.x, Constants::SCREEN_DIMENSIONS.y, "LeBreakout", true);
 
 		TextureManager::initTextureManager();
 		Fonts::initFont("assets/amatic.ttf");

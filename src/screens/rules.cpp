@@ -71,9 +71,9 @@ namespace RulesScreen {
 			);
 		}
 
-		const PowerUpWithText enlargeText = { TextureManager::TextureType::ENLARGE_POWER_UP, "Makes your paddle bigger." };
-		const PowerUpWithText reduceText = { TextureManager::TextureType::REDUCE_POWER_UP, "Makes your paddle smaller." };
-		const PowerUpWithText addBallText = { TextureManager::TextureType::ADD_BALL_POWER_UP, "Adds a ball!" };
+		const PowerUpWithText enlargeText = { TextureManager::TextureType::ENLARGE_POWER_UP, "Makes your scons (and consequentially your paddle!) bigger." };
+		const PowerUpWithText reduceText = { TextureManager::TextureType::REDUCE_POWER_UP, "Makes your scons tastier, but takes the water away from your scons. your paddle gets smaller." };
+		const PowerUpWithText addBallText = { TextureManager::TextureType::ADD_BALL_POWER_UP, "Adds a biscuit!" };
 
 		const int POWER_UP_TEXTS_COUNT = 3;
 		const PowerUpWithText powerUpTexts[POWER_UP_TEXTS_COUNT] = {
@@ -92,12 +92,14 @@ namespace RulesScreen {
 					PowerUps::POWER_UP_RADIUS 
 				});
 
+			const int ADDED_SPRITE_SIZE = 40;
+
 			slSprite(
 				TextureManager::obtainTexture(powerUpTexts[i].texture),
 				powerUpBox.xCenter,
 				powerUpBox.yCenter,
-				powerUpBox.width,
-				powerUpBox.height
+				powerUpBox.width + ADDED_SPRITE_SIZE,
+				powerUpBox.height + ADDED_SPRITE_SIZE
 			);
 
 			Fonts::writeText(
