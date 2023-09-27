@@ -1,7 +1,7 @@
 #pragma once
 
 namespace Screen {
-	extern enum Screen {
+	enum Screen {
 		MENU = 0,
 		GAMEPLAY,
 		RULES,

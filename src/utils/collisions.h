@@ -4,7 +4,7 @@
 #include "Vector.h"
 
 namespace Collisions {
-	extern enum CollisionPosition {
+	enum CollisionPosition {
 		UP = 0,
 		DOWN,
 		RIGHT,

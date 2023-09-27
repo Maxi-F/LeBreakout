@@ -29,7 +29,7 @@ namespace RulesScreen {
 	};
 
 	void drawRules() {
-		const double FONT_SIZE = 60;
+		const int FONT_SIZE = 60;
 
 		slSprite(
 			TextureManager::obtainTexture(TextureManager::TextureType::RULES_CREDITS_BACKGROUND),
@@ -125,7 +125,7 @@ namespace RulesScreen {
 			FONT_SIZE
 		);
 
-		Vectors::Vector2 mousePosition = { slGetMouseX(), slGetMouseY() };
+		Vectors::Vector2 mousePosition = { static_cast<double>(slGetMouseX()), static_cast<double>(slGetMouseY()) };
 
 		slSprite(
 			TextureManager::obtainTexture(TextureManager::TextureType::BUTTON),
@@ -156,7 +156,7 @@ namespace RulesScreen {
 	}
 
 	void changeScreen(Screen::Screen& screen) {
-		Vectors::Vector2 mousePosition = { slGetMouseX(), slGetMouseY() };
+		Vectors::Vector2 mousePosition = { static_cast<double>(slGetMouseX()), static_cast<double>(slGetMouseY()) };
 
 		if (Collisions::checkPointToRectangleCollision(goBackRectangle, mousePosition) && slGetMouseButton(SL_MOUSE_BUTTON_LEFT)) {
 			screen = Screen::MENU;
