@@ -1,7 +1,9 @@
 #pragma once
-#include "Vector.h"
-#include "Colors.h"
+#include "vector.h"
+#include "colors.h"
 
-namespace Circles {
-	void drawCircle(Vectors::Vector2 center, double radius, Colors::Color color);
+namespace LeBreakout {
+	namespace Circles {
+		void drawCircle(Vectors::Vector2 center, double radius, Colors::Color color);
+	}
 }

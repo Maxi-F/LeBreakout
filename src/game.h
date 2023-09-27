@@ -1,5 +1,8 @@
 #pragma once
 
-namespace Game {
-	void startGame();
+namespace LeBreakout {
+	namespace Game {
+		void startGame();
+	}
 }
+

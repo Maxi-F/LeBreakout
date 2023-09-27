@@ -1,8 +1,10 @@
 #pragma once
 
-namespace Vectors {
-	struct Vector2 {
-		double x;
-		double y;
-	};
+namespace LeBreakout {
+	namespace Vectors {
+		struct Vector2 {
+			double x;
+			double y;
+		};
+	}
 }

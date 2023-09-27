@@ -4,17 +4,19 @@
 #include "entities/powerup.h"
 #include "ball.h"
 
-namespace Block {
-	struct Block {
-		Rectangles::Rectangle rectangle;
-		PowerUps::PowerUp powerUp;
-		bool hasBeenHit;
-	};
+namespace LeBreakout {
+	namespace Block {
+		struct Block {
+			Rectangles::Rectangle rectangle;
+			PowerUps::PowerUp powerUp;
+			bool hasBeenHit;
+		};
 
-	extern const double BLOCK_HEIGHT;
-	extern const double BLOCK_WIDTH;
+		extern const double BLOCK_HEIGHT;
+		extern const double BLOCK_WIDTH;
 
-	void drawBlock(Block block);
-	Block initBlock(Vectors::Vector2 position, PowerUps::PowerUp powerUp);
-	void updateBlock(Block &block, Ball::Ball *ball);
+		Block initBlock(Vectors::Vector2 position, PowerUps::PowerUp powerUp);
+		void drawBlock(Block block);
+		void updateBlock(Block &block, Ball::Ball *ball);
+	}
 }

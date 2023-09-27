@@ -1,25 +1,30 @@
+#include "fonts.h"
+
 #include "sl.h"
-#include "Colors.h"
-#include "Vector.h"
 
-namespace Fonts {
-	static int ACTIVE_FONT;
+#include "colors.h"
+#include "vector.h"
 
-	void initFont(const char* filename) {
-		ACTIVE_FONT = slLoadFont(filename);
-	};
+namespace LeBreakout {
+	namespace Fonts {
+		static int ACTIVE_FONT;
 
-	void setFontSize(int fontSize) {
-		slSetFont(ACTIVE_FONT, fontSize);
-	}
+		void initFont(const char* filename) {
+			ACTIVE_FONT = slLoadFont(filename);
+		};
 
-	Vectors::Vector2 getTextSize(const char* text) {
-		return { slGetTextWidth(text), slGetTextHeight(text) };
-	}
+		void setFontSize(int fontSize) {
+			slSetFont(ACTIVE_FONT, fontSize);
+		}
 
-	void writeText(const char* text, Vectors::Vector2 position, Colors::Color color, int fontSize) {
-		slSetForeColor(color.r, color.g, color.b, color.a);
-		slSetFontSize(fontSize);
-		slText(position.x, position.y, text);
+		Vectors::Vector2 getTextSize(const char* text) {
+			return { slGetTextWidth(text), slGetTextHeight(text) };
+		}
+
+		void writeText(const char* text, Vectors::Vector2 position, Colors::Color color, int fontSize) {
+			slSetForeColor(color.r, color.g, color.b, color.a);
+			slSetFontSize(fontSize);
+			slText(position.x, position.y, text);
+		}
 	}
 }

@@ -7,18 +7,20 @@
 #include "entities/block.h"
 #include "entities/player.h"
 
-namespace Gameplay {
-	struct GameplayEntities {
-		Paddle::Paddle paddle;
-		std::vector<Ball::Ball> balls;
-		std::vector<std::vector<Block::Block>> blockRows;
-		Player::Player player;
-		bool hasWon = false;
-		bool hasLost = false;
-		bool paused = false;
-	};
+namespace LeBreakout {
+	namespace Gameplay {
+		struct GameplayEntities {
+			Paddle::Paddle paddle;
+			std::vector<Ball::Ball> balls;
+			std::vector<std::vector<Block::Block>> blockRows;
+			Player::Player player;
+			bool hasWon = false;
+			bool hasLost = false;
+			bool paused = false;
+		};
 
-	void updateGameplay(Screen::Screen &screen, bool& isLeftClickPressed);
-	void initGameplay();
-	void drawGameplay();
+		void initGameplay();
+		void updateGameplay(Screen::Screen &screen, bool& isLeftClickPressed);
+		void drawGameplay();
+	}
 }

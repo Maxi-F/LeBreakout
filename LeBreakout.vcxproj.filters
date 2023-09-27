@@ -87,7 +87,7 @@
     <ClCompile Include="src\entities\powerup.cpp">
       <Filter>Archivos de recursos\entities</Filter>
     </ClCompile>
-    <ClCompile Include="src\screens\draws\gameplayDraws.cpp">
+    <ClCompile Include="src\screens\draws\gameplay_draws.cpp">
       <Filter>Archivos de recursos\screens\draws</Filter>
     </ClCompile>
     <ClCompile Include="src\screens\rules.cpp">
@@ -152,7 +152,7 @@
     <ClInclude Include="src\entities\powerup.h">
       <Filter>Archivos de encabezado\entities</Filter>
     </ClInclude>
-    <ClInclude Include="src\screens\draws\gameplayDraws.h">
+    <ClInclude Include="src\screens\draws\gameplay_draws.h">
       <Filter>Archivos de encabezado\screens\draws</Filter>
     </ClInclude>
     <ClInclude Include="src\screens\rules.h">

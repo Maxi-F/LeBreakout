@@ -1,30 +1,35 @@
-#include "Rectangles.h"
-#include "Vector.h"
+#include "math.h"
+
 #include <stdlib.h>
 
-namespace MathUtils {
-	double getHalf(double value) {
-		return value / 2.0;
-	};
+#include "rectangles.h"
+#include "vector.h"
 
-	double clamp(double value, double min, double max)
-	{
-		return (value < min) ? min : value > max ? max : value;
-	}
+namespace LeBreakout {
+	namespace MathUtils {
+		double getHalf(double value) {
+			return value / 2.0;
+		};
 
-	double getDistanceFromMiddle(Rectangles::Rectangle rectangle, Vectors::Vector2 point) {
-		return point.x - rectangle.xCenter;
-	}
+		double clamp(double value, double min, double max)
+		{
+			return (value < min) ? min : value > max ? max : value;
+		}
 
-	double moduleOf(double value) {
-		return value < 0 ? -value : value;
-	}
+		double getDistanceFromMiddle(Rectangles::Rectangle rectangle, Vectors::Vector2 point) {
+			return point.x - rectangle.xCenter;
+		}
 
-	int getRandomBetween(int min, int max) {
-		return min + rand() % (max + 1 - min);
-	}
+		double moduleOf(double value) {
+			return value < 0 ? -value : value;
+		}
 
-	double positiveOrNegative() {
-		return getRandomBetween(0, 1) == 0 ? -1 : 1;
+		int getRandomBetween(int min, int max) {
+			return static_cast<int>(min + rand() % (max + 1 - min));
+		}
+
+		double positiveOrNegative() {
+			return getRandomBetween(0, 1) == 0 ? -1 : 1;
+		}
 	}
 }

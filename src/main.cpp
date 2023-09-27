@@ -1,7 +1,9 @@
 #include "game.h"
 
+using namespace LeBreakout::Game;
+
 int main()
 {
-	Game::startGame();
+	startGame();
 	return 0;
 }
