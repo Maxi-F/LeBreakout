@@ -19,13 +19,16 @@ namespace Block {
 	}
 
 	void drawBlock(Block block) {
+		const int SPRITE_ADDED_WIDTH = 60;
+		const int SPRITE_ADDED_HEIGHT = 40;
+
 		if (!block.hasBeenHit) {
 			slSprite(
 				TextureManager::obtainTexture(TextureManager::TextureType::BLOCK),
 				block.rectangle.xCenter,
 				block.rectangle.yCenter,
-				block.rectangle.width + 60,
-				block.rectangle.height + 40
+				block.rectangle.width + SPRITE_ADDED_WIDTH,
+				block.rectangle.height + SPRITE_ADDED_HEIGHT
 			);
 		}
 	}

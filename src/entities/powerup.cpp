@@ -54,12 +54,14 @@ namespace PowerUps {
 			Rectangles::Rectangle powerUpCollisionBox = getPowerUpCollisionBox(powerUp);
 			TextureManager::TextureType texture = getTexturePerPowerUp(powerUp.powerUpType);
 
+			const int SPRITE_ADDED_SIZE = 25;
+
 			slSprite(
 				TextureManager::obtainTexture(texture),
 				powerUpCollisionBox.xCenter,
 				powerUpCollisionBox.yCenter,
-				powerUpCollisionBox.width + 25,
-				powerUpCollisionBox.height + 25
+				powerUpCollisionBox.width + SPRITE_ADDED_SIZE,
+				powerUpCollisionBox.height + SPRITE_ADDED_SIZE
 			);
 		}
 	};

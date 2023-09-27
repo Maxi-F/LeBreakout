@@ -34,12 +34,14 @@ namespace Paddle {
 	}
 
 	void drawPaddle(Paddle paddle) {
+		const int SPRITE_ADDED_HEIGHT = 20;
+
 		slSprite(
 			TextureManager::obtainTexture(TextureManager::TextureType::PADDLE),
 			paddle.rectangle.xCenter,
 			paddle.rectangle.yCenter,
 			paddle.rectangle.width,
-			paddle.rectangle.height + 20
+			paddle.rectangle.height + SPRITE_ADDED_HEIGHT
 		);
 	}
 

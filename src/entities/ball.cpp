@@ -108,13 +108,14 @@ namespace Ball {
 
 	void drawBall(Ball *ball) {
 		Rectangles::Rectangle ballCollisionBox = getBallCollisionBox(*ball);
+		const int SPRITE_ADDED_SIZE = 25;
 
 		slSprite(
 			TextureManager::obtainTexture(TextureManager::TextureType::BALL),
 			ballCollisionBox.xCenter,
 			ballCollisionBox.yCenter,
-			ballCollisionBox.width + 25,
-			ballCollisionBox.height + 25
+			ballCollisionBox.width + SPRITE_ADDED_SIZE,
+			ballCollisionBox.height + SPRITE_ADDED_SIZE
 		);
 	}
 }
