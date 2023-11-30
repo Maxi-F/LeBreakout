@@ -1,7 +1,5 @@
 #include "block.h"
 
-#include "sl.h"
-
 #include "ball.h"
 #include "utils/collisions.h"
 #include "textureManager.h"
@@ -24,7 +22,7 @@ namespace LeBreakout {
 			const int SPRITE_ADDED_HEIGHT = 40;
 
 			if (!block.hasBeenHit) {
-				slSprite(
+				TextureManager::drawTexture(
 					TextureManager::obtainTexture(TextureManager::TextureType::BLOCK),
 					block.rectangle.xCenter,
 					block.rectangle.yCenter,

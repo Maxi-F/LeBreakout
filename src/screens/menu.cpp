@@ -1,6 +1,6 @@
 #include "menu.h"
 
-#include "sl.h"
+#include <SFML/Window/Mouse.hpp>
 
 #include "textureManager.h"
 #include "screens.h"
@@ -90,9 +90,10 @@ namespace LeBreakout {
 		}
 
 		void checkOptionCollisions(bool& isLeftClickPressed) {
-			Vectors::Vector2 mousePosition = { static_cast<double>(slGetMouseX()), static_cast<double>(slGetMouseY()) };
+			sf::Vector2i globalMousePosition = sf::Mouse::getPosition();
+			Vectors::Vector2 mousePosition = { globalMousePosition.x, globalMousePosition.y };
 
-			if (!slGetMouseButton(SL_MOUSE_BUTTON_LEFT)) {
+			if (!sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
 				isLeftClickPressed = false;
 			}
 
@@ -100,7 +101,7 @@ namespace LeBreakout {
 				if (Collisions::checkPointToRectangleCollision(menuOptions[i].rectangle, mousePosition)) {
 					menuOptions[i].isHovered = true;
 
-					if (slGetMouseButton(SL_MOUSE_BUTTON_LEFT) && !isLeftClickPressed) {
+					if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) && !isLeftClickPressed) {
 						menuOptions[i].isClicked = true;
 					}
 				}
@@ -111,9 +112,13 @@ namespace LeBreakout {
 		}
 
 		void drawMenu() {
-			setBackColor(Colors::BLACK);
+			sf::Texture background;
+			background.create(Constants::SCREEN_DIMENSIONS.x, Constants::SCREEN_DIMENSIONS.y);
+			sf::Sprite backgroundSprite;
+			backgroundSprite.setTexture(background);
+			backgroundSprite.setColor(sf::Color::Black);
 
-			slSprite(
+			TextureManager::drawTexture(
 				TextureManager::obtainTexture(TextureManager::TextureType::MENU_BACKGROUND),
 				MathUtils::getHalf(Constants::SCREEN_DIMENSIONS.x),
 				MathUtils::getHalf(Constants::SCREEN_DIMENSIONS.y),
@@ -127,21 +132,21 @@ namespace LeBreakout {
 
 			Fonts::setFontSize(titleFontSize);
 
+			Vectors::Vector2 titleSize = Fonts::getTextSize(title);
+
 			Fonts::writeText(
 				title,
-				{ HALF_SCREEN.x - MathUtils::getHalf(slGetTextWidth(title)), Constants::SCREEN_DIMENSIONS.y - titleMargin },
+				{ HALF_SCREEN.x - MathUtils::getHalf(titleSize.x), Constants::SCREEN_DIMENSIONS.y - titleMargin },
 				Colors::BLACK,
 				titleFontSize
 			);
 
 			for (int i = 0; i < MENU_OPTIONS_LENGTH; i++) {
-				Colors::setForeColor(Colors::WHITE);
-
 				Fonts::setFontSize(OPTION_FONT_SIZE);
 				const char* optionText = menuOptions[i].optionText;
 				Rectangles::Rectangle optionRectangle = menuOptions[i].rectangle;
 
-				slSprite(
+				TextureManager::drawTexture(
 					TextureManager::obtainTexture(TextureManager::TextureType::BUTTON),
 					optionRectangle.xCenter,
 					optionRectangle.yCenter,
@@ -164,8 +169,6 @@ namespace LeBreakout {
 					OPTION_FONT_SIZE
 				);
 			};
-
-			Colors::setForeColor(Colors::WHITE);
 		}
 
 		Option getPressedOption() {

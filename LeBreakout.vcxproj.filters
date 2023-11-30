@@ -99,6 +99,9 @@
     <ClCompile Include="src\textureManager.cpp">
       <Filter>Archivos de recursos</Filter>
     </ClCompile>
+    <ClCompile Include="src\window.cpp">
+      <Filter>Archivos de recursos</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\utils\colors.h">
@@ -162,6 +165,9 @@
       <Filter>Archivos de encabezado\screens</Filter>
     </ClInclude>
     <ClInclude Include="src\textureManager.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="src\window.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,11 +1,10 @@
 #include "ball.h"
 
-#include "sl.h"
-
 #include "utils/Rectangles.h"
 #include "utils/circles.h"
 #include "utils/collisions.h"
 #include "utils/math.h"
+#include "window.h"
 #include "constants.h"
 #include "textureManager.h"
 
@@ -80,8 +79,8 @@ namespace LeBreakout {
 			ball->lastFrameCollisionBox = getBallCollisionBox(*ball);
 
 			ball->position = {
-				ball->position.x + ball->velocity * ball->direction.x * slGetDeltaTime(),
-				ball->position.y + ball->velocity * ball->direction.y * slGetDeltaTime() 
+				ball->position.x + ball->velocity * ball->direction.x * Window::deltaTime,
+				ball->position.y + ball->velocity * ball->direction.y * Window::deltaTime 
 			};
 		}
 
@@ -112,7 +111,7 @@ namespace LeBreakout {
 			Rectangles::Rectangle ballCollisionBox = getBallCollisionBox(*ball);
 			const int SPRITE_ADDED_SIZE = 25;
 
-			slSprite(
+			TextureManager::drawTexture(
 				TextureManager::obtainTexture(TextureManager::TextureType::BALL),
 				ballCollisionBox.xCenter,
 				ballCollisionBox.yCenter,

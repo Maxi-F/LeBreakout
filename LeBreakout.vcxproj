@@ -90,7 +90,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>SFML_STATIC;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir)lib\include;$(ProjectDir)src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
@@ -98,14 +98,14 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(ProjectDir)lib\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>sigil.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sfml-graphics-s-d.lib;sfml-window-s-d.lib;sfml-system-s-d.lib;opengl32.lib;freetype.lib;winmm.lib;gdi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <CustomBuildStep>
       <Command>
       </Command>
     </CustomBuildStep>
     <PreBuildEvent>
-      <Command>xcopy /s/y "$(SolutionDir)lib\dlls" "$(OutDir)"
+      <Command>
 xcopy /s/y "$(SolutionDir)assets\" "$(OutDir)assets\"</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
@@ -115,7 +115,7 @@ xcopy /s/y "$(SolutionDir)assets\" "$(OutDir)assets\"</Command>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>SFML_STATIC;WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir)lib\include;$(ProjectDir)src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
@@ -125,7 +125,7 @@ xcopy /s/y "$(SolutionDir)assets\" "$(OutDir)assets\"</Command>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(ProjectDir)lib\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>sigil.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sfml-graphics-s.lib;sfml-window-s.lib;sfml-system-s.lib;opengl32.lib;freetype.lib;winmm.lib;gdi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <EntryPointSymbol>mainCRTStartup</EntryPointSymbol>
     </Link>
     <CustomBuildStep>
@@ -133,7 +133,7 @@ xcopy /s/y "$(SolutionDir)assets\" "$(OutDir)assets\"</Command>
       </Command>
     </CustomBuildStep>
     <PreBuildEvent>
-      <Command>xcopy /s/y "$(SolutionDir)lib\dlls" "$(OutDir)"
+      <Command>
 xcopy /s/y "$(SolutionDir)assets\" "$(OutDir)assets\"</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
@@ -186,6 +186,7 @@ xcopy /s/y "$(SolutionDir)assets\" "$(OutDir)assets\"</Command>
     <ClCompile Include="src\utils\fonts.cpp" />
     <ClCompile Include="src\utils\math.cpp" />
     <ClCompile Include="src\utils\rectangles.cpp" />
+    <ClCompile Include="src\window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\constants.h" />
@@ -209,6 +210,7 @@ xcopy /s/y "$(SolutionDir)assets\" "$(OutDir)assets\"</Command>
     <ClInclude Include="src\utils\math.h" />
     <ClInclude Include="src\utils\rectangles.h" />
     <ClInclude Include="src\utils\vector.h" />
+    <ClInclude Include="src\window.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

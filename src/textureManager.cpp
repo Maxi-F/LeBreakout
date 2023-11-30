@@ -1,33 +1,38 @@
 #include "textureManager.h"
 
 #include <vector>
-
-#include "sl.h"
+#include "window.h"
 
 namespace LeBreakout {
 	namespace TextureManager {
 		static struct Texture {
-			int loadedTexture;
+			sf::Texture loadedTexture;
 			TextureType textureType;
 		};
 
 		std::vector<Texture> textures;
 
+		static sf::Texture createImage(const char* fileName) {
+			sf::Texture image;
+			image.loadFromFile(fileName);
+			return image;
+		}
+
 		void initTextureManager() {
-			Texture mainBackgroundTexture = { slLoadTexture("assets/morningCafe.png"), TextureType::MENU_BACKGROUND };
-			Texture gameplayBackgroundTexture = { slLoadTexture("assets/nightCafe.png"), TextureType::GAMEPLAY_BACKGROUND };
-			Texture creditsAndRulesBackgroundTexture = { slLoadTexture("assets/eveningCafe.png"), TextureType::RULES_CREDITS_BACKGROUND };
-			Texture buttonTexture = { slLoadTexture("assets/button.png"), TextureType::BUTTON };
+			Texture mainBackgroundTexture = { createImage("assets/morningCafe.png"), TextureType::MENU_BACKGROUND };
+			Texture gameplayBackgroundTexture = { createImage("assets/nightCafe.png"), TextureType::GAMEPLAY_BACKGROUND };
+			Texture creditsAndRulesBackgroundTexture = { createImage("assets/eveningCafe.png"), TextureType::RULES_CREDITS_BACKGROUND };
+			Texture buttonTexture = { createImage("assets/button.png"), TextureType::BUTTON };
 		
-			Texture ballTexture = { slLoadTexture("assets/biscuitSingle.png"), TextureType::BALL };
-			Texture paddleTexture = { slLoadTexture("assets/biscuitTray.png"), TextureType::PADDLE };
-			Texture blockTexture = { slLoadTexture("assets/opera.png"), TextureType::BLOCK };
+			Texture ballTexture = { createImage("assets/biscuitSingle.png"), TextureType::BALL };
+			Texture paddleTexture = { createImage("assets/biscuitTray.png"), TextureType::PADDLE };
+			Texture blockTexture = { createImage("assets/opera.png"), TextureType::BLOCK };
 
-			Texture addBallTexture = { slLoadTexture("assets/biscuitsTray.png"), TextureType::ADD_BALL_POWER_UP };
-			Texture enlargeTexture = { slLoadTexture("assets/milk.png"), TextureType::ENLARGE_POWER_UP };
-			Texture reduceTexture = { slLoadTexture("assets/salt.png"), TextureType::REDUCE_POWER_UP };
+			Texture addBallTexture = { createImage("assets/biscuitsTray.png"), TextureType::ADD_BALL_POWER_UP };
+			Texture enlargeTexture = { createImage("assets/milk.png"), TextureType::ENLARGE_POWER_UP };
+			Texture reduceTexture = { createImage("assets/salt.png"), TextureType::REDUCE_POWER_UP };
 
-			Texture pauseBackgroundTexture = { slLoadTexture("assets/recipePages.png"), TextureType::PAUSE_BACKGROUND };
+			Texture pauseBackgroundTexture = { createImage("assets/recipePages.png"), TextureType::PAUSE_BACKGROUND };
 
 			textures = { 
 				mainBackgroundTexture,
@@ -44,12 +49,21 @@ namespace LeBreakout {
 			};
 		}
 
-		int obtainTexture(TextureType texture) {
+		sf::Texture obtainTexture(TextureType texture) {
 			for (int i = 0; i < textures.size(); i++) {
 				if (texture == textures[i].textureType) {
 					return textures[i].loadedTexture;
 				}
 			}
 		};
+
+		void drawTexture(sf::Texture image, double x, double y, double width, double height, sf::RenderWindow window) {
+			sf::Sprite sprite;
+			sprite.setTexture(image);
+			sprite.setPosition(sf::Vector2f(x, y));
+			sprite.setScale(sf::Vector2f(width / image.getSize().x, height / image.getSize().y));
+
+			window.draw(sprite);
+		}
 	}
 }

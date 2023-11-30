@@ -1,8 +1,9 @@
 #include "rectangles.h"
 
-#include "sl.h"
+#include <SFML/Graphics/RectangleShape.hpp>
 
 #include "colors.h"
+#include "window.h"
 
 namespace LeBreakout {
 	namespace Rectangles {
@@ -11,8 +12,11 @@ namespace LeBreakout {
 		}
 
 		void fillRectangle(Rectangle rectangle, Colors::Color color) {
-			setForeColor(color);
-			doWithRectangle(rectangle, slRectangleFill);
+			sf::RectangleShape rectangleToDraw(sf::Vector2f(rectangle.width, rectangle.height));
+			rectangleToDraw.setPosition(sf::Vector2f(rectangle.xCenter - rectangle.width / 2, rectangle.yCenter / rectangle.height / 2));
+			rectangleToDraw.setFillColor(sf::Color(color.r, color.g, color.b, color.a));
+			
+			Window::window.draw(rectangleToDraw);
 		};
 	}
 }

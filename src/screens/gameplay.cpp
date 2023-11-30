@@ -1,10 +1,10 @@
 #include "gameplay.h"
 
 #include <string>
-
-#include "sl.h"
+#include <SFML/Window/Keyboard.hpp>
 
 #include "screens/draws/gameplay_draws.h"
+#include <SFML/Window/Mouse.hpp>
 #include "utils/math.h"
 #include "constants.h"
 #include "utils/Vector.h"
@@ -136,13 +136,14 @@ namespace LeBreakout {
 		}
 
 		void updateGameplay(Screen::Screen &screen, bool& isLeftClickPressed) {
-			Vectors::Vector2 mousePosition = { slGetMouseX(), slGetMouseY() };
+			sf::Vector2i globalMousePosition = sf::Mouse::getPosition();
+			Vectors::Vector2 mousePosition = { globalMousePosition.x, globalMousePosition.y };
 
 			if (gameplayEntities.hasLost || gameplayEntities.hasWon) {
 				GameplayDraws::GameplayOption selectedOption = GameplayDraws::GameplayOption::NONE;
 
 				for (int i = 0; i < GameplayDraws::GAMEPLAY_MENU_OPTIONS_LENGTH; i++) {
-					if (Collisions::checkPointToRectangleCollision(GameplayDraws::LOSE_OR_WIN_OPTIONS[i].rectangle, mousePosition) && slGetMouseButton(SL_MOUSE_BUTTON_LEFT)) {
+					if (Collisions::checkPointToRectangleCollision(GameplayDraws::LOSE_OR_WIN_OPTIONS[i].rectangle, mousePosition) && sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
 						selectedOption = GameplayDraws::LOSE_OR_WIN_OPTIONS[i].option;
 					}
 				}
@@ -153,7 +154,7 @@ namespace LeBreakout {
 				GameplayDraws::GameplayOption selectedOption = GameplayDraws::GameplayOption::NONE;
 
 				for (int i = 0; i < GameplayDraws::GAMEPLAY_MENU_OPTIONS_LENGTH; i++) {
-					if (Collisions::checkPointToRectangleCollision(GameplayDraws::PAUSE_OPTIONS[i].rectangle, mousePosition) && slGetMouseButton(SL_MOUSE_BUTTON_LEFT)) {
+					if (Collisions::checkPointToRectangleCollision(GameplayDraws::PAUSE_OPTIONS[i].rectangle, mousePosition) && sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
 						selectedOption = GameplayDraws::PAUSE_OPTIONS[i].option;
 					}
 				}
@@ -163,7 +164,7 @@ namespace LeBreakout {
 			else {
 				updateGamplayEntities();
 
-				if (slGetKey(SL_KEY_ESCAPE)) {
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
 					gameplayEntities.paused = true;
 				}
 			};

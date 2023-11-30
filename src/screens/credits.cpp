@@ -1,6 +1,6 @@
 #include "credits.h"
 
-#include "sl.h"
+#include <SFML/Window/Mouse.hpp>
 
 #include "utils/math.h"
 #include "utils/Rectangles.h"
@@ -28,7 +28,7 @@ namespace LeBreakout {
 			int textFontSize = 40;
 			const int parts = 2;
 
-			slSprite(
+			TextureManager::drawTexture(
 				TextureManager::obtainTexture(TextureManager::TextureType::RULES_CREDITS_BACKGROUND),
 				MathUtils::getHalf(Constants::SCREEN_DIMENSIONS.x),
 				MathUtils::getHalf(Constants::SCREEN_DIMENSIONS.y),
@@ -77,10 +77,11 @@ namespace LeBreakout {
 			}
 
 			int goBackFontSize = 60;
-		
-			Vectors::Vector2 mousePosition = { static_cast<double>(slGetMouseX()), static_cast<double>(slGetMouseY()) };
+			sf::Vector2i globalMousePosition = sf::Mouse::getPosition();
 
-			slSprite(
+			Vectors::Vector2 mousePosition = { globalMousePosition.x, globalMousePosition.y };
+
+			TextureManager::drawTexture(
 				TextureManager::obtainTexture(TextureManager::TextureType::BUTTON),
 				goBackRectangle.xCenter,
 				goBackRectangle.yCenter,
@@ -104,14 +105,13 @@ namespace LeBreakout {
 				Colors::LIGHT_GRAY,
 				goBackFontSize
 			);
-
-			Colors::setForeColor(Colors::WHITE);
 		};
 
 		void changeScreen(Screen::Screen& screen) {
-			Vectors::Vector2 mousePosition = { static_cast<double>(slGetMouseX()), static_cast<double>(slGetMouseY()) };
+			sf::Vector2i globalMousePosition = sf::Mouse::getPosition();
+			Vectors::Vector2 mousePosition = { globalMousePosition.x, globalMousePosition.y };
 
-			if (Collisions::checkPointToRectangleCollision(goBackRectangle, mousePosition) && slGetMouseButton(SL_MOUSE_BUTTON_LEFT)) {
+			if (Collisions::checkPointToRectangleCollision(goBackRectangle, mousePosition) && sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
 				screen = Screen::MENU;
 			}
 		};

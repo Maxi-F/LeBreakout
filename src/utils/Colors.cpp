@@ -1,7 +1,5 @@
 #include "colors.h"
 
-#include "sl.h"
-
 namespace LeBreakout {
 	namespace Colors {
 		extern const Color RED = { 1, 0, 0, 1 };
@@ -17,13 +15,5 @@ namespace LeBreakout {
 		extern const Color OPAQUE_BLACK = { 0.45, 0.45, 0.45, 0.9 };
 		extern const Color OPAQUE_GRAY = { 0.45, 0.45, 0.45, 0.65 };
 		extern const Color OPAQUE_DARK_RED = { 0.6, 0, 0, 0.6 };
-
-		void setBackColor(Color color) {
-			slSetBackColor(color.r, color.g, color.b);
-		}
-
-		void setForeColor(Color color) {
-			slSetForeColor(color.r, color.g, color.b, color.a);
-		}
 	}
 }

@@ -1,10 +1,11 @@
 #include "paddle.h";
 
-#include "sl.h"
+#include <SFML/Window/Keyboard.hpp>
 
 #include "utils/math.h"
 #include "utils/Vector.h"
 #include "constants.h"
+#include "window.h"
 #include "textureManager.h"
 
 namespace LeBreakout {
@@ -39,7 +40,7 @@ namespace LeBreakout {
 		void drawPaddle(Paddle paddle) {
 			const int SPRITE_ADDED_HEIGHT = 20;
 
-			slSprite(
+			TextureManager::drawTexture(
 				TextureManager::obtainTexture(TextureManager::TextureType::PADDLE),
 				paddle.rectangle.xCenter,
 				paddle.rectangle.yCenter,
@@ -49,14 +50,14 @@ namespace LeBreakout {
 		}
 
 		static void moveLeftIfPressing(Paddle& paddle) {
-			if (slGetKey('A') && getPaddleLeftSide(paddle) > 0) {
-				paddle.rectangle.xCenter -= paddle.velocity * slGetDeltaTime();
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && getPaddleLeftSide(paddle) > 0) {
+				paddle.rectangle.xCenter -= paddle.velocity * Window::deltaTime;
 			}
 		}
 
 		static void moveRightIfPressing(Paddle& paddle) {
-			if (slGetKey('D') && getPaddleRightSide(paddle) < Constants::SCREEN_DIMENSIONS.x) {
-				paddle.rectangle.xCenter += paddle.velocity * slGetDeltaTime();
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && getPaddleRightSide(paddle) < Constants::SCREEN_DIMENSIONS.x) {
+				paddle.rectangle.xCenter += paddle.velocity * Window::deltaTime;
 			}
 		}
 

@@ -1,12 +1,11 @@
 #include "powerup.h"
 
-#include "sl.h"
-
 #include "utils/math.h"
 #include "utils/collisions.h"
 #include "utils/circles.h"
 #include "utils/Colors.h"
 #include "textureManager.h"
+#include "window.h"
 
 namespace LeBreakout {
 	namespace PowerUps {
@@ -57,7 +56,7 @@ namespace LeBreakout {
 
 				const int SPRITE_ADDED_SIZE = 25;
 
-				slSprite(
+				TextureManager::drawTexture(
 					TextureManager::obtainTexture(texture),
 					powerUpCollisionBox.xCenter,
 					powerUpCollisionBox.yCenter,
@@ -91,7 +90,7 @@ namespace LeBreakout {
 			if (powerUp.powerUpType == PowerUpType::NONE) return;
 
 			if (powerUp.isFalling && !powerUp.collisioned) {
-				powerUp.position.y -= POWER_UP_FALL_VELOCITY * slGetDeltaTime();
+				powerUp.position.y -= POWER_UP_FALL_VELOCITY * Window::deltaTime;
 			}
 		};
 	}

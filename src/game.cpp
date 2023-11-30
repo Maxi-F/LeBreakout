@@ -2,10 +2,10 @@
 
 #include <stdlib.h>
 #include <time.h>
-
-#include "sl.h"
+#include <SFML/Graphics.hpp>
 
 #include "utils/fonts.h"
+#include "window.h"
 #include "screens/screens.h"
 #include "screens/menu.h"
 #include "screens/rules.h"
@@ -17,17 +17,12 @@
 namespace LeBreakout {
 	namespace Game {
 		bool isLeftClickPressed = false;
+		extern sf::Clock deltaClock;
 
 		static void init() {
 			srand(static_cast<unsigned int>(time(NULL)));
-		
-			slWindow(
-				static_cast<int>(Constants::SCREEN_DIMENSIONS.x),
-				static_cast<int>(Constants::SCREEN_DIMENSIONS.y),
-				"LeBreakout",
-				true
-			);
 
+			Window::init();
 			TextureManager::initTextureManager();
 			Fonts::initFont("assets/amatic.ttf");
 			Menu::initMenu();
@@ -62,18 +57,26 @@ namespace LeBreakout {
 			switch (actualScreen) {
 				case Screen::MENU:
 					doActionBySelectedOption(actualScreen, shouldClose);
-					Menu::drawMenu();
+					Window::window.clear();
+						Menu::drawMenu();
+					Window::window.display();
 					break;
 				case Screen::GAMEPLAY:
 					Gameplay::updateGameplay(actualScreen, isLeftClickPressed);
-					Gameplay::drawGameplay();
+					Window::window.clear();
+						Gameplay::drawGameplay();
+					Window::window.display();
 					break;
 				case Screen::RULES:
-					RulesScreen::drawRules();
+					Window::window.clear();
+						RulesScreen::drawRules();
+					Window::window.display();
 					RulesScreen::changeScreen(actualScreen);
 					break;
 				case Screen::CREDITS:
-					CreditsScreen::drawCredits();
+					Window::window.clear();
+						CreditsScreen::drawCredits();
+					Window::window.display();
 					CreditsScreen::changeScreen(actualScreen);
 					break;
 			}
@@ -82,16 +85,15 @@ namespace LeBreakout {
 		void startGame() {
 			init();
 			Screen::Screen actualScreen = Screen::MENU;
+
 			bool shouldClose = false;
-
-			while (!slShouldClose() && !shouldClose)
+			sf::Clock clock;
+			while (Window::window.isOpen() && !shouldClose)
 			{
+				sf::Time dt = clock.restart();
+				Window::deltaTime = dt.asSeconds();
 				screenLoop(actualScreen, shouldClose);
-
-				slRender();
 			}
-
-			slClose();
 		}
 	}
 }

@@ -22,8 +22,5 @@ namespace LeBreakout {
 		extern const Color OPAQUE_BLACK;
 		extern const Color OPAQUE_GRAY;
 		extern const Color OPAQUE_DARK_RED;
-
-		void setBackColor(Color color);
-		void setForeColor(Color color);
 	}
 }

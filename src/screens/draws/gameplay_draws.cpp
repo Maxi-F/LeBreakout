@@ -1,8 +1,7 @@
 #include "gameplay_draws.h"
 
 #include <string>
-
-#include "sl.h"
+#include <SFML/Window/Mouse.hpp>
 
 #include "utils/Rectangles.h"
 #include "utils/math.h"
@@ -135,7 +134,9 @@ namespace LeBreakout {
 
 		static void drawBox(const char* title, const GameplayMenuOption options[GAMEPLAY_MENU_OPTIONS_LENGTH]) {
 			const Vectors::Vector2 MENU_SIZE = { 550, 700 };
-			const Vectors::Vector2 mousePosition = { static_cast<double>(slGetMouseX()), static_cast<double>(slGetMouseY()) };
+
+			sf::Vector2i globalMousePosition = sf::Mouse::getPosition();
+			Vectors::Vector2 mousePosition = { globalMousePosition.x, globalMousePosition.y };
 
 			Rectangles::Rectangle menu = {
 				MathUtils::getHalf(Constants::SCREEN_DIMENSIONS.x),
@@ -144,7 +145,7 @@ namespace LeBreakout {
 				MENU_SIZE.y
 			};
 
-			slSprite(
+			TextureManager::drawTexture(
 				TextureManager::obtainTexture(TextureManager::TextureType::PAUSE_BACKGROUND),
 				menu.xCenter,
 				menu.yCenter,
@@ -169,10 +170,8 @@ namespace LeBreakout {
 				titleFontSize
 			);
 
-			Colors::setForeColor(Colors::WHITE);
-
 			for (int i = 0; i < GAMEPLAY_MENU_OPTIONS_LENGTH; i++) {
-				slSprite(
+				TextureManager::drawTexture(
 					TextureManager::obtainTexture(TextureManager::TextureType::BUTTON),
 					options[i].rectangle.xCenter,
 					options[i].rectangle.yCenter,
@@ -199,8 +198,6 @@ namespace LeBreakout {
 					Colors::LIGHT_GRAY,
 					optionFontSize
 				);
-
-				Colors::setForeColor(Colors::WHITE);
 			}
 		}
 
@@ -217,7 +214,7 @@ namespace LeBreakout {
 		}
 
 		void drawGameplay(Gameplay::GameplayEntities gameplayEntities) {
-			slSprite(
+			TextureManager::drawTexture(
 				TextureManager::obtainTexture(TextureManager::TextureType::GAMEPLAY_BACKGROUND),
 				MathUtils::getHalf(Constants::SCREEN_DIMENSIONS.x),
 				MathUtils::getHalf(Constants::SCREEN_DIMENSIONS.y),
@@ -234,8 +231,7 @@ namespace LeBreakout {
 				},
 				Colors::OPAQUE_GRAY
 			);
-		
-			Colors::setForeColor(Colors::WHITE);
+	
 
 			Paddle::drawPaddle(gameplayEntities.paddle);
 
