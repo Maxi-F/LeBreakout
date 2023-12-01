@@ -96,7 +96,7 @@ namespace LeBreakout {
 				{
 					// Close window: exit
 					if (event.type == sf::Event::Closed)
-						return window.close();
+						window.close();
 				}
 
 				sf::Time dt = clock.restart();

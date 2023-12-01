@@ -253,7 +253,7 @@ namespace LeBreakout {
 					Block::drawBlock(window, gameplayEntities.blockRows[i][j]);
 				}
 			}
-			#include <SFML/Window/Window.hpp>
+
 			// This is in another loop so it draws on top of the blocks
 			for (int i = 0; i < static_cast<int>(gameplayEntities.blockRows.size()); i++) {
 				for (int j = 0; j < static_cast<int>(gameplayEntities.blockRows[i].size()); j++) {

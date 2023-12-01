@@ -14,7 +14,6 @@ namespace LeBreakout {
 
 		void initFont(const char* filename) {
 			ACTIVE_FONT.loadFromFile(filename);
-
 		};
 
 		void setFontSize(int fontSize) {
@@ -22,9 +21,13 @@ namespace LeBreakout {
 		}
 
 		Vectors::Vector2 getTextSize(const char* text) {
-			std::string textString = text;
-			int textLength = textString.length();
-			return { static_cast<double>(textLength * FONT_SIZE), static_cast<double>(FONT_SIZE) };
+			sf::Text textToMeasure;
+			
+			textToMeasure.setFont(ACTIVE_FONT);
+			textToMeasure.setCharacterSize(FONT_SIZE);
+			textToMeasure.setString(text);
+
+			return { textToMeasure.getLocalBounds().width, static_cast<double>(FONT_SIZE) };
 		}
 
 		void writeText(sf::RenderWindow& window, const char* text, Vectors::Vector2 position, Colors::Color color, int fontSize) {
@@ -34,9 +37,7 @@ namespace LeBreakout {
 			textToDraw.setCharacterSize(fontSize);
 			textToDraw.setString(text);
 
-			sf::Color sfColor(color.r, color.g, color.b, color.a);
-
-			textToDraw.setFillColor(sfColor);
+			textToDraw.setFillColor(sf::Color(color.r));
 			textToDraw.setPosition(sf::Vector2f(position.x, position.y));
 			
 			window.draw(textToDraw);

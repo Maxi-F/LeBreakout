@@ -13,7 +13,7 @@ namespace LeBreakout {
 
 		void fillRectangle(sf::RenderWindow& window, Rectangle rectangle, Colors::Color color) {
 			sf::RectangleShape rectangleToDraw(sf::Vector2f(rectangle.width, rectangle.height));
-			rectangleToDraw.setPosition(sf::Vector2f(rectangle.xCenter - rectangle.width / 2, rectangle.yCenter / rectangle.height / 2));
+			rectangleToDraw.setPosition(sf::Vector2f(rectangle.xCenter - rectangle.width / 2, rectangle.yCenter - rectangle.height / 2));
 			rectangleToDraw.setFillColor(sf::Color(color.r, color.g, color.b, color.a));
 			
 			window.draw(rectangleToDraw);

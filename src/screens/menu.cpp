@@ -112,12 +112,6 @@ namespace LeBreakout {
 		}
 
 		void drawMenu(sf::RenderWindow& window) {
-			sf::Texture background;
-			background.create(Constants::SCREEN_DIMENSIONS.x, Constants::SCREEN_DIMENSIONS.y);
-			sf::Sprite backgroundSprite;
-			backgroundSprite.setTexture(background);
-			backgroundSprite.setColor(sf::Color::Black);
-
 			TextureManager::drawTexture(
 				window,
 				TextureManager::obtainTexture(TextureManager::TextureType::MENU_BACKGROUND),

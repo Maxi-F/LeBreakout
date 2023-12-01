@@ -60,7 +60,7 @@ namespace LeBreakout {
 		void drawTexture(sf::RenderWindow& window, sf::Texture image, double x, double y, double width, double height) {
 			sf::Sprite sprite;
 			sprite.setTexture(image);
-			sprite.setPosition(sf::Vector2f(x, y));
+			sprite.setPosition(sf::Vector2f(x - width / 2, y - height / 2));
 			sprite.setScale(sf::Vector2f(width / image.getSize().x, height / image.getSize().y));
 
 			window.draw(sprite);
