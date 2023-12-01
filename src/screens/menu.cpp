@@ -111,7 +111,7 @@ namespace LeBreakout {
 			}
 		}
 
-		void drawMenu() {
+		void drawMenu(sf::RenderWindow& window) {
 			sf::Texture background;
 			background.create(Constants::SCREEN_DIMENSIONS.x, Constants::SCREEN_DIMENSIONS.y);
 			sf::Sprite backgroundSprite;
@@ -119,6 +119,7 @@ namespace LeBreakout {
 			backgroundSprite.setColor(sf::Color::Black);
 
 			TextureManager::drawTexture(
+				window,
 				TextureManager::obtainTexture(TextureManager::TextureType::MENU_BACKGROUND),
 				MathUtils::getHalf(Constants::SCREEN_DIMENSIONS.x),
 				MathUtils::getHalf(Constants::SCREEN_DIMENSIONS.y),
@@ -135,6 +136,7 @@ namespace LeBreakout {
 			Vectors::Vector2 titleSize = Fonts::getTextSize(title);
 
 			Fonts::writeText(
+				window,
 				title,
 				{ HALF_SCREEN.x - MathUtils::getHalf(titleSize.x), Constants::SCREEN_DIMENSIONS.y - titleMargin },
 				Colors::BLACK,
@@ -147,6 +149,7 @@ namespace LeBreakout {
 				Rectangles::Rectangle optionRectangle = menuOptions[i].rectangle;
 
 				TextureManager::drawTexture(
+					window,
 					TextureManager::obtainTexture(TextureManager::TextureType::BUTTON),
 					optionRectangle.xCenter,
 					optionRectangle.yCenter,
@@ -155,11 +158,12 @@ namespace LeBreakout {
 				);
 
 				if (menuOptions[i].isHovered) {
-					Rectangles::fillRectangle(menuOptions[i].rectangle, Colors::OPAQUE_GRAY);
+					Rectangles::fillRectangle(window, menuOptions[i].rectangle, Colors::OPAQUE_GRAY);
 				}
 
 				Vectors::Vector2 optionTextSize = Fonts::getTextSize(optionText);
 				Fonts::writeText(
+					window,
 					optionText,
 					{ 
 						optionRectangle.xCenter - MathUtils::getHalf(optionTextSize.x),

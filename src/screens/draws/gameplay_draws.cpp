@@ -77,7 +77,7 @@ namespace LeBreakout {
 			};
 		}
 
-		static void drawUI(Gameplay::GameplayEntities gameplayEntities) {
+		static void drawUI(sf::RenderWindow& window, Gameplay::GameplayEntities gameplayEntities) {
 			Rectangles::Rectangle uiBackground = {
 				MathUtils::getHalf(Constants::FIELD_DIMENSIONS.x),
 				Constants::SCREEN_DIMENSIONS.y - MathUtils::getHalf(Constants::FIELD_Y_MARGIN),
@@ -85,7 +85,7 @@ namespace LeBreakout {
 				Constants::FIELD_Y_MARGIN
 			};
 
-			Rectangles::fillRectangle(uiBackground, Colors::OPAQUE_DARK_RED);
+			Rectangles::fillRectangle(window, uiBackground, Colors::OPAQUE_DARK_RED);
 
 			const std::string livesPreText = "Lives: ";
 			std::string lives = std::to_string(gameplayEntities.player.lives);
@@ -99,6 +99,7 @@ namespace LeBreakout {
 			Vectors::Vector2 livesTextSize = Fonts::getTextSize(livesText.c_str());
 
 			Fonts::writeText(
+				window,
 				livesText.c_str(),
 				{ static_cast<double>(fontSize), Constants::FIELD_DIMENSIONS.y + MathUtils::getHalf(Constants::FIELD_Y_MARGIN) - MathUtils::getHalf(livesTextSize.y) },
 				Colors::WHITE,
@@ -109,6 +110,7 @@ namespace LeBreakout {
 			Vectors::Vector2 movementTextSize = Fonts::getTextSize(movementExplanation);
 
 			Fonts::writeText(
+				window,
 				movementExplanation,
 				{
 					MathUtils::getHalf(Constants::SCREEN_DIMENSIONS.x) - MathUtils::getHalf(movementTextSize.x),
@@ -122,6 +124,7 @@ namespace LeBreakout {
 			Vectors::Vector2 pauseTextSize = Fonts::getTextSize(pauseExplanation);
 
 			Fonts::writeText(
+				window,
 				pauseExplanation,
 				{
 					Constants::SCREEN_DIMENSIONS.x - movementTextSize.x,
@@ -132,7 +135,7 @@ namespace LeBreakout {
 			);
 		}
 
-		static void drawBox(const char* title, const GameplayMenuOption options[GAMEPLAY_MENU_OPTIONS_LENGTH]) {
+		static void drawBox(sf::RenderWindow& window, const char* title, const GameplayMenuOption options[GAMEPLAY_MENU_OPTIONS_LENGTH]) {
 			const Vectors::Vector2 MENU_SIZE = { 550, 700 };
 
 			sf::Vector2i globalMousePosition = sf::Mouse::getPosition();
@@ -146,6 +149,7 @@ namespace LeBreakout {
 			};
 
 			TextureManager::drawTexture(
+				window,
 				TextureManager::obtainTexture(TextureManager::TextureType::PAUSE_BACKGROUND),
 				menu.xCenter,
 				menu.yCenter,
@@ -161,6 +165,7 @@ namespace LeBreakout {
 			Vectors::Vector2 titleSize = Fonts::getTextSize(title);
 
 			Fonts::writeText(
+				window,
 				title,
 				{ 
 					MathUtils::getHalf(Constants::SCREEN_DIMENSIONS.x) - MathUtils::getHalf(titleSize.x),
@@ -172,6 +177,7 @@ namespace LeBreakout {
 
 			for (int i = 0; i < GAMEPLAY_MENU_OPTIONS_LENGTH; i++) {
 				TextureManager::drawTexture(
+					window,
 					TextureManager::obtainTexture(TextureManager::TextureType::BUTTON),
 					options[i].rectangle.xCenter,
 					options[i].rectangle.yCenter,
@@ -180,7 +186,7 @@ namespace LeBreakout {
 				);
 
 				if (Collisions::checkPointToRectangleCollision(options[i].rectangle, mousePosition)) {
-					Rectangles::fillRectangle(options[i].rectangle, Colors::OPAQUE_GRAY);
+					Rectangles::fillRectangle(window, options[i].rectangle, Colors::OPAQUE_GRAY);
 				}
 
 				const char* optionText = optionToString(options[i].option);
@@ -190,6 +196,7 @@ namespace LeBreakout {
 				Vectors::Vector2 optionSize = Fonts::getTextSize(optionText);
 
 				Fonts::writeText(
+					window,
 					optionText,
 					{ 
 						options[i].rectangle.xCenter - MathUtils::getHalf(optionSize.x),
@@ -201,20 +208,21 @@ namespace LeBreakout {
 			}
 		}
 
-		static void drawPause() {
-			drawBox("PAUSED", PAUSE_OPTIONS);
+		static void drawPause(sf::RenderWindow& window) {
+			drawBox(window, "PAUSED", PAUSE_OPTIONS);
 		}
 
-		static void drawWinBox() {
-			drawBox("You won!", LOSE_OR_WIN_OPTIONS);
+		static void drawWinBox(sf::RenderWindow& window) {
+			drawBox(window, "You won!", LOSE_OR_WIN_OPTIONS);
 		}
 
-		static void drawLoseBox() {
-			drawBox("You lost...", LOSE_OR_WIN_OPTIONS);
+		static void drawLoseBox(sf::RenderWindow& window) {
+			drawBox(window, "You lost...", LOSE_OR_WIN_OPTIONS);
 		}
 
-		void drawGameplay(Gameplay::GameplayEntities gameplayEntities) {
+		void drawGameplay(sf::RenderWindow& window, Gameplay::GameplayEntities gameplayEntities) {
 			TextureManager::drawTexture(
+				window,
 				TextureManager::obtainTexture(TextureManager::TextureType::GAMEPLAY_BACKGROUND),
 				MathUtils::getHalf(Constants::SCREEN_DIMENSIONS.x),
 				MathUtils::getHalf(Constants::SCREEN_DIMENSIONS.y),
@@ -223,6 +231,7 @@ namespace LeBreakout {
 			);
 
 			Rectangles::fillRectangle(
+				window,
 				{
 					MathUtils::getHalf(Constants::SCREEN_DIMENSIONS.x),
 					MathUtils::getHalf(Constants::SCREEN_DIMENSIONS.y),
@@ -233,30 +242,30 @@ namespace LeBreakout {
 			);
 	
 
-			Paddle::drawPaddle(gameplayEntities.paddle);
+			Paddle::drawPaddle(window, gameplayEntities.paddle);
 
 			for (int i = 0; i < static_cast<int>(gameplayEntities.balls.size()); i++) {
-				Ball::drawBall(&gameplayEntities.balls[i]);
+				Ball::drawBall(window, &gameplayEntities.balls[i]);
 			}
 
 			for (int i = 0; i < static_cast<int>(gameplayEntities.blockRows.size()); i++) {
 				for (int j = 0; j < static_cast<int>(gameplayEntities.blockRows[i].size()); j++) {
-					Block::drawBlock(gameplayEntities.blockRows[i][j]);
+					Block::drawBlock(window, gameplayEntities.blockRows[i][j]);
 				}
 			}
-
+			#include <SFML/Window/Window.hpp>
 			// This is in another loop so it draws on top of the blocks
 			for (int i = 0; i < static_cast<int>(gameplayEntities.blockRows.size()); i++) {
 				for (int j = 0; j < static_cast<int>(gameplayEntities.blockRows[i].size()); j++) {
-					PowerUps::drawPowerUp(gameplayEntities.blockRows[i][j].powerUp);
+					PowerUps::drawPowerUp(window, gameplayEntities.blockRows[i][j].powerUp);
 				}
 			}
 
-			drawUI(gameplayEntities);
+			drawUI(window, gameplayEntities);
 
-			if (gameplayEntities.hasLost) drawLoseBox();
-			if (gameplayEntities.hasWon) drawWinBox();
-			if (gameplayEntities.paused) drawPause();
+			if (gameplayEntities.hasLost) drawLoseBox(window);
+			if (gameplayEntities.hasWon) drawWinBox(window);
+			if (gameplayEntities.paused) drawPause(window);
 		}
 	}
 }

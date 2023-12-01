@@ -21,6 +21,6 @@ namespace LeBreakout {
 
 		void initGameplay();
 		void updateGameplay(Screen::Screen &screen, bool& isLeftClickPressed);
-		void drawGameplay();
+		void drawGameplay(sf::RenderWindow& window);
 	}
 }

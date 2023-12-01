@@ -26,7 +26,7 @@ namespace LeBreakout {
 		Rectangles::Rectangle getPowerUpCollisionBox(PowerUp powerUp);
 
 		PowerUp createPowerUp(Vectors::Vector2 position);
-		void drawPowerUp(PowerUp powerUp);
+		void drawPowerUp(sf::RenderWindow& window, PowerUp powerUp);
 		void doPowerUp(PowerUp& powerUp, Paddle::Paddle& paddle, Ball::Ball& ball, std::vector<Ball::Ball>& balls);
 		void updatePowerUp(PowerUp& powerUp);
 	}

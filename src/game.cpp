@@ -22,7 +22,6 @@ namespace LeBreakout {
 		static void init() {
 			srand(static_cast<unsigned int>(time(NULL)));
 
-			Window::init();
 			TextureManager::initTextureManager();
 			Fonts::initFont("assets/amatic.ttf");
 			Menu::initMenu();
@@ -53,30 +52,30 @@ namespace LeBreakout {
 		}
 
 
-		static void screenLoop(Screen::Screen &actualScreen, bool& shouldClose) {
+		static void screenLoop(sf::RenderWindow& window, Screen::Screen &actualScreen, bool& shouldClose) {
 			switch (actualScreen) {
 				case Screen::MENU:
 					doActionBySelectedOption(actualScreen, shouldClose);
-					Window::window.clear();
-						Menu::drawMenu();
-					Window::window.display();
+					window.clear();
+						Menu::drawMenu(window);
+					window.display();
 					break;
 				case Screen::GAMEPLAY:
 					Gameplay::updateGameplay(actualScreen, isLeftClickPressed);
-					Window::window.clear();
-						Gameplay::drawGameplay();
-					Window::window.display();
+					window.clear();
+						Gameplay::drawGameplay(window);
+					window.display();
 					break;
 				case Screen::RULES:
-					Window::window.clear();
-						RulesScreen::drawRules();
-					Window::window.display();
+					window.clear();
+						RulesScreen::drawRules(window);
+					window.display();
 					RulesScreen::changeScreen(actualScreen);
 					break;
 				case Screen::CREDITS:
-					Window::window.clear();
-						CreditsScreen::drawCredits();
-					Window::window.display();
+					window.clear();
+						CreditsScreen::drawCredits(window);
+					window.display();
 					CreditsScreen::changeScreen(actualScreen);
 					break;
 			}
@@ -84,15 +83,25 @@ namespace LeBreakout {
 
 		void startGame() {
 			init();
+			sf::RenderWindow window(sf::VideoMode(Constants::SCREEN_DIMENSIONS.x, Constants::SCREEN_DIMENSIONS.y), "LeBreakout");
 			Screen::Screen actualScreen = Screen::MENU;
 
 			bool shouldClose = false;
 			sf::Clock clock;
-			while (Window::window.isOpen() && !shouldClose)
+			while (window.isOpen() && !shouldClose)
 			{
+				// Process events
+				sf::Event event;
+				while (window.pollEvent(event))
+				{
+					// Close window: exit
+					if (event.type == sf::Event::Closed)
+						return window.close();
+				}
+
 				sf::Time dt = clock.restart();
 				Window::deltaTime = dt.asSeconds();
-				screenLoop(actualScreen, shouldClose);
+				screenLoop(window, actualScreen, shouldClose);
 			}
 		}
 	}

@@ -10,7 +10,7 @@ namespace LeBreakout {
 	namespace Circles {
 		static const int NUM_VERTICES = 50;
 
-		void drawCircle(Vectors::Vector2 center, double radius, Colors::Color color, sf::RenderWindow window) {
+		void drawCircle(sf::RenderWindow& window, Vectors::Vector2 center, double radius, Colors::Color color) {
 			sf::CircleShape circle = sf::CircleShape(radius);
 
 			circle.setFillColor(sf::Color(color.r, color.g, color.b, color.a));

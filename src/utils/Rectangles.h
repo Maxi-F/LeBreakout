@@ -1,6 +1,8 @@
 #pragma once
 #include "colors.h"
 
+#include <SFML/Graphics/RenderWindow.hpp>
+
 namespace LeBreakout {
 	namespace Rectangles {
 		struct Rectangle {
@@ -10,6 +12,6 @@ namespace LeBreakout {
 			double height;
 		};
 
-		void fillRectangle(Rectangle rectangle, Colors::Color color);
+		void fillRectangle(sf::RenderWindow& window, Rectangle rectangle, Colors::Color color);
 	}
 }

@@ -170,8 +170,8 @@ namespace LeBreakout {
 			};
 		}
 
-		void drawGameplay() {
-			GameplayDraws::drawGameplay(gameplayEntities);
+		void drawGameplay(sf::RenderWindow& window) {
+			GameplayDraws::drawGameplay(window, gameplayEntities);
 		}
 	}
 }

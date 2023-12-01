@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/Graphics/Sprite.hpp>
+#include <SFML/Graphics/RenderWindow.hpp>
 
 namespace LeBreakout {
 	namespace TextureManager {
@@ -20,6 +21,6 @@ namespace LeBreakout {
 
 		void initTextureManager();
 		sf::Texture obtainTexture(TextureType texture);
-		void drawTexture(sf::Texture image, double x, double y, double width, double height);
+		void drawTexture(sf::RenderWindow& window, sf::Texture image, double x, double y, double width, double height);
 	}
 }

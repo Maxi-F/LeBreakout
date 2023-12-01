@@ -19,6 +19,6 @@ namespace LeBreakout {
 		void updateBall(Ball* ball, Rectangles::Rectangle paddleRectangle, bool& collidedBottom);
 		void changeDirectionByCollisionPosition(Ball* ball, Rectangles::Rectangle blockRectangle);
 	
-		void drawBall(Ball* ball);
+		void drawBall(sf::RenderWindow& window, Ball* ball);
 	}
 }

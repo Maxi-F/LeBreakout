@@ -27,7 +27,7 @@ namespace LeBreakout {
 			return { static_cast<double>(textLength * FONT_SIZE), static_cast<double>(FONT_SIZE) };
 		}
 
-		void writeText(const char* text, Vectors::Vector2 position, Colors::Color color, int fontSize,sf::RenderWindow window) {
+		void writeText(sf::RenderWindow& window, const char* text, Vectors::Vector2 position, Colors::Color color, int fontSize) {
 			sf::Text textToDraw;
 
 			textToDraw.setFont(ACTIVE_FONT);

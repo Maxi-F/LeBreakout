@@ -37,10 +37,11 @@ namespace LeBreakout {
 			};
 		}
 
-		void drawPaddle(Paddle paddle) {
+		void drawPaddle(sf::RenderWindow& window, Paddle paddle) {
 			const int SPRITE_ADDED_HEIGHT = 20;
 
 			TextureManager::drawTexture(
+				window,
 				TextureManager::obtainTexture(TextureManager::TextureType::PADDLE),
 				paddle.rectangle.xCenter,
 				paddle.rectangle.yCenter,

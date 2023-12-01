@@ -23,12 +23,13 @@ namespace LeBreakout {
 		};
 
 
-		void drawCredits() {
+		void drawCredits(sf::RenderWindow& window) {
 			int titleFontSize = 60;
 			int textFontSize = 40;
 			const int parts = 2;
 
 			TextureManager::drawTexture(
+				window,
 				TextureManager::obtainTexture(TextureManager::TextureType::RULES_CREDITS_BACKGROUND),
 				MathUtils::getHalf(Constants::SCREEN_DIMENSIONS.x),
 				MathUtils::getHalf(Constants::SCREEN_DIMENSIONS.y),
@@ -37,6 +38,7 @@ namespace LeBreakout {
 			);
 
 			Rectangles::fillRectangle(
+				window,
 				{
 					MathUtils::getHalf(Constants::SCREEN_DIMENSIONS.x),
 					MathUtils::getHalf(Constants::SCREEN_DIMENSIONS.y),
@@ -62,13 +64,15 @@ namespace LeBreakout {
 				double groupMargin = MARGIN * i * 2;
 
 				Fonts::writeText(
+					window,
 					titles[i],
-					{ MARGIN, Constants::SCREEN_DIMENSIONS.y - TITLE_MARGIN - groupMargin},
+					{ MARGIN, Constants::SCREEN_DIMENSIONS.y - TITLE_MARGIN - groupMargin },
 					Colors::YELLOW,
 					titleFontSize
 				);
 
 				Fonts::writeText(
+					window,
 					texts[i],
 					{ MARGIN, Constants::SCREEN_DIMENSIONS.y - TEXT_MARGIN - groupMargin },
 					Colors::WHITE,
@@ -82,6 +86,7 @@ namespace LeBreakout {
 			Vectors::Vector2 mousePosition = { globalMousePosition.x, globalMousePosition.y };
 
 			TextureManager::drawTexture(
+				window,
 				TextureManager::obtainTexture(TextureManager::TextureType::BUTTON),
 				goBackRectangle.xCenter,
 				goBackRectangle.yCenter,
@@ -91,6 +96,7 @@ namespace LeBreakout {
 
 			if (Collisions::checkPointToRectangleCollision(goBackRectangle, mousePosition)) {
 				Rectangles::fillRectangle(
+					window,
 					goBackRectangle,
 					Colors::OPAQUE_GRAY
 				);
@@ -100,6 +106,7 @@ namespace LeBreakout {
 			Vectors::Vector2 goBackTextSize = Fonts::getTextSize(goBackText);
 
 			Fonts::writeText(
+				window,
 				goBackText,
 				{ goBackRectangle.xCenter - MathUtils::getHalf(goBackTextSize.x), goBackRectangle.yCenter - MathUtils::getHalf(goBackTextSize.y) },
 				Colors::LIGHT_GRAY,

@@ -16,7 +16,7 @@ namespace LeBreakout {
 		extern const double BLOCK_WIDTH;
 
 		Block initBlock(Vectors::Vector2 position, PowerUps::PowerUp powerUp);
-		void drawBlock(Block block);
+		void drawBlock(sf::RenderWindow& window, Block block);
 		void updateBlock(Block &block, Ball::Ball *ball);
 	}
 }

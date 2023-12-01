@@ -9,7 +9,7 @@ namespace LeBreakout {
 		};
 
 		Paddle initPaddle();
-		void drawPaddle(Paddle paddle);
+		void drawPaddle(sf::RenderWindow& window, Paddle paddle);
 		void updatePaddle(Paddle& paddle);
 		void enlarge(Paddle& paddle);
 		void reduce(Paddle& paddle);

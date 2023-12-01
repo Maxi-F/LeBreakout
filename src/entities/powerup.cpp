@@ -49,7 +49,7 @@ namespace LeBreakout {
 			};
 		}
 
-		void drawPowerUp(PowerUp powerUp) {
+		void drawPowerUp(sf::RenderWindow& window, PowerUp powerUp) {
 			if (powerUp.powerUpType != PowerUpType::NONE && !powerUp.collisioned && powerUp.isFalling) {
 				Rectangles::Rectangle powerUpCollisionBox = getPowerUpCollisionBox(powerUp);
 				TextureManager::TextureType texture = getTexturePerPowerUp(powerUp.powerUpType);
@@ -57,6 +57,7 @@ namespace LeBreakout {
 				const int SPRITE_ADDED_SIZE = 25;
 
 				TextureManager::drawTexture(
+					window,
 					TextureManager::obtainTexture(texture),
 					powerUpCollisionBox.xCenter,
 					powerUpCollisionBox.yCenter,

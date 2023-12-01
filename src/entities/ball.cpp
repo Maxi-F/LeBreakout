@@ -107,11 +107,12 @@ namespace LeBreakout {
 			}
 		}
 
-		void drawBall(Ball *ball) {
+		void drawBall(sf::RenderWindow& window, Ball *ball) {
 			Rectangles::Rectangle ballCollisionBox = getBallCollisionBox(*ball);
 			const int SPRITE_ADDED_SIZE = 25;
 
 			TextureManager::drawTexture(
+				window,
 				TextureManager::obtainTexture(TextureManager::TextureType::BALL),
 				ballCollisionBox.xCenter,
 				ballCollisionBox.yCenter,

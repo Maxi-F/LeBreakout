@@ -17,12 +17,13 @@ namespace LeBreakout {
 			};
 		}
 
-		void drawBlock(Block block) {
+		void drawBlock(sf::RenderWindow& window, Block block) {
 			const int SPRITE_ADDED_WIDTH = 60;
 			const int SPRITE_ADDED_HEIGHT = 40;
 
 			if (!block.hasBeenHit) {
 				TextureManager::drawTexture(
+					window,
 					TextureManager::obtainTexture(TextureManager::TextureType::BLOCK),
 					block.rectangle.xCenter,
 					block.rectangle.yCenter,

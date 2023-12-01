@@ -1,5 +1,6 @@
 #pragma once
 #include "screens/gameplay.h"
+#include <SFML/Graphics/RenderWindow.hpp>
 
 namespace LeBreakout {
 	namespace GameplayDraws {
@@ -20,6 +21,6 @@ namespace LeBreakout {
 		extern const GameplayMenuOption PAUSE_OPTIONS[];
 		extern const GameplayMenuOption LOSE_OR_WIN_OPTIONS[];
 
-		void drawGameplay(Gameplay::GameplayEntities gameplayEntities);
+		void drawGameplay(sf::RenderWindow& window, Gameplay::GameplayEntities gameplayEntities);
 	}
 }

@@ -29,10 +29,11 @@ namespace LeBreakout {
 			const char* text;
 		};
 
-		void drawRules() {
+		void drawRules(sf::RenderWindow& window) {
 			const int FONT_SIZE = 60;
 
 			TextureManager::drawTexture(
+				window,
 				TextureManager::obtainTexture(TextureManager::TextureType::RULES_CREDITS_BACKGROUND),
 				MathUtils::getHalf(Constants::SCREEN_DIMENSIONS.x),
 				MathUtils::getHalf(Constants::SCREEN_DIMENSIONS.y),
@@ -41,6 +42,7 @@ namespace LeBreakout {
 			);
 
 			Rectangles::fillRectangle(
+				window,
 				{ 
 					MathUtils::getHalf(Constants::SCREEN_DIMENSIONS.x),
 					MathUtils::getHalf(Constants::SCREEN_DIMENSIONS.y),
@@ -65,6 +67,7 @@ namespace LeBreakout {
 
 			for (int i = 0; i < FIRST_TEXTS_COUNT; i++) {
 				Fonts::writeText(
+					window,
 					firstTexts[i],
 					{ MARGIN, Constants::SCREEN_DIMENSIONS.y - MARGIN - MARGIN * i },
 					Colors::WHITE,
@@ -96,6 +99,7 @@ namespace LeBreakout {
 				const int ADDED_SPRITE_SIZE = 40;
 
 				TextureManager::drawTexture(
+					window,
 					TextureManager::obtainTexture(powerUpTexts[i].texture),
 					powerUpBox.xCenter,
 					powerUpBox.yCenter,
@@ -104,6 +108,7 @@ namespace LeBreakout {
 				);
 
 				Fonts::writeText(
+					window,
 					powerUpTexts[i].text,
 					{
 						MARGIN + PowerUps::POWER_UP_RADIUS * 3,
@@ -117,6 +122,7 @@ namespace LeBreakout {
 			const char* randomlyGeneratedText = "All levels are randomly generated!";
 
 			Fonts::writeText(
+				window,
 				randomlyGeneratedText,
 				{
 					MARGIN,
@@ -130,6 +136,7 @@ namespace LeBreakout {
 			Vectors::Vector2 mousePosition = { globalMousePosition.x, globalMousePosition.y };
 
 			TextureManager::drawTexture(
+				window,
 				TextureManager::obtainTexture(TextureManager::TextureType::BUTTON),
 				goBackRectangle.xCenter,
 				goBackRectangle.yCenter,
@@ -139,6 +146,7 @@ namespace LeBreakout {
 
 			if (Collisions::checkPointToRectangleCollision(goBackRectangle, mousePosition)) {
 				Rectangles::fillRectangle(
+					window,
 					goBackRectangle,
 					Colors::OPAQUE_GRAY
 				);
@@ -148,6 +156,7 @@ namespace LeBreakout {
 			Vectors::Vector2 goBackTextSize = Fonts::getTextSize(goBackText);
 
 			Fonts::writeText(
+				window,
 				goBackText,
 				{ goBackRectangle.xCenter - MathUtils::getHalf(goBackTextSize.x), goBackRectangle.yCenter - MathUtils::getHalf(goBackTextSize.y) },
 				Colors::LIGHT_GRAY,

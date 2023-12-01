@@ -1,6 +1,7 @@
 #pragma once
 
 #include "screens.h";
+#include <SFML/Graphics/RenderWindow.hpp>
 
 namespace LeBreakout {
 	namespace Menu {
@@ -14,7 +15,7 @@ namespace LeBreakout {
 
 		void initMenu();
 		void checkOptionCollisions(bool& isLeftClickPressed);
-		void drawMenu();
+		void drawMenu(sf::RenderWindow& window);
 		Option getPressedOption();
 	}
 }
