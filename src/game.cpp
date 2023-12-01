@@ -17,7 +17,7 @@
 namespace LeBreakout {
 	namespace Game {
 		bool isLeftClickPressed = false;
-		extern sf::Clock deltaClock;
+		static sf::Clock deltaClock;
 
 		static void init() {
 			srand(static_cast<unsigned int>(time(NULL)));
@@ -103,6 +103,9 @@ namespace LeBreakout {
 				Window::deltaTime = dt.asSeconds();
 				screenLoop(window, actualScreen, shouldClose);
 			}
+
+			TextureManager::unloadTextures();
+			Fonts::unloadFont();
 		}
 	}
 }

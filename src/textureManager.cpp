@@ -5,12 +5,15 @@
 
 namespace LeBreakout {
 	namespace TextureManager {
+
 		static struct Texture {
 			sf::Texture loadedTexture;
 			TextureType textureType;
 		};
 
-		std::vector<Texture> textures;
+		using Textures = std::vector<Texture>;
+		
+		Textures* textures;
 
 		static sf::Texture createImage(const char* fileName) {
 			sf::Texture image;
@@ -19,6 +22,8 @@ namespace LeBreakout {
 		}
 
 		void initTextureManager() {
+			textures = new Textures();
+
 			Texture mainBackgroundTexture = { createImage("assets/morningCafe.png"), TextureType::MENU_BACKGROUND };
 			Texture gameplayBackgroundTexture = { createImage("assets/nightCafe.png"), TextureType::GAMEPLAY_BACKGROUND };
 			Texture creditsAndRulesBackgroundTexture = { createImage("assets/eveningCafe.png"), TextureType::RULES_CREDITS_BACKGROUND };
@@ -34,7 +39,7 @@ namespace LeBreakout {
 
 			Texture pauseBackgroundTexture = { createImage("assets/recipePages.png"), TextureType::PAUSE_BACKGROUND };
 
-			textures = { 
+			*textures = { 
 				mainBackgroundTexture,
 				buttonTexture,
 				creditsAndRulesBackgroundTexture,
@@ -50,9 +55,9 @@ namespace LeBreakout {
 		}
 
 		sf::Texture obtainTexture(TextureType texture) {
-			for (int i = 0; i < textures.size(); i++) {
-				if (texture == textures[i].textureType) {
-					return textures[i].loadedTexture;
+			for (int i = 0; i < textures->size(); i++) {
+				if (texture == (*textures)[i].textureType) {
+					return (*textures)[i].loadedTexture;
 				}
 			}
 		};
@@ -64,6 +69,10 @@ namespace LeBreakout {
 			sprite.setScale(sf::Vector2f(width / image.getSize().x, height / image.getSize().y));
 
 			window.draw(sprite);
+		}
+
+		void unloadTextures() {
+			delete textures;
 		}
 	}
 }

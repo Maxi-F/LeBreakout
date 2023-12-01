@@ -22,5 +22,6 @@ namespace LeBreakout {
 		void initTextureManager();
 		sf::Texture obtainTexture(TextureType texture);
 		void drawTexture(sf::RenderWindow& window, sf::Texture image, double x, double y, double width, double height);
+		void unloadTextures();
 	}
 }

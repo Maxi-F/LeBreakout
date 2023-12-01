@@ -9,11 +9,12 @@
 
 namespace LeBreakout {
 	namespace Fonts {
-		static sf::Font ACTIVE_FONT;
+		static sf::Font* ACTIVE_FONT;
 		static int FONT_SIZE;
 
 		void initFont(const char* filename) {
-			ACTIVE_FONT.loadFromFile(filename);
+			ACTIVE_FONT = new sf::Font();
+			ACTIVE_FONT->loadFromFile(filename);
 		};
 
 		void setFontSize(int fontSize) {
@@ -23,7 +24,7 @@ namespace LeBreakout {
 		Vectors::Vector2 getTextSize(const char* text) {
 			sf::Text textToMeasure;
 			
-			textToMeasure.setFont(ACTIVE_FONT);
+			textToMeasure.setFont(*ACTIVE_FONT);
 			textToMeasure.setCharacterSize(FONT_SIZE);
 			textToMeasure.setString(text);
 
@@ -33,7 +34,7 @@ namespace LeBreakout {
 		void writeText(sf::RenderWindow& window, const char* text, Vectors::Vector2 position, Colors::Color color, int fontSize) {
 			sf::Text textToDraw;
 
-			textToDraw.setFont(ACTIVE_FONT);
+			textToDraw.setFont(*ACTIVE_FONT);
 			textToDraw.setCharacterSize(fontSize);
 			textToDraw.setString(text);
 
@@ -41,6 +42,10 @@ namespace LeBreakout {
 			textToDraw.setPosition(sf::Vector2f(position.x, position.y));
 			
 			window.draw(textToDraw);
+		}
+
+		void unloadFont() {
+			delete ACTIVE_FONT;
 		}
 	}
 }
