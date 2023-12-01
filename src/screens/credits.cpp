@@ -66,7 +66,7 @@ namespace LeBreakout {
 				Fonts::writeText(
 					window,
 					titles[i],
-					{ MARGIN, Constants::SCREEN_DIMENSIONS.y - TITLE_MARGIN - groupMargin },
+					{ MARGIN, TITLE_MARGIN + groupMargin },
 					Colors::YELLOW,
 					titleFontSize
 				);
@@ -74,16 +74,15 @@ namespace LeBreakout {
 				Fonts::writeText(
 					window,
 					texts[i],
-					{ MARGIN, Constants::SCREEN_DIMENSIONS.y - TEXT_MARGIN - groupMargin },
+					{ MARGIN, TEXT_MARGIN + groupMargin },
 					Colors::WHITE,
 					titleFontSize
 				);
 			}
 
 			int goBackFontSize = 60;
-			sf::Vector2i globalMousePosition = sf::Mouse::getPosition(window);
 
-			Vectors::Vector2 mousePosition = { globalMousePosition.x, globalMousePosition.y };
+			Vectors::Vector2 mousePosition = Window::getMousePosition(window);
 
 			TextureManager::drawTexture(
 				window,
@@ -115,8 +114,7 @@ namespace LeBreakout {
 		};
 
 		void changeScreen(sf::RenderWindow& window, Screen::Screen& screen) {
-			sf::Vector2i globalMousePosition = sf::Mouse::getPosition(window);
-			Vectors::Vector2 mousePosition = { globalMousePosition.x, globalMousePosition.y };
+			Vectors::Vector2 mousePosition = Window::getMousePosition(window);
 
 			if (Collisions::checkPointToRectangleCollision(goBackRectangle, mousePosition) && sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
 				screen = Screen::MENU;

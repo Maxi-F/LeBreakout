@@ -36,28 +36,28 @@ namespace LeBreakout {
 		void initMenu() {
 			Rectangles::Rectangle playRectangle = { 
 				HALF_SCREEN.x,
-				HALF_SCREEN.y + OPTION_HEIGHT + OPTION_MARGIN,
+				HALF_SCREEN.y - OPTION_HEIGHT * 2 - OPTION_MARGIN * 2,
 				OPTION_WIDTH,
 				OPTION_HEIGHT
 			};
 
 			Rectangles::Rectangle rulesRectangle = {
 				HALF_SCREEN.x,
-				HALF_SCREEN.y,
+				HALF_SCREEN.y - OPTION_HEIGHT - OPTION_MARGIN,
 				OPTION_WIDTH,
 				OPTION_HEIGHT
 			};
 
 			Rectangles::Rectangle creditsRectangle = {
 				HALF_SCREEN.x,
-				HALF_SCREEN.y - OPTION_HEIGHT - OPTION_MARGIN,
+				HALF_SCREEN.y ,
 				OPTION_WIDTH,
 				OPTION_HEIGHT
 			};
 
 			Rectangles::Rectangle exitRectangle = {
 				HALF_SCREEN.x,
-				HALF_SCREEN.y - OPTION_HEIGHT * 2 - OPTION_MARGIN * 2,
+				HALF_SCREEN.y + OPTION_HEIGHT + OPTION_MARGIN,
 				OPTION_WIDTH,
 				OPTION_HEIGHT
 			};
@@ -91,8 +91,8 @@ namespace LeBreakout {
 		}
 
 		void checkOptionCollisions(sf::RenderWindow& window, bool& isLeftClickPressed) {
-			sf::Vector2i globalMousePosition = sf::Mouse::getPosition(window);
-			Vectors::Vector2 mousePosition = { globalMousePosition.x, globalMousePosition.y };
+			Vectors::Vector2 mousePosition = Window::getMousePosition(window);
+
 			std::cout << "MOUSE: " << mousePosition.x << ", " << mousePosition.y << std::endl;
 
 			if (!sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
@@ -125,7 +125,7 @@ namespace LeBreakout {
 
 			const char* title = "LeBreakout";
 			int titleFontSize = 160;
-			double titleMargin = 200;
+			double titleMargin = 50;
 
 			Fonts::setFontSize(titleFontSize);
 
@@ -134,7 +134,7 @@ namespace LeBreakout {
 			Fonts::writeText(
 				window,
 				title,
-				{ HALF_SCREEN.x - MathUtils::getHalf(titleSize.x), Constants::SCREEN_DIMENSIONS.y - titleMargin },
+				{ HALF_SCREEN.x - MathUtils::getHalf(titleSize.x), titleMargin },
 				Colors::BLACK,
 				titleFontSize
 			);
@@ -143,6 +143,14 @@ namespace LeBreakout {
 				Fonts::setFontSize(OPTION_FONT_SIZE);
 				const char* optionText = menuOptions[i].optionText;
 				Rectangles::Rectangle optionRectangle = menuOptions[i].rectangle;
+
+#ifdef _DEBUG
+				Rectangles::fillRectangle(
+					window,
+					optionRectangle,
+					Colors::RED
+				);
+#endif
 
 				TextureManager::drawTexture(
 					window,

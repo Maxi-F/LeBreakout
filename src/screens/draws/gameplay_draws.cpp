@@ -138,8 +138,7 @@ namespace LeBreakout {
 		static void drawBox(sf::RenderWindow& window, const char* title, const GameplayMenuOption options[GAMEPLAY_MENU_OPTIONS_LENGTH]) {
 			const Vectors::Vector2 MENU_SIZE = { 550, 700 };
 
-			sf::Vector2i globalMousePosition = sf::Mouse::getPosition(window);
-			Vectors::Vector2 mousePosition = { globalMousePosition.x, globalMousePosition.y };
+			Vectors::Vector2 mousePosition = Window::getMousePosition(window);
 
 			Rectangles::Rectangle menu = {
 				MathUtils::getHalf(Constants::SCREEN_DIMENSIONS.x),
