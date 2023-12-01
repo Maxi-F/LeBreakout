@@ -37,7 +37,7 @@ namespace LeBreakout {
 			textToDraw.setCharacterSize(fontSize);
 			textToDraw.setString(text);
 
-			textToDraw.setFillColor(sf::Color(color.r));
+			textToDraw.setFillColor(sf::Color(color.r, color.g, color.b, color.a));
 			textToDraw.setPosition(sf::Vector2f(position.x, position.y));
 			
 			window.draw(textToDraw);

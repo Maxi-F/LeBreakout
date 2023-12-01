@@ -70,13 +70,13 @@ namespace LeBreakout {
         bool checkPointToRectangleCollision(Rectangles::Rectangle rectangle, Vectors::Vector2 point) {
             float rectangleLeftEdge = rectangle.xCenter - MathUtils::getHalf(rectangle.width);
             float rectangleRightEdge = rectangle.xCenter + MathUtils::getHalf(rectangle.width);
-            float rectangleTopEdge = rectangle.yCenter + MathUtils::getHalf(rectangle.height);
-            float rectangleBottomEdge = rectangle.yCenter - MathUtils::getHalf(rectangle.height);
+            float rectangleTopEdge = rectangle.yCenter - MathUtils::getHalf(rectangle.height);
+            float rectangleBottomEdge = rectangle.yCenter + MathUtils::getHalf(rectangle.height);
 
             return point.x >= rectangleLeftEdge &&
                 point.x <= rectangleRightEdge &&
-                point.y >= rectangleBottomEdge &&
-                point.y <= rectangleTopEdge;
+                point.y <= rectangleBottomEdge &&
+                point.y >= rectangleTopEdge;
         }
     }
 }

@@ -5,6 +5,6 @@
 namespace LeBreakout {
 	namespace RulesScreen {
 		void drawRules(sf::RenderWindow& window);
-		void changeScreen(Screen::Screen& screen);
+		void changeScreen(sf::RenderWindow& window, Screen::Screen& screen);
 	}
 }

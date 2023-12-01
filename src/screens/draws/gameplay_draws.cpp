@@ -26,7 +26,7 @@ namespace LeBreakout {
 			{
 				{
 					MathUtils::getHalf(Constants::SCREEN_DIMENSIONS.x),
-					MathUtils::getHalf(Constants::SCREEN_DIMENSIONS.y) + MENU_OPTION_HEIGHT + MENU_OPTION_MARGIN,
+					MathUtils::getHalf(Constants::SCREEN_DIMENSIONS.y) - MENU_OPTION_HEIGHT - MENU_OPTION_MARGIN,
 					MENU_OPTION_WIDTH,
 					MENU_OPTION_HEIGHT
 				},
@@ -47,7 +47,7 @@ namespace LeBreakout {
 			{
 				{
 					MathUtils::getHalf(Constants::SCREEN_DIMENSIONS.x),
-					MathUtils::getHalf(Constants::SCREEN_DIMENSIONS.y) + MENU_OPTION_HEIGHT + MENU_OPTION_MARGIN,
+					MathUtils::getHalf(Constants::SCREEN_DIMENSIONS.y) - MENU_OPTION_HEIGHT - MENU_OPTION_MARGIN,
 					MENU_OPTION_WIDTH,
 					MENU_OPTION_HEIGHT
 				},
@@ -80,7 +80,7 @@ namespace LeBreakout {
 		static void drawUI(sf::RenderWindow& window, Gameplay::GameplayEntities gameplayEntities) {
 			Rectangles::Rectangle uiBackground = {
 				MathUtils::getHalf(Constants::FIELD_DIMENSIONS.x),
-				Constants::SCREEN_DIMENSIONS.y - MathUtils::getHalf(Constants::FIELD_Y_MARGIN),
+				MathUtils::getHalf(Constants::FIELD_Y_MARGIN),
 				Constants::SCREEN_DIMENSIONS.x,
 				Constants::FIELD_Y_MARGIN
 			};
@@ -138,7 +138,7 @@ namespace LeBreakout {
 		static void drawBox(sf::RenderWindow& window, const char* title, const GameplayMenuOption options[GAMEPLAY_MENU_OPTIONS_LENGTH]) {
 			const Vectors::Vector2 MENU_SIZE = { 550, 700 };
 
-			sf::Vector2i globalMousePosition = sf::Mouse::getPosition();
+			sf::Vector2i globalMousePosition = sf::Mouse::getPosition(window);
 			Vectors::Vector2 mousePosition = { globalMousePosition.x, globalMousePosition.y };
 
 			Rectangles::Rectangle menu = {
@@ -158,7 +158,7 @@ namespace LeBreakout {
 			);
 		
 			int titleFontSize = 80;
-			int titleMargin = 60;
+			int titleMargin = 40;
 
 			Fonts::setFontSize(titleFontSize);
 
@@ -169,7 +169,7 @@ namespace LeBreakout {
 				title,
 				{ 
 					MathUtils::getHalf(Constants::SCREEN_DIMENSIONS.x) - MathUtils::getHalf(titleSize.x),
-					MathUtils::getHalf(Constants::SCREEN_DIMENSIONS.y) + MathUtils::getHalf(MENU_SIZE.y) - titleSize.y - titleMargin
+					MathUtils::getHalf(Constants::SCREEN_DIMENSIONS.y) - MathUtils::getHalf(MENU_SIZE.y) + titleMargin
 				},
 				Colors::LIGHT_GRAY,
 				titleFontSize

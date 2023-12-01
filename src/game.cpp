@@ -27,8 +27,8 @@ namespace LeBreakout {
 			Menu::initMenu();
 		}
 
-		static void doActionBySelectedOption(Screen::Screen& actualScreen, bool& shouldClose) {
-			Menu::checkOptionCollisions(isLeftClickPressed);
+		static void doActionBySelectedOption(sf::RenderWindow& window, Screen::Screen& actualScreen, bool& shouldClose) {
+			Menu::checkOptionCollisions(window, isLeftClickPressed);
 
 			Menu::Option selectedOption = Menu::getPressedOption();
 
@@ -55,13 +55,13 @@ namespace LeBreakout {
 		static void screenLoop(sf::RenderWindow& window, Screen::Screen &actualScreen, bool& shouldClose) {
 			switch (actualScreen) {
 				case Screen::MENU:
-					doActionBySelectedOption(actualScreen, shouldClose);
+					doActionBySelectedOption(window, actualScreen, shouldClose);
 					window.clear();
 						Menu::drawMenu(window);
 					window.display();
 					break;
 				case Screen::GAMEPLAY:
-					Gameplay::updateGameplay(actualScreen, isLeftClickPressed);
+					Gameplay::updateGameplay(window, actualScreen, isLeftClickPressed);
 					window.clear();
 						Gameplay::drawGameplay(window);
 					window.display();
@@ -70,13 +70,13 @@ namespace LeBreakout {
 					window.clear();
 						RulesScreen::drawRules(window);
 					window.display();
-					RulesScreen::changeScreen(actualScreen);
+					RulesScreen::changeScreen(window, actualScreen);
 					break;
 				case Screen::CREDITS:
 					window.clear();
 						CreditsScreen::drawCredits(window);
 					window.display();
-					CreditsScreen::changeScreen(actualScreen);
+					CreditsScreen::changeScreen(window, actualScreen);
 					break;
 			}
 		}

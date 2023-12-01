@@ -14,7 +14,7 @@ namespace LeBreakout {
 		};
 
 		void initMenu();
-		void checkOptionCollisions(bool& isLeftClickPressed);
+		void checkOptionCollisions(sf::RenderWindow& window, bool& isLeftClickPressed);
 		void drawMenu(sf::RenderWindow& window);
 		Option getPressedOption();
 	}

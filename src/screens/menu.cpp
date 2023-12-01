@@ -1,6 +1,7 @@
 #include "menu.h"
 
 #include <SFML/Window/Mouse.hpp>
+#include <iostream>
 
 #include "textureManager.h"
 #include "screens.h"
@@ -89,9 +90,10 @@ namespace LeBreakout {
 			}
 		}
 
-		void checkOptionCollisions(bool& isLeftClickPressed) {
-			sf::Vector2i globalMousePosition = sf::Mouse::getPosition();
+		void checkOptionCollisions(sf::RenderWindow& window, bool& isLeftClickPressed) {
+			sf::Vector2i globalMousePosition = sf::Mouse::getPosition(window);
 			Vectors::Vector2 mousePosition = { globalMousePosition.x, globalMousePosition.y };
+			std::cout << "MOUSE: " << mousePosition.x << ", " << mousePosition.y << std::endl;
 
 			if (!sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
 				isLeftClickPressed = false;

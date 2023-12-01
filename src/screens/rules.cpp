@@ -132,7 +132,7 @@ namespace LeBreakout {
 				FONT_SIZE
 			);
 
-			sf::Vector2i globalMousePosition = sf::Mouse::getPosition();
+			sf::Vector2i globalMousePosition = sf::Mouse::getPosition(window);
 			Vectors::Vector2 mousePosition = { globalMousePosition.x, globalMousePosition.y };
 
 			TextureManager::drawTexture(
@@ -165,8 +165,8 @@ namespace LeBreakout {
 
 		}
 
-		void changeScreen(Screen::Screen& screen) {
-			sf::Vector2i globalMousePosition = sf::Mouse::getPosition();
+		void changeScreen(sf::RenderWindow& window, Screen::Screen& screen) {
+			sf::Vector2i globalMousePosition = sf::Mouse::getPosition(window);
 			Vectors::Vector2 mousePosition = { globalMousePosition.x, globalMousePosition.y };
 
 			if (Collisions::checkPointToRectangleCollision(goBackRectangle, mousePosition) && sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {

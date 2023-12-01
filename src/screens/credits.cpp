@@ -17,7 +17,7 @@ namespace LeBreakout {
 
 		static const Rectangles::Rectangle goBackRectangle = {
 			MARGIN + MathUtils::getHalf(GO_BACK_WIDTH),
-			MARGIN + MathUtils::getHalf(GO_BACK_HEIGHT),
+			Constants::SCREEN_DIMENSIONS.y - MARGIN - MathUtils::getHalf(GO_BACK_HEIGHT),
 			GO_BACK_WIDTH,
 			GO_BACK_HEIGHT
 		};
@@ -81,7 +81,7 @@ namespace LeBreakout {
 			}
 
 			int goBackFontSize = 60;
-			sf::Vector2i globalMousePosition = sf::Mouse::getPosition();
+			sf::Vector2i globalMousePosition = sf::Mouse::getPosition(window);
 
 			Vectors::Vector2 mousePosition = { globalMousePosition.x, globalMousePosition.y };
 
@@ -114,8 +114,8 @@ namespace LeBreakout {
 			);
 		};
 
-		void changeScreen(Screen::Screen& screen) {
-			sf::Vector2i globalMousePosition = sf::Mouse::getPosition();
+		void changeScreen(sf::RenderWindow& window, Screen::Screen& screen) {
+			sf::Vector2i globalMousePosition = sf::Mouse::getPosition(window);
 			Vectors::Vector2 mousePosition = { globalMousePosition.x, globalMousePosition.y };
 
 			if (Collisions::checkPointToRectangleCollision(goBackRectangle, mousePosition) && sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {

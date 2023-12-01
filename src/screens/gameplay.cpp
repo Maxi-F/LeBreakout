@@ -135,8 +135,8 @@ namespace LeBreakout {
 			}
 		}
 
-		void updateGameplay(Screen::Screen &screen, bool& isLeftClickPressed) {
-			sf::Vector2i globalMousePosition = sf::Mouse::getPosition();
+		void updateGameplay(sf::RenderWindow& window, Screen::Screen &screen, bool& isLeftClickPressed) {
+			sf::Vector2i globalMousePosition = sf::Mouse::getPosition(window);
 			Vectors::Vector2 mousePosition = { globalMousePosition.x, globalMousePosition.y };
 
 			if (gameplayEntities.hasLost || gameplayEntities.hasWon) {
