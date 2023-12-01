@@ -91,7 +91,7 @@ namespace LeBreakout {
 			if (powerUp.powerUpType == PowerUpType::NONE) return;
 
 			if (powerUp.isFalling && !powerUp.collisioned) {
-				powerUp.position.y -= POWER_UP_FALL_VELOCITY * Window::deltaTime;
+				powerUp.position.y += POWER_UP_FALL_VELOCITY * Window::deltaTime;
 			}
 		};
 	}

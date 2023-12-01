@@ -19,7 +19,7 @@ namespace LeBreakout {
 
 		static const Rectangles::Rectangle goBackRectangle = {
 			MARGIN + MathUtils::getHalf(GO_BACK_WIDTH),
-			MARGIN + MathUtils::getHalf(GO_BACK_HEIGHT),
+			Constants::SCREEN_DIMENSIONS.y - MARGIN - MathUtils::getHalf(GO_BACK_HEIGHT),
 			GO_BACK_WIDTH,
 			GO_BACK_HEIGHT
 		};
@@ -69,7 +69,7 @@ namespace LeBreakout {
 				Fonts::writeText(
 					window,
 					firstTexts[i],
-					{ MARGIN, Constants::SCREEN_DIMENSIONS.y - MARGIN - MARGIN * i },
+					{ MARGIN, MARGIN + MARGIN * i },
 					Colors::WHITE,
 					FONT_SIZE
 				);
@@ -90,7 +90,7 @@ namespace LeBreakout {
 				Rectangles::Rectangle powerUpBox = PowerUps::getPowerUpCollisionBox({
 						{
 							MARGIN + PowerUps::POWER_UP_RADIUS,
-							Constants::SCREEN_DIMENSIONS.y - FIRST_TEXTS_COUNT * MARGIN - MARGIN * (i + 1)
+							FIRST_TEXTS_COUNT * MARGIN + MARGIN * (i + 1) + PowerUps::POWER_UP_RADIUS
 						},
 						{},
 						PowerUps::POWER_UP_RADIUS 
@@ -112,7 +112,7 @@ namespace LeBreakout {
 					powerUpTexts[i].text,
 					{
 						MARGIN + PowerUps::POWER_UP_RADIUS * 3,
-						Constants::SCREEN_DIMENSIONS.y - FIRST_TEXTS_COUNT * MARGIN - MARGIN - MARGIN * i - PowerUps::POWER_UP_RADIUS
+						FIRST_TEXTS_COUNT * MARGIN + MARGIN + MARGIN * i
 					},
 					Colors::WHITE,
 					FONT_SIZE
@@ -126,7 +126,7 @@ namespace LeBreakout {
 				randomlyGeneratedText,
 				{
 					MARGIN,
-					Constants::SCREEN_DIMENSIONS.y - (FIRST_TEXTS_COUNT + POWER_UP_TEXTS_COUNT) * MARGIN - MARGIN
+					(FIRST_TEXTS_COUNT + POWER_UP_TEXTS_COUNT) * MARGIN + MARGIN
 				},
 				Colors::WHITE,
 				FONT_SIZE

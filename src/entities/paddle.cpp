@@ -29,7 +29,7 @@ namespace LeBreakout {
 			return {
 				{
 					MathUtils::getHalf(Constants::SCREEN_DIMENSIONS.x),
-					PADDLE_MARGIN_TO_BOTTOM,
+					Constants::SCREEN_DIMENSIONS.y - PADDLE_MARGIN_TO_BOTTOM,
 					PADDLE_SIZE.x,
 					PADDLE_SIZE.y
 				},

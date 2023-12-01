@@ -98,10 +98,12 @@ namespace LeBreakout {
 
 			Vectors::Vector2 livesTextSize = Fonts::getTextSize(livesText.c_str());
 
+			double topMargin = 10;
+
 			Fonts::writeText(
 				window,
 				livesText.c_str(),
-				{ static_cast<double>(fontSize), Constants::FIELD_DIMENSIONS.y + MathUtils::getHalf(Constants::FIELD_Y_MARGIN) - MathUtils::getHalf(livesTextSize.y) },
+				{ static_cast<double>(fontSize), topMargin },
 				Colors::WHITE,
 				fontSize
 			);
@@ -114,7 +116,7 @@ namespace LeBreakout {
 				movementExplanation,
 				{
 					MathUtils::getHalf(Constants::SCREEN_DIMENSIONS.x) - MathUtils::getHalf(movementTextSize.x),
-					Constants::FIELD_DIMENSIONS.y + MathUtils::getHalf(Constants::FIELD_Y_MARGIN) - MathUtils::getHalf(movementTextSize.y)
+					topMargin
 				},
 				Colors::WHITE,
 				fontSize
@@ -128,7 +130,7 @@ namespace LeBreakout {
 				pauseExplanation,
 				{
 					Constants::SCREEN_DIMENSIONS.x - movementTextSize.x,
-					Constants::FIELD_DIMENSIONS.y + MathUtils::getHalf(Constants::FIELD_Y_MARGIN) - MathUtils::getHalf(pauseTextSize.y)
+					topMargin
 				},
 				Colors::WHITE,
 				fontSize

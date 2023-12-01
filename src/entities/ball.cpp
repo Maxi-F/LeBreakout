@@ -49,7 +49,7 @@ namespace LeBreakout {
 
 				ball.direction = { directionPercentage, getValuePerBallDirection(ball, MathUtils::moduleOf(directionPercentage) - 1, 1 - MathUtils::moduleOf(directionPercentage)) };
 
-				ball.position.y = paddleRectangle.yCenter + MathUtils::getHalf(paddleRectangle.height) + ball.radius;
+				ball.position.y = paddleRectangle.yCenter - MathUtils::getHalf(paddleRectangle.height) - ball.radius;
 			}
 		}
 
@@ -63,11 +63,11 @@ namespace LeBreakout {
 				ball.direction = { -ball.direction.x, ball.direction.y };
 			}
 
-			if (ball.position.y + ball.radius > Constants::FIELD_DIMENSIONS.y) {
-				ball.position.y = Constants::FIELD_DIMENSIONS.y - ball.radius;
+			if (ball.position.y - ball.radius < Constants::FIELD_Y_MARGIN) {
+				ball.position.y = Constants::FIELD_Y_MARGIN + ball.radius;
 				ball.direction = { ball.direction.x, -ball.direction.y };
 			}
-			else if (ball.position.y + ball.radius < 0) {
+			else if (ball.position.y + ball.radius > Constants::SCREEN_DIMENSIONS.y) {
 				collidedBottom = true;
 			}
 		}

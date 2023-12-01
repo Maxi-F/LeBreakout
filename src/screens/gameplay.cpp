@@ -38,7 +38,7 @@ namespace LeBreakout {
 				for (int j = 0; j < blockColumnsQuantity; j++) {
 					Vectors::Vector2 blockPosition = {
 						blockRowStartPosition + j * Block::BLOCK_WIDTH,
-						Constants::FIELD_DIMENSIONS.y - Block::BLOCK_HEIGHT - i * Block::BLOCK_HEIGHT
+						Constants::FIELD_Y_MARGIN + Block::BLOCK_HEIGHT + i * Block::BLOCK_HEIGHT
 					};
 
 					blocks[i][j] = Block::initBlock(blockPosition, PowerUps::createPowerUp(blockPosition));
